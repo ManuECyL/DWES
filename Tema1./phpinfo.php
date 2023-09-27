@@ -1,0 +1,4 @@
+<?
+    phpinfo();
+    echo "Hola Mundo"; 
+?>
