@@ -5,5 +5,6 @@
     $GRE = "Καλημέρα";
     $GB = "Good Morning";
 
-    $elegido = ""
+    $elegido = "";
+    
 ?>
