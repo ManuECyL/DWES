@@ -1,10 +1,12 @@
 <?php
-    $ES = "Buenos días";
-    $POR = "Bom dia";
-    $ITA = "Buongiorno";
-    $GRE = "Καλημέρα";
-    $GB = "Good Morning";
+    $es = "Buenos días";
+    $por = "Bom dia";
+    $ita = "Buongiorno";
+    $gri = "Καλημέρα";
+    $en = "Good Morning";
 
-    $elegido = "";
+    $elegido = $_GET["idioma"];
+
+    echo $$elegido;
     
 ?>
