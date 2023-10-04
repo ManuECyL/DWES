@@ -75,7 +75,7 @@
 
         <main>
             <div class="divImagen">
-                <img src="./imagenes/img_php.jpg" alt="img_php">
+                
             </div>
         </main>
 
