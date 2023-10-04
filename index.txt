@@ -75,11 +75,13 @@
                 
         <!-- MAIN -->
             <main>
-                <img src="imagenes/php_img.jpg" class="d-block mx-auto php_img py" alt="php_img">               
+                <div>
+                    <img src="imagenes/php_img.jpg" class="d-block mx-auto php_img py" alt="php_img">               
+                </div>
             </main>
            
         <!-- FOOTER -->
-            <footer class="border-top bg-dark bg-gradient">
+            <footer class="bg-dark bg-gradient">
                 <div class="row">
 
                     <!-- ACORDEON DE REDES -->
