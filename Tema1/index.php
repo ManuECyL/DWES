@@ -20,7 +20,16 @@
         <?php
                 include("../html/header.html");
                 include("../html/navTemas.html");
-                include("../html/main.html");
+        ?>
+
+        <!-- MAIN -->
+        <main>
+            <div>
+                              
+            </div>
+        </main>
+
+        <?php
                 include("../html/footer.html");
             ?>
         </div>

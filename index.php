@@ -73,8 +73,13 @@
                 </div>
             </nav>
 
+        <main>
+            <div class="divImagen">
+            
+            </div>
+        </main>
+
             <?php
-                include("./html/main.html");
                 include("./html/footer.html");
             ?>
         </div>

@@ -16,19 +16,24 @@ h5 {
     color: black;
 }
 
-.php_img {
-    height: 295px;
-    width: 100%;
-    border-radius: 1%;
-    box-shadow: 1px 1px 15px black;
+.divImagen {
+    background-color: red;
+    background-image: url("/imagenes/php_img.jpg");
+    height: 500px;
 }
 
-footer {
+/* .php_img {
+    width: 100%;
+    border-radius: 1%; 
+    box-shadow: 1px 1px 15px black;
+}  */
+
+/* footer {
     background-color: black;
     position: absolute;
     bottom: 0;
     width: 98%;
-  }
+  } */
 
 .footerTitulo{
     color: white;
