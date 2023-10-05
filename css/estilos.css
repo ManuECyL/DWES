@@ -10,12 +10,12 @@
 }
 
 #anterior {
-    color: rgb(0, 153, 255);
+    color: rgb(152, 234, 255);
     text-shadow: 2px 2px rgb(0, 0, 0);
 }
 
 #anterior:hover {
-    color: rgb(152, 234, 255);
+    color: rgb(0, 153, 255);
 }
 
 .navTema {
