@@ -40,7 +40,11 @@
     print_r ($intervalo);
     echo "</pre>";
 
-//Otros métodos: mktime | getdate
+// Otros métodos: mktime | getdate
     echo "<pre>";
     print_r (getdate());
     echo "</pre>";
+
+
+// Ver Código del fichero actual
+    echo "<a href='http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'] . "' target='_blank'>Ver Código PHP</a>";
