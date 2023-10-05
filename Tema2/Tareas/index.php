@@ -30,7 +30,7 @@
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="../index.php">Tema 2</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Tema 2</a>
                             </li>
                         </div>
 

@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Apuntes Tema 2</title>
+        <title>Apuntes Tema 1</title>
 
     <!-- BOOTSTRAP -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -28,33 +28,21 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="../index.php" id="anterior">Tema 2</a>
+                                <a class="nav-link navTema" href="../index.php">Tema 1</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="28Septiembre.php">28 Septiembre</a>
+                                <a class="nav-link navTema" href="phpinfo.php">PHP Info</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="3Octubre.php">3 Octubre</a>
-                            </li>                      
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="MipaginaEntera/oferta.php">Mi Pagina Entera</a>
-                            </li>                      
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="fechas.php">Fechas</a>
+                                <a class="nav-link navTema" href="prueba.php">Prueba</a>
                             </li>                      
                         </div>
                     </ul>

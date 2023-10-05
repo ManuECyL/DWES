@@ -36,7 +36,7 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="../index.php">Tareas</a>
+                            <a class="nav-link navTema" href="../index.php" id="anterior">Tareas</a>
                         </li>
                         </div>
 
