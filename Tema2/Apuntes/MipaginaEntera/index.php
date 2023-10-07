@@ -1,37 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Home</title>
-        <link rel="stylesheet" href="./css/style.css">
-    </head>
-
-    <body>
-        <?php
-            include("./html/header.php");
-        ?>
-
-        <main>
-            Esta es la página principal
-        </main>
-
-        <?php
-            include("./html/footer.php");
-        ?>
-    </body>
-</html>
-
-
-<!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Apuntes Tema 2</title>
+        <title>Mi Página Entera</title>
 
     <!-- BOOTSTRAP -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -44,7 +18,7 @@
         <div class="container-fluid">
             
             <?php
-                include("../../html/header.php");
+                include("../../../html/header.php");
             ?>
 
             <!-- NAV -->
@@ -56,7 +30,7 @@
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Apuntes Tema 2</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Apuntes Tema 2</a>
                             </li>
                         </div>
                     </ul>
@@ -64,85 +38,17 @@
             </nav>
 
             <main>
-                <div style="border: 1px black solid; margin: 10px; text-align: center;">
-                    <pre>
-                        <?php
-                            print_r($_SERVER);
-                            print_r($_GET);
+                <?php
+                    include("./fragmentos/header.html");
+                ?>
 
-                        ?>
-                    </pre>
+                <div style="border: 1px black solid; margin: 10px; text-align: center;">
+
+                     Esta es la página principal
+
+                     <br><br>
 
                     <?php
-                    // AMBITO DE LAS VARIABLES
-                        echo "<h1>Ambito de las variables</h1>";
-                        $contador = 5;
-
-                        function PruebaVariable() {
-                            echo $contador;
-                        }
-
-                        function PruebaVariableParametro($contador) {
-                            echo $contador;
-                            $contador++;
-                            echo "<br>";
-                            echo $contador;
-                        }
-
-                        function PruebaVariableReferencia(&$contador) {
-                            echo $contador . "<br>";
-                            $contador++;
-                            echo $contador;
-                        }
-
-                        function PruebaVariableGlobal() {
-                            global $contador;
-                            echo $contador . "<br>";
-                            $contador++;
-                            echo $contador;
-                        }
-
-                        echo "<p>No puede acceder</p>";
-                        PruebaVariable();
-
-                        echo "<p>Pasado como parametro</p>";
-                        PruebaVariableParametro($contador);
-                        echo "<p>¿Qué le pasa a contador?</p>";
-                        echo $contador;
-
-                        echo "<p>Pasado como parametro con referencia</p>";
-                        PruebaVariableReferencia($contador);
-                        echo "<p>¿Qué le pasa a contador?</p>";
-                        echo $contador;
-
-                        echo "<p>Sin parametro pero llama a la variable global</p>";
-                        PruebaVariableGlobal($contador);
-                        echo "<p>¿Qué le pasa a contador?</p>";
-                        echo $contador;
-
-                        echo "<br>";
-
-                    // STATIC
-                        function contador() {
-                            static $c = 0;
-                            $c++;
-                            echo "<br>" . $c;
-                        }
-
-                        contador();
-                        contador();
-                        contador();
-                        contador();
-                        contador();
-
-                        echo "<br>";
-
-                    // CONSTANTES
-                        define("USER","Maria");
-                        echo USER;
-
-                        echo "<br><br>";
-
                     // Ver Código del fichero actual
                         echo "<a href='http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'] . "' target='_blank'>Ver Código PHP</a>";
                     ?>
@@ -150,7 +56,8 @@
             </main>
 
             <?php
-                include("../../html/footer.html");
+                include("./fragmentos/footer.html");
+                include("../../../html/footer.html");
             ?>
         </div>
             

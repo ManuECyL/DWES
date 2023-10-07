@@ -28,22 +28,16 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md-6 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tema 1</a>
                             </li>
                         </div>
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md-6 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="phpinfo.php">PHP Info</a>
                             </li>
-                        </div>
-
-                        <div class="col-md-4 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="prueba.php">Prueba</a>
-                            </li>                      
                         </div>
                     </ul>
                 </div>
