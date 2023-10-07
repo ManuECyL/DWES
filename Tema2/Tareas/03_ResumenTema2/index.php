@@ -36,37 +36,37 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="../index.php" id="anterior">Tareas</a>
+                            <a class="nav-link navTema" href="../index.php" id="anterior">Tareas Tema 2</a>
                         </li>
                         </div>
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema2">Ejercicio 1</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio1.php">Ejercicio 1</a>
                         </li>
                         </div>
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema3">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php">Ejercicio 2</a>
                         </li>                      
                         </div>
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema4">Ejercicio 3</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio3.php">Ejercicio 3</a>
                         </li>                    
                         </div>              
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema5">Ejercicio 4</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio4.php">Ejercicio 4</a>
                         </li>
                         </div>
 
                         <div class="col-md-2 col-lg"> 
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema6">Ejercicio 5</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio5.php">Ejercicio 5</a>
                         </li>
                         </div>
                     </ul> 
