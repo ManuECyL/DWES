@@ -31,7 +31,7 @@
         <div class="container-fluid">
             
             <?php
-                include("../../../html/header.html");
+                include("../../../html/header.php");
             ?>
 
             <!-- NAV -->

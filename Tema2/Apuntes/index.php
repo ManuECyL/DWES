@@ -18,7 +18,7 @@
         <div class="container-fluid">
             
             <?php
-                include("./html/header.php");
+                include("../../html/header.php");
             ?>
 
             <!-- NAV -->
@@ -48,7 +48,7 @@
 
                         <div class="col-md-3 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="MipaginaEntera/oferta.php">Mi Pagina Entera</a>
+                                <a class="nav-link navTema" href="MipaginaEntera/index.php">Mi Pagina Entera</a>
                             </li>                      
                         </div>
 

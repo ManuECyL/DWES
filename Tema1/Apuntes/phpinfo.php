@@ -8,8 +8,8 @@
         <title>PHP Info</title>
 
     <!-- BOOTSTRAP -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         
         <link rel="stylesheet" href="../../css/estilos.css">
     </head>
@@ -18,7 +18,7 @@
         <div class="container-fluid">
             
             <?php
-                include("../../html/header.html");
+                include("../../html/header.php");
             ?>
 
             <!-- NAV -->
@@ -28,7 +28,7 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md col-lg">
+                        <div class="col-md-12 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Apuntes</a>
                             </li>
