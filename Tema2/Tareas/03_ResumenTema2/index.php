@@ -60,13 +60,7 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio4.php">Ejercicio 4</a>
-                        </li>
-                        </div>
-
-                        <div class="col-md-2 col-lg"> 
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio5.php">Ejercicio 5</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio4.php?fecha1=1998/04/30&fecha2=1996/03/22">Ejercicio 4</a>
                         </li>
                         </div>
                     </ul> 
@@ -77,7 +71,6 @@
                 <div style="border: 1px black solid; margin: 10px;">
                     <pre>
                         <h3 style="text-align: center">Enunciados de los ejercicios de la Tarea 03</h3>
-
                         <h5>    1. Crea una página que:</h5>
 
                             a. Muestra el nombre del fichero que se está ejecutando. 
@@ -100,8 +93,6 @@
                         <h6>    3. Crea una página en la que se le pase como parámetros en la URL (ano, mes y día) y muestre el día de la semana de dicho día. (Por defecto, dale el valor de 03/10/2023)</h6>
 
                         <h6>    4. Crea una página en la que se le pase como parámetros en la URL (ano, mes y día) de dos personas y muestre las fechas de nacimiento de ambos y la diferencia de edad en años.</h6> 
-
-                        <h6>    5. Crea un enlace a una página en cada página anterior que muestre el contenido del fichero que se está ejecutando."</h6>
                     </pre>
                 </div>
             </main>

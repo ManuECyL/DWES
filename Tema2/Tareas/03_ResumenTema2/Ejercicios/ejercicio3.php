@@ -53,21 +53,15 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php?variable=">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="./ejercicio2.php?variable=">Ejercicio 2</a>
                         </li>                      
                         </div>
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio4.php">Ejercicio 4</a>
+                            <a class="nav-link navTema" href="./ejercicio4.php?fecha1=1998/04/30&fecha2=1996/03/22">Ejercicio 4</a>
                         </li>                    
                         </div>              
-
-                        <div class="col-md-2 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio5.php">Ejercicio 5</a>
-                        </li>
-                        </div>
                     </ul> 
                 </div>
             </nav>
@@ -82,6 +76,7 @@
                         <p>
                             <?php
                                 $dia = new DateTime($_GET['fecha']);
+                                // $dia = new DateTime::createFromFormat('d/m/Y',$_GET['fecha']);
                                 echo $dia -> format('l');
                                 echo "<br><br>";
                             ?>

@@ -55,31 +55,53 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php?variable=">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="./ejercicio2.php?variable=">Ejercicio 2</a>
                         </li>                      
                         </div>
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio3.php?fecha=03/10/2023">Ejercicio 3</a>
+                            <a class="nav-link navTema" href="./ejercicio3.php?fecha=03/10/2023">Ejercicio 3</a>
                         </li>                    
                         </div>              
-
-                        <div class="col-md-2 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio5.php">Ejercicio 5</a>
-                        </li>
-                        </div>
                     </ul> 
                 </div>
             </nav>
 
             <main>
-                <div style="border: 1px black solid; margin: 10px; text-align: center;">
-                    <?php
+                <div style="border: 1px black solid; margin: 10px;">
 
+                    <h5>4. Crea una página en la que se le pase como parámetros en la URL (ano, mes y día) de dos personas y muestre las fechas de nacimiento de ambos y la diferencia de edad en años.</h5>
 
-                    ?>
+                    <br>
+
+                    <p>
+                        <?php
+                            $date1 = new DateTime($_GET["fecha1"]);
+                            $date2 = new DateTime($_GET["fecha2"]);
+
+                            echo "<strong>Fecha Cumpleaños 1:</strong> " . date_format($date1, 'd-m-Y');
+                            echo "<br>";
+                            echo "<strong>Fecha Cumpleaños 2:</strong> " . date_format($date2, 'd-m-Y');
+                            echo "<br>";
+
+                            if ($date1 > $date2) {
+                                $diff = $date1 -> diff($date2);
+                                echo "<br>";
+                                echo "Hay " . $diff -> y . " años de diferencia";
+                                
+                            }elseif ($date1 < $date2) {
+                                $diff = $date2 -> diff($date1);
+                                echo "<br>";
+                                echo "Hay " . $diff -> y . " años de diferencia";
+
+                            
+                            } else {
+                                echo "<br>";
+                                echo "Tienen los mismos años";
+                            }
+                        ?>
+                    </p>
                 </div>
             </main>
 
