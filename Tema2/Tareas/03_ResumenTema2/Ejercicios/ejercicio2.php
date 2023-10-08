@@ -53,7 +53,7 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio3.php">Ejercicio 3</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio3.php?fecha=03/10/2023">Ejercicio 3</a>
                         </li>                      
                         </div>
 

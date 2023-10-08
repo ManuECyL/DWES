@@ -12,7 +12,17 @@
         
         <link rel="stylesheet" href="../../../../css/estilos.css">
 
+        <style>
+            h5 {
+                font-weight: bold;
+                margin-top: 30px;
+                margin-left: 50px;
+            }
 
+            p {
+                margin-left: 190px;
+            }
+        </style>
     </head>
 
     <body>
@@ -63,11 +73,19 @@
             </nav>
 
             <main>
-                <div style="border: 1px black solid; margin: 10px; text-align: center;">
-                    <?php
+                <div style="border: 1px black solid; margin: 10px;">
+                    
+                    <h5>3. Crea una página en la que se le pase como parámetros en la URL (ano, mes y día) y muestre el día de la semana de dicho día. (Por defecto, dale el valor de 03/10/2023)</h5>
 
+                        <br>
 
-                    ?>
+                        <p>
+                            <?php
+                                $dia = new DateTime($_GET['fecha']);
+                                echo $dia -> format('l');
+                                echo "<br><br>";
+                            ?>
+                        </p>
                 </div>
             </main>
 
