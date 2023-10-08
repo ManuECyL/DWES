@@ -13,17 +13,21 @@
         <link rel="stylesheet" href="../../../../css/estilos.css">
 
         <style>
-            body {
-                text-align: center;
+            h5 {
+                font-weight: bold;
+                margin-top: 30px;
+                margin-left: 50px;
             }
 
-            img {
-                height: 200px;
-                width: 350px;
-                margin: 10px;
-                border: 1px solid black;
+            p {
+                margin-left: 190px;
             }
 
+            h7 {
+                font-weight: bold;
+                margin-top: 30px;
+                margin-left: 120px;
+            }
         </style>
     </head>
 
@@ -75,11 +79,78 @@
             </nav>
 
             <main>
-                <div style="border: 1px black solid; margin: 10px; text-align: center;">
-                    <?php
+                <div style="border: 1px black solid; margin: 10px;">
+                
+                    <h5>1. Crea una página que:</h5>
+
+                        <br>
+
+                        <h7>a. Muestra el nombre del fichero que se está ejecutando.</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    echo basename(__FILE__);
+                                    echo "<br><br><br>";
+                                ?>
+                            </p>
 
 
-                    ?>
+                        <h7>b. Muestra la dirección IP del equipo desde el que estás accediendo.</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    echo $_SERVER["SERVER_ADDR"];
+                                    echo "<br><br><br>";
+                                ?>
+                            </p>
+
+                        <h7>c. Muestra el path donde se encuentra el fichero que se está ejecutando.</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    echo $_SERVER["SERVER_ADDR"] .  __FILE__;
+                                    echo "<br><br><br>";
+                                ?>
+                            </p>
+
+                        <h7>d. Muestra la fecha y hora actual formateada en 2022-09-4 19:17:18.</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    echo date("Y/m/d H:m:s", time());
+                                    echo "<br><br><br>";
+                                ?>  
+                            </p>
+  
+                        <h7>e. Muestra la fecha y hora actual en Oporto formateada en (día de la semana, día de mes de año, hh:mm:ss , Zona horaria).</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    date_default_timezone_set("Europe/Lisbon");
+                                    echo date("d/m/Y H:m:s", time()) . " " . date_default_timezone_get();
+                                    echo "<br><br><br>";
+                                ?>  
+                            </p>
+
+                        <h7>f. Inicializa y muestra una variable en timestamp y en fecha con formato dd/mm/yyyy de tu cumpleaños</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    $cumple = new DateTime("1998-04-30");
+                                    echo $cumple -> format('U = d/m/Y');
+                                    echo "<br><br><br>";
+                                ?>  
+                            </p> 
+
+                        <h7>g. Calcular la fecha y el día de la semana de dentro de 60 días.</h7>
+                            <p>
+                                <?php
+                                    echo "<br>";
+                                    date_default_timezone_set("Europe/Madrid");
+                                    echo date("d/m/Y l", strtotime("now + 60 day")) . " " . date_default_timezone_get();
+                                    echo "<br><br><br>";
+                                ?>  
+                            </p>
                 </div>
             </main>
 
