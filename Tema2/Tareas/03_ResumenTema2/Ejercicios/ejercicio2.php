@@ -13,17 +13,15 @@
         <link rel="stylesheet" href="../../../../css/estilos.css">
 
         <style>
-            body {
-                text-align: center;
+            h5 {
+                font-weight: bold;
+                margin-top: 30px;
+                margin-left: 50px;
             }
 
-            img {
-                height: 200px;
-                width: 350px;
-                margin: 10px;
-                border: 1px solid black;
+            p {
+                margin-left: 190px;
             }
-
         </style>
     </head>
 
@@ -75,11 +73,19 @@
             </nav>
 
             <main>
-                <div style="border: 1px black solid; margin: 10px; text-align: center;">
-                    <?php
+                <div style="border: 1px black solid; margin: 10px;">
+                    
+                    <h5>2. Crea una página a la que se le pase por url una variable con el nombre que quieras y muestre el valor de la variable, el tipo, si es numérico o no y si lo es, si es entero o float. (No hace falta usar if)</h5>
 
+                        <br>
 
-                    ?>
+                        <p>
+                            <?php
+                                $valor = $_GET["variable"];
+                                echo "<strong>Valor de la variable:</strong> " . $valor . "<br><strong>Tipo:</strong> " . gettype($valor) . "<br><strong>Númerico:</strong> " . is_numeric($valor) . "<br><strong>Entero:</strong> " . is_int($valor) . "<br><strong>Float:</strong> " . is_float($valor);
+                                echo "<br><br>";
+                            ?>
+                        </p>
                 </div>
             </main>
 

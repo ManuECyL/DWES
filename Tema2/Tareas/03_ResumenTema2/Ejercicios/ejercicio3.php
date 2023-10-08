@@ -12,19 +12,7 @@
         
         <link rel="stylesheet" href="../../../../css/estilos.css">
 
-        <style>
-            body {
-                text-align: center;
-            }
 
-            img {
-                height: 200px;
-                width: 350px;
-                margin: 10px;
-                border: 1px solid black;
-            }
-
-        </style>
     </head>
 
     <body>
@@ -55,7 +43,7 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio2.php">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php?variable=">Ejercicio 2</a>
                         </li>                      
                         </div>
 

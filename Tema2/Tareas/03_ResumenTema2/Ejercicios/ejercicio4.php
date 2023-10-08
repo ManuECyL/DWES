@@ -55,7 +55,7 @@
 
                         <div class="col-md-2 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./ejercicio2.php">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php?variable=">Ejercicio 2</a>
                         </li>                      
                         </div>
 
