@@ -39,6 +39,12 @@
                                 <a class="nav-link navTema" href="04_Figuras/index.php?filas=">Tarea 04</a>
                             </li>
                         </div>
+
+                        <div class="col-md-4 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="05_ArraysBasicos/index.php?filas=">Tarea 05</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>
