@@ -76,7 +76,20 @@
                         <p>
                             <?php
                                 $valor = $_GET["variable"];
-                                echo "<strong>Valor de la variable:</strong> " . $valor . "<br><strong>Tipo:</strong> " . gettype($valor) . "<br><strong>Númerico:</strong> " . is_numeric($valor) . "<br><strong>Entero:</strong> " . is_int($valor) . "<br><strong>Float:</strong> " . is_float($valor);
+                                echo "<strong>Valor de la variable:</strong> " . $valor . "<br><strong>Tipo:</strong> " . gettype($valor) . "<br>";
+                                
+                                echo "<strong>Númerico:</strong> "; 
+                                var_dump(is_numeric($valor));
+                                
+                                // Conversión de tipos automática. Si se pasa un entero por url is_int() será true, si es float is_float() será true.
+                                $valor = $valor + 0;
+
+                                echo "<br><strong>Entero:</strong> ";
+                                var_dump(is_int($valor));
+
+                                echo "<br><strong>Float:</strong> ";
+                                var_dump(is_float($valor));
+
                                 echo "<br><br>";
                             ?>
                         </p>

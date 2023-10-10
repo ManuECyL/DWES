@@ -75,8 +75,10 @@
 
                         <p>
                             <?php
-                                $dia = new DateTime($_GET['fecha']);
-                                // $dia = new DateTime::createFromFormat('d/m/Y',$_GET['fecha']);
+                                // Usar mktime $dia, $mes, $año 
+
+                                // $dia = new DateTime($_GET['fecha']);
+                                $dia = DateTime::createFromFormat('d/m/Y',$_GET['fecha']);
                                 echo $dia -> format('l');
                                 echo "<br><br>";
                             ?>
