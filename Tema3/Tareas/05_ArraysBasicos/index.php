@@ -62,35 +62,42 @@
                     <h3 style="text-align: center">Ejercicios de la Tarea 05</h3>
 
                     <h6>1. Escribe un programa que dado un array ordénalo y devuelve otro array sin que haya elementos repetidos
-                            <br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                            <br><br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                             datos = [2,5,9,7,6,3,1,5,4,8,3,2,6,9,3,5,1,2,3];</h6>
                         <p>
                             <?php
                                 $datos = [2,5,9,7,6,3,1,5,4,8,3,2,6,9,3,5,1,2,3];
 
-                                foreach ($datos as $value) {
-                                    $datosOrdenados[$value] = $datos[$value];
-                                    sort($datosOrdenados);
-                                }
+                                $datosNoRepetidos = array_unique($datos);
+                                sort($datosNoRepetidos);
+
+                                $datosOrdenados = new ArrayObject($datosNoRepetidos);
 
                                 echo "datosOrdenados = [";
 
-                                foreach ($datosOrdenados as $value) {
-                                    echo $value . ", ";
-                                }
-                                
-                                echo "]";
+                                foreach ($datosOrdenados as $key => $value) {
 
+                                    if ($key < count($datosOrdenados) - 1) {
+                                        echo $value . ", ";
+                                    
+                                    } else {
+                                        echo $value;
+                                    }
+                                }
+
+                                echo "]";
                             ?>
                         </p>   
             
                     <h6>2. Escribe un programa que dado un array devuelva la posición donde haya el valor 3 y cambie el valor por el número de la posición
-                            <br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                            <br><br>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
                             datos = [2,5,9,7,6,3,1,5,4,8,3,2,6,9,3,5,1,2,3];
                     </h6>
                         <p>
                             <?php
-      
+                                $datos = [2,5,9,7,6,3,1,5,4,8,3,2,6,9,3,5,1,2,3];
+
+
                             ?>
                         </p>
 
@@ -98,7 +105,56 @@
                         <div id="divImagen"><img src="./imagenes/Tarea05_Ejercicio3.png" alt="Tarea05_Ejercicio3.png"></div>
                         <br><br>                        
                         <p>
+                            <?php
 
+                                /* 
+                                          1  1
+                                    array[i][j] = array[i - 1][j] + array[i][j - 1];
+                                
+                                */
+
+                                $tabla = array();
+
+                                for ($i = 1; $i <= 10; $i++) { 
+                                    $tabla[$i] = array();
+
+                                    for ($j = 1; $j <= 10; $j++) { 
+                                        $tabla[$i][$j] = $i * $j;
+                                    }
+                                }
+
+                                print_r($tabla);
+                            ?>
+
+                            <table border = ""1>
+                                <thead>
+                                    <?php
+                                        echo "<th>Tabla</th>";
+
+                                        // Valores fila superior
+                                        foreach ($tabla as $key => $value) {
+                                            echo "<th>$key</th>";
+                                        }
+                                    ?>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                        // Valores 1ª columna
+                                        foreach ($tabla as $key => $value) {
+                                            echo "<tr>";
+                                                echo "<td>$key</td>";
+
+                                                // Recorrer el value
+                                                foreach ($value as $resultado) {
+                                                    echo "<td>$resultado</td>";
+                                                }
+
+                                            echo "</tr>";
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
                         </p>
                 </div>
             </main>
