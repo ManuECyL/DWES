@@ -20,6 +20,9 @@
 
             .verde {
                 background-color: green;
+                padding: 5px;
+                padding-left: 33px;
+                padding-right: 33px;
             }
 
             .amarillo {
@@ -33,6 +36,7 @@
             span {
                 display: inline;
                 padding: 10px;
+                margin: 1px;
             }
 
             td {
@@ -180,22 +184,24 @@
 
                                             echo "<td>";
 
+                                            $cont = 0;
+
                                             foreach ($resultado as $estadisticas => $marcador) {
 
-                                                $cont = 0;
-
-                                                if ($cont = 0) {
-                                                    echo "<p>$marcador</p>";
+                                                if ($cont == 0) {
+                                                    echo "<p><span class=verde>$marcador</span></p>";
                                                 
-                                                } elseif ($cont = 1) {
-                                                    echo "<p>$marcador</p>";
+                                                } elseif ($cont == 1){
+                                                    echo "<span class=rojo>$marcador</span>";
                                                 
-                                                } elseif ($cont = 2) {
-                                                    echo "<p>$marcador</p>";
+                                                } elseif ($cont == 2) {
+                                                    echo "<span class=amarillo>$marcador</span>";
                                                 
-                                                } else {
-                                                    echo "<p>$marcador</p>";
-                                                }
+                                                } elseif ($cont == 3) {
+                                                    echo "<span class=naranja>$marcador</span>";
+                                                }   
+                                                
+                                                $cont ++;
                                             }
 
                                             echo "</td>";
