@@ -249,22 +249,27 @@
                                 foreach ($liga as $equipoC => $partidos) {
                                     
                                     $ganado = 0;
+                                    $golesF = 0;
+                                    $golesC = 0;
 
                                     echo "<tr>";
 
                                     echo "<th>$equipoC</th>";
                                     
+                                // 1ª Columna
                                     echo "<td>";
+
                                         foreach ($partidos as $equipoRival => $resultado) {
 
                                             $cont = 0;
-                                            $golesF = 0;
-                                            $golesC = 0;
 
                                             foreach ($resultado as $estadisticas => $marcador) {
                                                 
                                                 if ($cont == 0) {
 
+                                                    $golesF += $marcador[0];
+                                                    $golesC += $marcador[2];
+                                                    
                                                     if (($marcador[0] > $marcador[2])) {
                                                         $ganado += 3;
                                                     
@@ -272,16 +277,26 @@
                                                         $ganado += 1;
                                                     }
                                                 }
-                                                // $golesF = $marcador[0];
-                                                // $golesC = $marcador[2];
 
                                                 $cont ++;
                                             }
                                         }
 
-                                    echo $ganado;
-                                        // echo $golesF;
-                                        // echo $golesC;
+                                        echo $ganado;
+
+                                    echo "</td>";
+
+                                // 2ª Columna
+                                    echo "<td>";
+
+                                        echo $golesF;
+
+                                    echo "</td>";
+
+                                // 3ª Columna
+                                    echo "<td>";
+
+                                        echo $golesC;
 
                                     echo "</td>";
 
