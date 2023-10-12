@@ -42,7 +42,7 @@
 
                         <div class="col-md-3 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="05_ArraysBasicos/index.php?filas=">Tarea 05</a>
+                                <a class="nav-link navTema" href="05_ArraysBasicos/index.php?tamaño=">Tarea 05</a>
                             </li>
                         </div>
 

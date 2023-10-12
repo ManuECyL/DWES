@@ -118,4 +118,60 @@
             next($ciclos);
         }
         echo "</pre>";
-?>
+
+
+
+
+
+
+    // EXPLICACIÓN EJERCICIO 3 TAREA 05
+        /* 
+                    1  1
+            array[i][j] = array[i - 1][j] + array[i][j - 1];
+        
+        */
+
+        $tabla = array();
+
+        for ($i = 1; $i <= 10; $i++) { 
+            $tabla[$i] = array();
+
+            for ($j = 1; $j <= 10; $j++) { 
+                $tabla[$i][$j] = $i * $j;
+            }
+        }
+
+        print_r($tabla);
+
+    ?>
+
+    <table border = ""1>
+        <thead>
+            <?php
+                echo "<th>Tabla</th>";
+
+                // Valores fila superior
+                foreach ($tabla as $key => $value) {
+                    echo "<th>$key</th>";
+                }
+            ?>
+        </thead>
+
+        <tbody>
+            <?php
+                // Valores 1ª columna
+                foreach ($tabla as $key => $value) {
+                    echo "<tr>";
+                        echo "<td>$key</td>";
+
+                        // Recorrer el value
+                        foreach ($value as $resultado) {
+                            echo "<td>$resultado</td>";
+                        }
+
+                    echo "</tr>";
+                }
+            ?>
+        </tbody>
+    </table>
+           

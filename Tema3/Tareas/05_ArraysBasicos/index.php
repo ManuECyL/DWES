@@ -97,7 +97,33 @@
                             <?php
                                 $datos = [2,5,9,7,6,3,1,5,4,8,3,2,6,9,3,5,1,2,3];
 
+                                echo "datosModificados = [";
 
+                                foreach ($datos as $key => $value) {
+                                
+                                    if ($key < count($datos) - 1) {
+                                        
+                                        if ($value == 3) {
+                                            $value = $key;
+                                            echo $value . ', ';
+                                        
+                                        } else {
+                                            echo $value . ', ';
+                                        }
+                                    
+                                    } else {
+                                        if ($value == 3) {
+                                            $value = $key;
+                                            echo $value;
+                                        
+                                        } else {
+                                            echo $value;
+                                        }
+                                    }
+
+                                }
+
+                                echo "]";
                             ?>
                         </p>
 
@@ -105,34 +131,27 @@
                         <div id="divImagen"><img src="./imagenes/Tarea05_Ejercicio3.png" alt="Tarea05_Ejercicio3.png"></div>
                         <br><br>                        
                         <p>
-                            <?php
-
-                                /* 
-                                          1  1
-                                    array[i][j] = array[i - 1][j] + array[i][j - 1];
-                                
-                                */
-
-                                $tabla = array();
-
-                                for ($i = 1; $i <= 10; $i++) { 
-                                    $tabla[$i] = array();
-
-                                    for ($j = 1; $j <= 10; $j++) { 
-                                        $tabla[$i][$j] = $i * $j;
-                                    }
-                                }
-
-                                print_r($tabla);
-                            ?>
-
                             <table border = ""1>
                                 <thead>
                                     <?php
-                                        echo "<th>Tabla</th>";
+
+                                        $matriz = array();
+
+                                        for ($i = 0; $i <= $_GET["tamaño"]; $i++) { 
+                                            
+                                            $matriz[$i] = array();
+
+                                            for ($j = 0; $j <= $_GET["tamaño"]; $j++) { 
+
+                                                if ($i = 0 || $j = 0) {
+                                                    
+                                                }
+                                                // $matriz[$i][$j] = $matriz[$i - 1][$j] + $matriz[$i][$j - 1];
+                                            }
+                                        }
 
                                         // Valores fila superior
-                                        foreach ($tabla as $key => $value) {
+                                        foreach ($matriz as $key => $value) {
                                             echo "<th>$key</th>";
                                         }
                                     ?>
@@ -141,7 +160,7 @@
                                 <tbody>
                                     <?php
                                         // Valores 1ª columna
-                                        foreach ($tabla as $key => $value) {
+                                        foreach ($matriz as $key => $value) {
                                             echo "<tr>";
                                                 echo "<td>$key</td>";
 
