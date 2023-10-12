@@ -218,12 +218,74 @@
                                         }
 
                                     echo "</tr>";
-                                    
                                 }
 
                             ?>
                         </tbody>
                     </table>
+
+                    <br><br>
+
+                    <?php
+                        $clasificacion = array("Puntos", "Goles a favor", "Goles en contra")
+                    ?>
+
+                    <table border="1">
+                        <thead>
+                            <?php
+
+                                echo "<th id='equi'>Equipos</th>";
+                        
+                                // Valores fila superior
+                                foreach ($clasificacion as $clave) {
+                                    echo "<th>$clave</th>";
+                                }
+                            ?>
+                        </thead>
+
+                        <tbody>
+                            <?php
+                                // Valores 1ª columna
+                                foreach ($liga as $equipoC => $partidos) {
+                                    
+                                    $ganado = 0;
+
+                                    echo "<tr>";
+
+                                    echo "<th>$equipoC</th>";
+                                    
+                                    echo "<td>";
+                                        foreach ($partidos as $equipoRival => $resultado) {
+
+                                            $cont = 0;
+                                            $golesF = 0;
+                                            $golesC = 0;
+
+                                            foreach ($resultado as $estadisticas => $marcador) {
+                                                
+                                                if ($cont == 0 && ($marcador[0] > $marcador[2])) {
+                                                    $ganado += 3;
+                                                }
+                                                
+                                                $golesF += int($marcador[0]);
+                                                $golesC += int($marcador[2]);
+
+                                                $cont ++;
+                                            }
+                                        }
+
+                                        echo $ganado;
+                                        // echo $golesF;
+                                        // echo $golesC;
+
+                                        echo "</td>";
+
+                                    echo "</tr>";
+                                }
+                            ?>
+                        </tbody>
+                    </table>
+
                 </p>
 
             </main>
