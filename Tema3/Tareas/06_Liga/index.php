@@ -153,7 +153,7 @@
                                         "Resultado" => "3-1", "Roja" => 0, "Amarilla" => 0, "Penalti" => 0
                                     ),
                                     "Avila" => array(
-                                        "Resultado" => "1-2", "Roja" => 1, "Amarilla" => 1, "Penalti" => 2
+                                        "Resultado" => "1-1", "Roja" => 1, "Amarilla" => 1, "Penalti" => 2
                                     )
                                 ),
                             )
@@ -263,22 +263,27 @@
 
                                             foreach ($resultado as $estadisticas => $marcador) {
                                                 
-                                                if ($cont == 0 && ($marcador[0] > $marcador[2])) {
-                                                    $ganado += 3;
+                                                if ($cont == 0) {
+
+                                                    if (($marcador[0] > $marcador[2])) {
+                                                        $ganado += 3;
+                                                    
+                                                    } elseif (($marcador[0] == $marcador[2])) {
+                                                        $ganado += 1;
+                                                    }
                                                 }
-                                                
-                                                $golesF += int($marcador[0]);
-                                                $golesC += int($marcador[2]);
+                                                // $golesF = $marcador[0];
+                                                // $golesC = $marcador[2];
 
                                                 $cont ++;
                                             }
                                         }
 
-                                        echo $ganado;
+                                    echo $ganado;
                                         // echo $golesF;
                                         // echo $golesC;
 
-                                        echo "</td>";
+                                    echo "</td>";
 
                                     echo "</tr>";
                                 }
