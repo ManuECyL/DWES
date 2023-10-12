@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
@@ -19,8 +19,8 @@
             }
 
             .verde {
-                background-color: green;
-                padding: 5px;
+                background-color: rgb(102, 209, 102);
+                padding: 1px;
                 padding-left: 33px;
                 padding-right: 33px;
             }
@@ -33,20 +33,30 @@
                 background-color: orange;
             }
 
+            #equi {
+                background-color: red;
+            }
+
             span {
                 display: inline;
                 padding: 10px;
                 margin: 1px;
             }
 
+            table {
+                margin: auto;
+            }
+
             td {
-                padding: 10px;
+                padding: 16px;
                 text-align: center;
+                border: gray 1px solid;
             }
 
             th {
                 padding: 10px;
                 text-align: center;
+                border: gray 1px solid;
             }
 
             thead td {
@@ -153,7 +163,7 @@
                         <thead>
                             <?php
 
-                                echo "<th>Equipos</th>";
+                                echo "<th id='equi'>Equipos</th>";
 
                                 $locales = array();
                         
@@ -162,8 +172,6 @@
                                     echo "<th>$equipoF</th>";
                                     array_push($locales, $equipoF);
                                 }
-                                
-                                print_r($locales);
                             ?>
                         </thead>
 
