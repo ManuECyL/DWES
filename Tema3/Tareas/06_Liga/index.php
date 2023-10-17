@@ -66,10 +66,11 @@
             .equi {
                 font-weight: bold;
             }
-
+/* 
             body {
                 margin: 150px;
-            }
+            } 
+*/
 
             p {
                 text-align: center;
@@ -107,7 +108,7 @@
             </nav>
 
             <main>
-
+                                                    <!-- EJERCICIO 1 -->
                 <p>
                     <?php
                         $liga =
@@ -226,8 +227,63 @@
 
                     <br><br>
 
+
+                                            <!-- EJERCICIO 2 -->
+
                     <?php
-                        $clasificacion = array("Puntos", "Goles a favor", "Goles en contra")
+                        $clasificacion = array(
+                            "Zamora" => array("Puntos" => 0, "GF" => 0, "GC" => 0),
+                            "Salamanca" => array("Puntos" => 0, "GF" => 0, "GC" => 0),
+                            "Avila" => array("Puntos" => 0, "GF" => 0, "GC" => 0),
+                            "Valladolid" => array("Puntos" => 0, "GF" => 0, "GC" => 0)
+                        );
+
+                        // Valores 1ª columna
+                        foreach ($liga as $equipoLocal => $partidos) {
+                                
+                            foreach ($partidos as $equipoRival => $partido) {
+                                
+                                $resultado = explode('-', $partido["Resultado"]);
+                                
+                                if ($resultado[0] > $resultado[1]) {
+
+                                    if (!isset($clasificacion[$equipoLocal]["Puntos"])) {
+                                        $clasificacion[$equipoLocal]["Puntos"] = 3;    
+                                    }
+
+                                    $clasificacion[$equipoLocal]["Puntos"] += 3;
+                                
+                                } elseif ($resultado[0] < $resultado[1]) {
+
+                                    if (!isset($clasificacion[$equipoRival]["Puntos"])) {
+                                        $clasificacion[$equipoRival]["Puntos"] = 3;   
+                                    }
+
+                                    $clasificacion[$equipoRival]["Puntos"] += 3;
+                                
+                                } else {
+
+                                    if (!isset($clasificacion[$equipoLocal]["Puntos"])) {
+                                        $clasificacion[$equipoLocal]["Puntos"] = 1;   
+                                    }
+
+                                    $clasificacion[$equipoLocal]["Puntos"] += 1;
+
+                                    if (!isset($clasificacion[$equipoRival]["Puntos"])) {
+                                        $clasificacion[$equipoRival]["Puntos"] = 1;
+                                    }
+
+                                    $clasificacion[$equipoRival]["Puntos"] += 1;
+                                }
+
+                                $clasificacion[$equipoLocal]["GF"] += $resultado[0];
+                                $clasificacion[$equipoRival]["GF"] += $resultado[1];
+
+                                $clasificacion[$equipoLocal]["GC"] += $resultado[1];
+                                $clasificacion[$equipoRival]["GC"] += $resultado[0];
+                            }
+                        }
+
                     ?>
 
                     <table border="1">
@@ -236,72 +292,29 @@
 
                                 echo "<th id='equi'>Equipos</th>";
                         
-                                // Valores fila superior
-                                foreach ($clasificacion as $clave) {
-                                    echo "<th>$clave</th>";
-                                }
+                            // Valores fila superior
+                                echo "<th>Puntos</th>";
+                                echo "<th>Goles a favor</th>";
+                                echo "<th>Goles en contra</th>";
                             ?>
                         </thead>
 
                         <tbody>
                             <?php
+
                                 // Valores 1ª columna
-                                foreach ($liga as $equipoC => $partidos) {
-                                    
-                                    $ganado = 0;
-                                    $golesF = 0;
-                                    $golesC = 0;
+                                foreach ($clasificacion as $equipoLocal => $partidos) {
 
                                     echo "<tr>";
 
-                                    echo "<th>$equipoC</th>";
-                                    
-                                // 1ª Columna
-                                    echo "<td>";
-
-                                        foreach ($partidos as $equipoRival => $resultado) {
-
-                                            $cont = 0;
-
-                                            foreach ($resultado as $estadisticas => $marcador) {
-                                                
-                                                if ($cont == 0) {
-
-                                                    $golesF += $marcador[0];
-                                                    $golesC += $marcador[2];
-                                                    
-                                                    if (($marcador[0] > $marcador[2])) {
-                                                        $ganado += 3;
-                                                    
-                                                    } elseif (($marcador[0] == $marcador[2])) {
-                                                        $ganado += 1;
-                                                    }
-                                                }
-
-                                                $cont ++;
-                                            }
-                                        }
-
-                                        echo $ganado;
-
-                                    echo "</td>";
-
-                                // 2ª Columna
-                                    echo "<td>";
-
-                                        echo $golesF;
-
-                                    echo "</td>";
-
-                                // 3ª Columna
-                                    echo "<td>";
-
-                                        echo $golesC;
-
-                                    echo "</td>";
-
+                                        echo "<th>$equipoLocal</th>";
+                                        
+                                            foreach ($partidos as $equipoRival => $partido) {
+                                                print_r("<td>" . $partido . "</td>");
+                                            } 
+           
                                     echo "</tr>";
-                                }
+                                }                      
                             ?>
                         </tbody>
                     </table>
@@ -321,4 +334,3 @@
     </body>
 
 </html>
-
