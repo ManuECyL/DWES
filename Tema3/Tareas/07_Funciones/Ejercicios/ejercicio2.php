@@ -1,18 +1,24 @@
 <?php
 
-    function numAleatorios($array, $min, $max, $fichero, $numeros, $repetirse) {
+    function numAleatorios(&$array, $min, $max, $numeros, &$repetirse) {
 
         for ($i = 0; $i < $numeros; $i++) { 
             
             $num = rand($min, $max);
 
-            
-            
+            array_push($array, $num);
+
+            // echo $num . "\n";
+
+            // if ($repetirse && (array_values($array) != $num)) {
+            //     array_push($array, $num);
+
+            //     print_r($array);
+
+            // }
         }    
-        
+
+        print_r($array);
     }
 
-// Ver Código del fichero actual
-    echo "<center><a href='http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'] . "' target='_blank'>Ver Código PHP</a></center>";
 ?>  
-  

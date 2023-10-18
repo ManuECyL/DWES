@@ -35,6 +35,8 @@
             
             <?php
                 include("./Ejercicios/ejercicio1.php");
+                include("./Ejercicios/ejercicio2.php");
+
                 include("../../../html/header.php");
             ?>
 
@@ -126,16 +128,21 @@
                         </p>
 
                         <p>
-                            d. self() Devuelve el fichero actual.
+                            d. Número de números generados.
                         </p>
 
                         <p>
-                            e. Número de números generados.
+                            e. True si pueden repetirse/ False si no pueden repetirse.
                         </p>
+                        
+                        <?php
+                            $array = array();
+                            $repetirse = false;
 
-                        <p>
-                            f. True si puedes repetirse/ False si no pueden repetirse.
-                        </p>                           
+                            numAleatorios($array, 0, 15, 10, $repetirse);
+
+                            
+                        ?>
                 </div>
             </main>
 
