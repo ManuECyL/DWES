@@ -22,10 +22,9 @@
     }
 
 
-    function añadirAlArray($array, $value) {
+    function añadirAlArray(&$array, $value) {
         
         $ultimo = count($array);
-
         $array[$ultimo] = $value;
     }
 

@@ -10,7 +10,8 @@
     $contador = array();
     
     añadirAlArray($contador, "uno");
-    
-    print_r($contador);
-    
+    añadirAlArray($contador, "dos");
+    añadirAlArray($contador, "tres");
+
+    print_r($contador); 
 ?>

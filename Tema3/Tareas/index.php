@@ -51,6 +51,12 @@
                                 <a class="nav-link navTema" href="06_Liga/index.php">Tarea 06</a>
                             </li>
                         </div>
+
+                        <div class="col-md-3 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="07_Funciones/index.php">Tarea 07</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>
