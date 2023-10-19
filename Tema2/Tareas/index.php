@@ -49,6 +49,8 @@
                 </div>
             </nav>
 
+            <div class="divImagen"></div>
+
             <?php
                 include("../../html/footer.html");
             ?>

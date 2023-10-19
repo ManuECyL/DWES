@@ -74,9 +74,7 @@
             </nav>
 
         <main>
-            <div class="divImagen">
-                
-            </div>
+            <div class="divImagen"></div>
         </main>
 
             <?php

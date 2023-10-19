@@ -24,9 +24,7 @@
 
         <!-- MAIN -->
         <main>
-            <div>
-                              
-            </div>
+            <div class="divImagen"></div>
         </main>
 
         <?php

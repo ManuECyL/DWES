@@ -17,9 +17,14 @@
     <body>
         <div class="container-fluid">
             
-        <?php
+            <?php
                 include("../html/header.php");
                 include("../html/navTemas.html");
+            ?>
+
+            <div class="divImagen"></div>
+
+            <?php
                 include("../html/footer.html");
             ?>
         </div>
