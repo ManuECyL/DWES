@@ -55,7 +55,7 @@
         -->
 
                 <!-- <form action="procesa.php" method="post" enctype="multipart/form-data" name="formulario1" target="_blank"> -->
-                <form action="" method="post" name="formulario1" enctype="multipart/form-data">
+                <form action="" method="get" name="formulario1" enctype="multipart/form-data">
 
                     <label for="nombre">Nombre: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value=<?php recuerda('nombre')?>></label>
                     <span class="error">
