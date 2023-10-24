@@ -28,21 +28,27 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md-3 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tema 3</a>
                             </li>
                         </div>
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md-3 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="Operadores.php">Operadores</a>
                             </li>
                         </div>
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md-3 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="Arrays.php">Arrays</a>
+                            </li>
+                        </div>
+
+                        <div class="col-md-3 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Formularios/formulario.php">Formularios</a>
                             </li>
                         </div>
                     </ul>
