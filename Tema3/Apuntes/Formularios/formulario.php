@@ -202,7 +202,7 @@
                                 <input type="submit" value="Enviar" name="enviar">
                                 <input type="submit" value="Borrar" name="borrar">
 
-                                <br><br>
+                                <br><br>  
                             </form>
 
                     <?php // Abrir php
