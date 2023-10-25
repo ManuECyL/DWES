@@ -28,33 +28,39 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-2 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tema 3</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-2 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="04_Figuras/index.php?filas=">Tarea 04</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-2 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="05_ArraysBasicos/index.php?tamaño=">Tarea 05</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-2 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="06_Liga/index.php">Tarea 06</a>
                             </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md-2 col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="07_Funciones/index.php">Tarea 07</a>
+                            </li>
+                        </div>
+
+                        <div class="col-md-2 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="08_Formularios/index.php">Tarea 08</a>
                             </li>
                         </div>
                     </ul>

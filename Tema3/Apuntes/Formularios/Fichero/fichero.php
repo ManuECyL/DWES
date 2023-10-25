@@ -54,7 +54,7 @@
                     <br><br>
 
                     <form action="subir.php" method="post" enctype="multipart/form-data">
-                        <input type="file" name="fichero" id="">
+                        <input type="file" name="fichero[]" id="" multiple>
                         <input type="submit" value="Enviar">
                     </form> 
                     
