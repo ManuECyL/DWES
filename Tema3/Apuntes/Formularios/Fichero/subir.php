@@ -7,6 +7,14 @@
         $ruta = '/var/www/html/DWES/Tema3/Apuntes/Formularios/Fichero/';
         $ruta .= basename($_FILES['fichero']['name']);
 
-        $temp_name = $_FILES["pictures"]["tmp_name"][$key];
+        // $temp_name = $_FILES["pictures"]["tmp_name"][$key];
+
+        if (move_uploaded_file($_FILES['fichero']['tmp_name'], $ruta)) {
+            echo "Archivo Subido";
+        
+        } else {
+            echo "Error al subir el archivo";
+        }
+
     }
 ?>

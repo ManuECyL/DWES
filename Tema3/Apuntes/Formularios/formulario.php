@@ -45,7 +45,7 @@
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Apuntes Tema 3</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Apuntes Tema 3</a>
                             </li>
                         </div>
                     </ul>
@@ -54,6 +54,8 @@
 
             <main>
                 <div style="border: 1px black solid; margin: 10px; text-align: center;">
+
+                    <br>
 
                     <h1>FORMULARIO BÁSICO</h1>
 

@@ -51,6 +51,12 @@
                                 <a class="nav-link navTema" href="Formularios/formulario.php">Formularios</a>
                             </li>
                         </div>
+
+                        <div class="col-md-3 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Formularios/Fichero/fichero.php">Subir Fichero</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>
