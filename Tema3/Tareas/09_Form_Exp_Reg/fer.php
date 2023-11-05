@@ -94,7 +94,7 @@
                                 <label for="apellidos">Apellidos: <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" value=<?php recuerda('apellidos')?>></label>
                                 <span class="error">
                                     <?php            
-                                        errores($errores,'apellido');
+                                        errores($errores,'apellidos');
                                     ?>
                                 </span>
 
@@ -104,18 +104,23 @@
                                 <label for="contraseña">Contraseña: <input type="password" name="contraseña" id="contraseña" placeholder="Contraseña" value=<?php recuerda('contraseña')?>></label>
                                 <span class="error">
                                     <?php            
-                                        errores($errores,'numérico');
+                                        errores($errores,'contraseña');
                                     ?>
                                 </span>
 
                                 <br><br>
 
                                 <label for="r_contraseña">Repetir Contraseña: <input type="password" name="r_contraseña" id="r_contraseña" placeholder="Repetir Contraseña" value=<?php recuerda('r_contraseña')?>></label>
+                                <span class="error">
+                                    <?php            
+                                        errores($errores,'r_contraseña');
+                                    ?>
+                                </span>
 
                                 <br><br>
 
                                 <!-- FECHA -->
-                                <label for="fecha">Fecha: <input type="text" name="fecha" id="fecha" value=<?php recuerda('fecha')?>></label>
+                                <label for="fecha">Fecha: <input type="text" name="fecha" id="fecha" placeholder="01/11/2023" value=<?php recuerda('fecha')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'fecha');

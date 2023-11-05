@@ -16,35 +16,6 @@
         
         return false;
     }
-
-
-    function radioVacio($name) {
-
-        if (!isset($_REQUEST[$name])) 
-            return true;
-    
-        return false;
-    }
-
-
-    function selectVacio($name) {
-
-        if (isset($_REQUEST[$name]) && $_REQUEST[$name] != 0) 
-            return false;
-    
-        return true;
-    }
-
-
-    function rangoNumerico($name) {
-
-        if ($_REQUEST[$name] >= 0 && $_REQUEST[$name] <= 100) {
-            return true;
-        }
-
-        return false;
-    }
-
     
     function mayorEdad($name) {
 
@@ -53,19 +24,6 @@
         // }
 
         // return false;
-    }
-
-
-    function generaChecks($name) {
-
-        for ($i = 1; $i <= 6; $i++) { 
-            echo "Check" . $i;
-        }
-    }
-
-
-    function rangoChecks($name) {
-
     }
 
 
@@ -91,37 +49,13 @@
         }
     }
 
+    function comprobarExpresionRegular($exp, $name) {
 
-    function recuerdaRadio($name, $value) {
-
-        if (enviado() && isset($_REQUEST[$name]) && $_REQUEST[$name] == $value) {
-            echo 'checked';            
-        
-        } elseif (isset($_REQUEST['borrar'])) {
-            echo '';
+        if (preg_match($exp, $name)) {
+            return true;
         }
-    }
 
-
-    function recuerdaCheck($name, $value) {
-
-        if (enviado() && isset($_REQUEST[$name]) && in_array($value, $_REQUEST[$name])) {
-            echo 'checked';            
-        
-        } elseif (isset($_REQUEST['borrar'])) {
-            echo '';
-        }
-    }  
-
-
-    function recuerdaSelect($name, $value) {
-
-        if (enviado() && isset($_REQUEST[$name]) && $_REQUEST[$name] == $value) {
-            echo 'selected';            
-        
-        } elseif (isset($_REQUEST['borrar'])) {
-            echo '';
-        }
+        return false;
     }
 
     
@@ -129,46 +63,40 @@
 
         if (textVacio('nombre')) {
             $errores['nombre'] = "Nombre Vacío";
+
+            $exp_nombre = '/^[a-Z]{3,}/';
+
+            if (comprobarExpresionRegular($exp_nombre, 'nombre')) {
+                
+            }
         }
 
-        if (textVacio('apellido')) {
-            $errores['apellido'] = "Apellido Vacío";
-        }
-
-        if (textVacio('numérico')) {
-            $errores['numérico'] = "Numérico Vacío";
-        }
-
-        if (textVacio('fecha')) {
-            $errores['fecha'] = "Debe seleccionar una fecha";
-        }
-
-        if (radioVacio('radio')) {
-            $errores['radio'] = "Debe seleccionar una opción";
-        }
-
-        if (selectVacio('select')) {
-            $errores['select'] = "Debe seleccionar una opción";
-        }
-
-        if (radioVacio('checks')) {
-            $errores['checks'] = "Debe seleccionar al menos una opción y como máximo 3";
-        }
-
-        if (textVacio('telefono')) {
-            $errores['telefono'] = "Teléfono Vacío";
-        }
-
-        if (textVacio('email')) {
-            $errores['email'] = "Email Vacío";
+        if (textVacio('apellidos')) {
+            $errores['apellidos'] = "Apellidos Vacío";
         }
 
         if (textVacio('contraseña')) {
             $errores['contraseña'] = "Contraseña Vacía";
         }
 
+        if (textVacio('r_contraseña')) {
+            $errores['r_contraseña'] = "Repetir Contraseña Vacía";
+        }
+
+        if (textVacio('fecha')) {
+            $errores['fecha'] = "Debe seleccionar una fecha";
+        }
+
+        if (textVacio('dni')) {
+            $errores['dni'] = "DNI Vacío";
+        }
+
+        if (textVacio('email')) {
+            $errores['email'] = "Correo Electrónico Vacío";
+        }
+
         if (textVacio('fichero')) {
-            $errores['fichero'] = "Fichero Vacío";
+            $errores['fichero'] = "Imagen Vacía";
         }
 
         if (count($errores) == 0) {
