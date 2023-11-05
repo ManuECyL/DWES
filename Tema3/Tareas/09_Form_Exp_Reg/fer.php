@@ -120,7 +120,7 @@
                                 <br><br>
 
                                 <!-- FECHA -->
-                                <label for="fecha">Fecha: <input type="text" name="fecha" id="fecha" placeholder="01/11/2023" value=<?php recuerda('fecha')?>></label>
+                                <label for="fecha">Fecha: <input type="text" name="fecha" id="fecha" placeholder="01-11-2023" value=<?php recuerda('fecha')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'fecha');
