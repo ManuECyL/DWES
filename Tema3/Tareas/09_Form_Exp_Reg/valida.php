@@ -35,6 +35,10 @@
     }
 
 
+    function dniValido($name) {
+
+    }
+
     // function imagen($name) {
 
     // }
@@ -95,19 +99,31 @@
         if (textVacio('fecha')) {
             $errores['fecha'] = "Debe seleccionar una fecha";
         
-        } elseif (!comprobarExpresionRegular($exp_fecha = '/^\d{2}\-\d{2}\-\d{4}$/', 'contraseña')) {
-            $errores['contraseña'] = "Formato de fecha incorrecto: dd-mm-yyyy";
+        } elseif (!comprobarExpresionRegular($exp_fecha = '/^\d{2}\-\d{2}\-\d{4}$/', 'fecha')) {
+            $errores['fecha'] = "Formato de fecha incorrecto: dd-mm-yyyy";
         
-        } elseif (!mayorEdad('fecha'))
+        } elseif (!mayorEdad('fecha')) {
+            $errores['fecha'] = "No es mayor de edad";
+        }
 
     // DNI  
         if (textVacio('dni')) {
             $errores['dni'] = "DNI Vacío";
+
+        } elseif (!comprobarExpresionRegular($exp_dni = '/^\d{8}[A-Z]{1}$/', 'dni')) {
+            $errores['dni'] = "El DNI debe contener 8 dígitos y una letra";
+        
+        } elseif (!dniValido('dni')) {
+            $errores['dni'] = "El DNI no es válido";
         }
 
     // EMAIL
         if (textVacio('email')) {
             $errores['email'] = "Correo Electrónico Vacío";
+
+        } elseif (!comprobarExpresionRegular($exp_email = '/^$/', 'email')) {
+            $errores['email'] = "El DNI debe contener 8 dígitos y una letra";
+        
         }
 
     // FICHERO IMAGEN
