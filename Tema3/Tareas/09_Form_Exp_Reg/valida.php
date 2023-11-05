@@ -51,7 +51,7 @@
 
     function comprobarExpresionRegular($exp, $name) {
 
-        if (preg_match($exp, $name)) {
+        if (preg_match($exp, $_REQUEST[$name])) {
             return true;
         }
 
@@ -63,12 +63,9 @@
 
         if (textVacio('nombre')) {
             $errores['nombre'] = "Nombre Vacío";
-
-            $exp_nombre = '/^[a-Z]{3,}/';
-
-            if (comprobarExpresionRegular($exp_nombre, 'nombre')) {
-                
-            }
+     
+        } elseif (!comprobarExpresionRegular($exp_nombre = '/^[a-zA-Z]{3,}/', 'nombre')) {
+            $errores['nombre'] = "Mínimo 3 caracteres";
         }
 
         if (textVacio('apellidos')) {
