@@ -27,7 +27,15 @@
     
     function mayorEdad($name) {
 
-        if (($_REQUEST[$name])) {
+        $fecha = new Datetime($_REQUEST[$name]);
+        $hoy = new Datetime();
+
+        date_format($fecha, 'd-m-Y');
+        date_format($hoy, 'd-m-Y');
+
+        $años = $hoy -> diff($fecha);
+        
+        if (($años -> y) >= 18) {
             return true;
         }
 
@@ -37,11 +45,26 @@
 
     function dniValido($name) {
 
+        $dni = $_REQUEST[$name];
+
+        $letra = substr($dni, -1);
+        $numeros = substr($dni, 0, -1);
+
+        $letras= "TRWAGMYFPDXBNJZSQVHLCKEO";
+        $valor = $numeros % 23;
+
+        $letraNif= substr($letras, $valor, 1);
+
+        if ($letraNif == $letra) {
+            return true;
+        }
+
+        return false;
     }
 
-    // function imagen($name) {
+    function formatoImg($name) {
 
-    // }
+    }
 
 
     function errores($errores, $name) {
@@ -84,14 +107,14 @@
         if (textVacio('contraseña')) {
             $errores['contraseña'] = "Contraseña Vacía";
 
-        } elseif (!comprobarExpresionRegular($exp_contraseña = '/^(?=\w*[a-z])(?=\w*[A-Z])(?=\w*\d)[a-zA-Z\d]$/', 'contraseña')) {
+        } elseif (!comprobarExpresionRegular($exp_contraseña = '/^?[a-z]+?[A-Z]+?\d+$/', 'contraseña')) {
             $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
         }
 
         if (textVacio('r_contraseña')) {
             $errores['r_contraseña'] = "Repetir Contraseña Vacía";
         
-        } elseif (!strcmp($_REQUEST['contraseña'], $_REQUEST['r_contraseña'])) {
+        } elseif (strcmp($_REQUEST['contraseña'], $_REQUEST['r_contraseña']) != 0) {
             $errores['r_contraseña'] = "Las contraseñas no coinciden";
         }
 
@@ -121,14 +144,17 @@
         if (textVacio('email')) {
             $errores['email'] = "Correo Electrónico Vacío";
 
-        } elseif (!comprobarExpresionRegular($exp_email = '/^$/', 'email')) {
-            $errores['email'] = "El DNI debe contener 8 dígitos y una letra";
+        } elseif (!comprobarExpresionRegular($exp_email = '/^\w+\@\w+\.\w{2,}$/', 'email')) {
+            $errores['email'] = "Formato de email incorrecto";
         
         }
 
     // FICHERO IMAGEN
         if (textVacio('fichero')) {
             $errores['fichero'] = "Imagen Vacía";
+        
+        } elseif (!formatoImg($name)) {
+            $errores['fichero'] = "Formato de Imagen Incorrecto (jpg, png, bmp)";
         }
 
         if (count($errores) == 0) {
