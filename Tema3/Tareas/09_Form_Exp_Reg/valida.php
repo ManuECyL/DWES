@@ -62,10 +62,6 @@
         return false;
     }
 
-    function formatoImg($name) {
-
-    }
-
 
     function errores($errores, $name) {
 
@@ -107,7 +103,7 @@
         if (textVacio('contraseña')) {
             $errores['contraseña'] = "Contraseña Vacía";
 
-        } elseif (!comprobarExpresionRegular($exp_contraseña = '/^?[a-z]+?[A-Z]+?\d+$/', 'contraseña')) {
+        } elseif (!comprobarExpresionRegular($exp_contraseña = '/^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)$/', 'contraseña')) {
             $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
         }
 
@@ -153,7 +149,7 @@
         if (textVacio('fichero')) {
             $errores['fichero'] = "Imagen Vacía";
         
-        } elseif (!formatoImg($name)) {
+        } elseif (!comprobarExpresionRegular($exp_Img = '/(jpg|png|bmp)$/', 'fichero')) {
             $errores['fichero'] = "Formato de Imagen Incorrecto (jpg, png, bmp)";
         }
 
@@ -165,26 +161,48 @@
     }
 
 
+    function subirFichero() {
+        if (count($_FILES) != 0) {
+            echo "<pre>";
+            print_r($_FILES);
+            echo "</pre>";
+    
+            $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/';
+            $ruta .= basename($_FILES['fichero']['name']);
+    
+        // Comprueba si el archivo se ha movido al directorio indicado
+            if (move_uploaded_file($_FILES['fichero']['tmp_name'], $ruta)) {
+                echo "Archivo Subido";
+            
+            } else {
+                echo "Error al subir el archivo";
+            }
+    
+        }
+    }
+
+
+
     function mostrarTodo() {
         // NOMBRE
-        echo "El nombre es: " .$_REQUEST['nombre'];
+        echo "El nombre es: " . $_REQUEST['nombre'];
 
         // APELLIDO
-        echo "<br>Los apellidos son: " .$_REQUEST['apellido'];
+        echo "<br>Los apellidos son: " . $_REQUEST['apellido'];
 
         // CONTRASEÑA
-        echo "<br>La contraseña es: " .$_REQUEST['contraseña'];
+        echo "<br>La contraseña es: " . $_REQUEST['contraseña'];
 
         // FECHA
-        echo "<br>La fecha es: " .$_REQUEST['fecha'];
+        echo "<br>La fecha es: " . $_REQUEST['fecha'];
                 
         // DNI
-        echo "<br>El DNI es: " .$_REQUEST['dni'];
+        echo "<br>El DNI es: " . $_REQUEST['dni'];
 
         // EMAIL
-        echo "<br>El email es: " .$_REQUEST['email'];
+        echo "<br>El email es: " . $_REQUEST['email'];
 
         // FICHERO IMAGEN
-        //  echo $_REQUEST['imagen'];
+        echo "<br>" . $_REQUEST['fichero'];
     }
 ?>

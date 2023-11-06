@@ -73,8 +73,7 @@
 
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
-                            echo "<pre>";
-                            print_r($_REQUEST);
+                            mostrarTodo();
 
                         // Si hay algún error
                         } else {
@@ -147,7 +146,7 @@
 
                                 <br><br>                               
 
-                                <!-- SUBIR IMAGEN -->
+                                <!-- IMAGEN -->
                                 <label for="fichero">Subir imagen <input type="file" name="fichero" id="fichero" value=<?php recuerda('fichero')?>></label>                                
                                 <span class="error">
                                     <?php            
