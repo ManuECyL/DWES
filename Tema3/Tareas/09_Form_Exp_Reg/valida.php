@@ -102,10 +102,11 @@
     // CONTRASEÑA
         if (textVacio('contraseña')) {
             $errores['contraseña'] = "Contraseña Vacía";
-
-        } elseif (!comprobarExpresionRegular($exp_contraseña = '/^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)$/', 'contraseña')) {
-            $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
         }
+
+        // } elseif (!comprobarExpresionRegular($exp_contraseña = '/^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)$/', 'contraseña')) {
+        //     $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
+        // }
 
         if (textVacio('r_contraseña')) {
             $errores['r_contraseña'] = "Repetir Contraseña Vacía";
@@ -155,31 +156,32 @@
 
         if (count($errores) == 0) {
             return true;
+            // subirFichero();
         }
 
         return false;
     }
 
 
-    function subirFichero() {
-        if (count($_FILES) != 0) {
-            echo "<pre>";
-            print_r($_FILES);
-            echo "</pre>";
+    // function subirFichero() {
+    //     if (count($_FILES) != 0) {
+    //         echo "<pre>";
+    //         print_r($_FILES);
+    //         echo "</pre>";
     
-            $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/';
-            $ruta .= basename($_FILES['fichero']['name']);
+    //         $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/';
+    //         $ruta .= basename($_FILES['fichero']['name']);
     
-        // Comprueba si el archivo se ha movido al directorio indicado
-            if (move_uploaded_file($_FILES['fichero']['tmp_name'], $ruta)) {
-                echo "Archivo Subido";
+    //     // Comprueba si el archivo se ha movido al directorio indicado
+    //         if (move_uploaded_file($_FILES['fichero']['tmp_name'], $ruta)) {
+    //             echo "Archivo Subido";
             
-            } else {
-                echo "Error al subir el archivo";
-            }
+    //         } else {
+    //             echo "Error al subir el archivo";
+    //         }
     
-        }
-    }
+    //     }
+    // }
 
 
 
@@ -188,7 +190,7 @@
         echo "El nombre es: " . $_REQUEST['nombre'];
 
         // APELLIDO
-        echo "<br>Los apellidos son: " . $_REQUEST['apellido'];
+        echo "<br>Los apellidos son: " . $_REQUEST['apellidos'];
 
         // CONTRASEÑA
         echo "<br>La contraseña es: " . $_REQUEST['contraseña'];
