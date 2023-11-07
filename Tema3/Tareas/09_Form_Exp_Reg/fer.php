@@ -73,13 +73,14 @@
 
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
-                            mostrarTodo();
+                            subirFichero('fichero');
+                            // mostrarTodo();
 
                         // Si hay algún error
                         } else {
                     ?>
 
-                            <form action="" method="get" name="formulario1" enctype="multipart/form-data">
+                            <form action="resultado.php" method="post" name="formulario1" enctype="multipart/form-data">
 
                                 <label for="nombre">Nombre: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value=<?php recuerda('nombre')?>></label>
                                 <span class="error">
