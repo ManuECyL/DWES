@@ -68,10 +68,12 @@
         $imagen = $_FILES[$archivo]['name'];
 
         $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/imagenes/' . basename($_FILES[$archivo]['name']);
+        chmod("../../", 0777);
 
     // Comprueba si el archivo se ha movido al directorio indicado
         if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $ruta)) {
-            chmod($ruta, 0777);
+            
+            // chmod($ruta, 0777);
             echo "Archivo Subido";
         
         } else {
@@ -120,11 +122,13 @@
     // CONTRASEÑA
         if (textVacio('contraseña')) {
             $errores['contraseña'] = "Contraseña Vacía";
-        }
 
-        // } elseif (!comprobarExpresionRegular($exp_contraseña = '/^(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)$/', 'contraseña')) {
-        //     $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
-        // }
+        } elseif (strlen($_REQUEST['contraseña']) < 8) {
+            $errores['contraseña'] = "La contraseña debe tener mínimo 8 caracteres";
+
+        } elseif (!comprobarExpresionRegular($exp_contraseña = '/(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)/', 'contraseña')) {
+            $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
+        }
 
         if (textVacio('r_contraseña')) {
             $errores['r_contraseña'] = "Repetir Contraseña Vacía";
@@ -165,10 +169,10 @@
         }
 
     // FICHERO IMAGEN
-        if (textVacio('fichero')) {
+        if (empty($_FILES['fichero']['name'])) {
             $errores['fichero'] = "Imagen Vacía";
         
-        } elseif (!comprobarExpresionRegular($exp_Img = '/(jpg|png|bmp)$/', 'fichero')) {
+        } elseif (!preg_match('/(jpg|png|bmp)$/', $_FILES['fichero']['name'])) {
             $errores['fichero'] = "Formato de Imagen Incorrecto (jpg, png, bmp)";
         }
 
@@ -180,26 +184,26 @@
     }
 
 
-    // function mostrarTodo() {
-    //     // NOMBRE
-    //     echo "El nombre es: " . $_REQUEST['nombre'];
+    function mostrarResultado() {
+        // NOMBRE
+        echo "El nombre es: " . $_REQUEST['nombre'];
 
-    //     // APELLIDO
-    //     echo "<br>Los apellidos son: " . $_REQUEST['apellidos'];
+        // APELLIDO
+        echo "<br>Los apellidos son: " . $_REQUEST['apellidos'];
 
-    //     // CONTRASEÑA
-    //     echo "<br>La contraseña es: " . $_REQUEST['contraseña'];
+        // CONTRASEÑA
+        echo "<br>La contraseña es: " . $_REQUEST['contraseña'];
 
-    //     // FECHA
-    //     echo "<br>La fecha es: " . $_REQUEST['fecha'];
+        // FECHA
+        echo "<br>La fecha es: " . $_REQUEST['fecha'];
                 
-    //     // DNI
-    //     echo "<br>El DNI es: " . $_REQUEST['dni'];
+        // DNI
+        echo "<br>El DNI es: " . $_REQUEST['dni'];
 
-    //     // EMAIL
-    //     echo "<br>El email es: " . $_REQUEST['email'];
+        // EMAIL
+        echo "<br>El email es: " . $_REQUEST['email'];
 
-    //     // FICHERO IMAGEN
-    //     echo '<br><p><img src="imagenes/'.$_REQUEST[$_FILES['fichero']].'"></p>';
-    // }
+        // FICHERO IMAGEN
+        echo '<br><p><img src="imagenes/'.$_FILES['fichero']['name'].'"></p>';
+    }
 ?>

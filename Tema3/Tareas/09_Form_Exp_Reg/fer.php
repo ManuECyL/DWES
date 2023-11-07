@@ -74,15 +74,15 @@
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
                             subirFichero('fichero');
-                            // mostrarTodo();
+                            mostrarResultado();
 
                         // Si hay algún error
                         } else {
                     ?>
 
-                            <form action="resultado.php" method="post" name="formulario1" enctype="multipart/form-data">
+                            <form action="" method="post" name="formularioT09" enctype="multipart/form-data">
 
-                                <label for="nombre">Nombre: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value=<?php recuerda('nombre')?>></label>
+                                <label for="nombre">Nombre: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value="<?php recuerda('nombre')?>"></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'nombre');
@@ -91,7 +91,7 @@
 
                                 <br><br>
 
-                                <label for="apellidos">Apellidos: <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" value=<?php recuerda('apellidos')?>></label>
+                                <label for="apellidos">Apellidos: <input type="text" name="apellidos" id="apellidos" placeholder="Apellidos" value="<?php recuerda('apellidos')?>"></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'apellidos');
@@ -160,7 +160,7 @@
 
                                 <!-- Enviar o borrar la información mediante un botón-->
                                 <input type="submit" value="Enviar" name="enviar" id="enviar">
-                                <input type="submit" value="Borrar" name="borrar">
+                                <input type="reset" value="Borrar" name="borrar">
 
                                 <br><br><br> 
                             </form>

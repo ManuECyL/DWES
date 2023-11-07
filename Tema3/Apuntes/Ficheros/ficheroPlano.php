@@ -172,6 +172,7 @@
             fclose($ft);
             unlink("ficheroLineas.txt");
             rename($tmp, "ficheroLineas.txt");
+            chmod("ficheroLineas.txt", 0777);
         }
 
     } else {
