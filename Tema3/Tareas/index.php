@@ -69,6 +69,12 @@
                                 <a class="nav-link navTema" href="09_Form_Exp_Reg/index.php">Tarea 09</a>
                             </li>
                         </div>
+
+                        <div class="col-md-2 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="10_ModificarFicheros/index.php">Tarea 10</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>

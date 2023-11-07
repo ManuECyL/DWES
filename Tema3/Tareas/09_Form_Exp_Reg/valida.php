@@ -168,11 +168,11 @@
             
         $imagen = $_FILES[$archivo]['name'];
 
-        $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/imagenes';
+        $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/imagenes/';
         //chmod('/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg', 0777); 
         //chmod('/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/valida.php', 0777);
         //chmod($ruta, 0777);
-        $ruta .= "/". basename($_FILES[$archivo]['name']);
+        $ruta .= basename($_FILES[$archivo]['name']);
 
     // Comprueba si el archivo se ha movido al directorio indicado
         if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $ruta)) {
