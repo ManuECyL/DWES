@@ -6,6 +6,7 @@
            return true;
         
         return false;
+        echo "El fichero no existe";
     }
 
 
