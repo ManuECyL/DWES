@@ -28,6 +28,11 @@
                 font-weight: bold;
             }
 
+            img {
+                width: 150px;
+                height: 100px;
+            }
+
             #enviar {
                 width: 200px;
             }

@@ -63,26 +63,6 @@
     }
 
 
-    function subirFichero($archivo) {
-            
-        $imagen = $_FILES[$archivo]['name'];
-
-        $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/imagenes/' . basename($_FILES[$archivo]['name']);
-        chmod("../../", 0777);
-
-    // Comprueba si el archivo se ha movido al directorio indicado
-        if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $ruta)) {
-            
-            // chmod($ruta, 0777);
-            echo "Archivo Subido";
-        
-        } else {
-            echo "Error al subir el archivo";
-        }
-
-    }
-
-
     function errores($errores, $name) {
 
         if (isset($errores[$name])) 
@@ -183,6 +163,27 @@
         return false;
     }
 
+
+    function subirFichero($archivo) {
+            
+        $imagen = $_FILES[$archivo]['name'];
+
+        $ruta = '/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/imagenes';
+        //chmod('/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg', 0777); 
+        //chmod('/var/www/html/DWES/Tema3/Tareas/09_Form_Exp_Reg/valida.php', 0777);
+        //chmod($ruta, 0777);
+        $ruta .= "/". basename($_FILES[$archivo]['name']);
+
+    // Comprueba si el archivo se ha movido al directorio indicado
+        if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $ruta)) {
+            
+            // chmod($ruta, 0777);
+            // echo "Archivo Subido";
+        
+        } else {
+            echo "Error al subir el archivo";
+        }
+    }
 
     function mostrarResultado() {
         // NOMBRE
