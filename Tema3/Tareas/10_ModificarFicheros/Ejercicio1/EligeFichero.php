@@ -81,26 +81,26 @@
                     <h3 style="text-align: center">Elige Fichero</h3>
 
 
+                    <?php
+                        if (!textVacio($_REQUEST['fichero']) && existe('editar')) {
+                            
+                            header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
+                            exit;
+
+                        } elseif (!textVacio($_REQUEST['fichero']) && existe('leer')) {
+
+                            if (existeFichero('fichero')) {
+                                header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
+                                exit;
+                            }
+                        }
+                    ?>
+                    
                     <form action="./EligeFichero.php" method="post" name="formularioT10" enctype="multipart/form-data">
 
                         <label for="idFichero">Fichero: </label>
                             
-                        <input type="text" name="fichero" id="idFichero" 
-                            value="<?php
-                                 
-                                if (!textVacio() && existe('editar')) {
-    
-                                    header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
-                                    exit;
-                                
-                                } elseif (!textVacio() && existe('leer')) {
-    
-                                    if (existeFichero('fichero')) {
-                                        header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
-                                        exit;
-                                    }
-                                }
-                            ?>">
+                        <input type="text" name="fichero" id="idFichero">
 
                         <?php
 
