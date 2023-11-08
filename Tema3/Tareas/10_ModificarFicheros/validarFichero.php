@@ -6,7 +6,6 @@
            return true;
         
         return false;
-        echo "El fichero no existe";
     }
 
 
@@ -21,19 +20,42 @@
 
     function leer() {
 
-        if (isset($_REQUEST['leer'])) 
-            return true;
+        if (isset($_REQUEST['leer']) && !existeFichero('fichero')) {
+            $errores['leer'] = "El fichero no existe";
         
-        return false;
+        } elseif (isset($_REQUEST['leer']) && existeFichero('fichero')) {
+
+            if (!$fp = fopen('fichero', 'r')) {
+                $errores['leer'] = "Ha habido un problema al abrir el fichero";
+                
+            } else {
+                $leido = fread($fp, filesize('fichero'));
+                echo "<br>" . $leido;
+    
+                // Cerramos el fichero
+                fclose($fp);
+            }            
+        } 
     }
 
     
     function escribir() {
 
-        if (isset($_REQUEST['escribir'])) 
-            return true;
-        
-        return false;
-    }
+        if (isset($_REQUEST['escribir']) && !existeFichero('fichero')) {
 
+        
+        } elseif (isset($_REQUEST['escribir']) && existeFichero('fichero')) {
+
+            if (!$fp = fopen('fichero', 'w')) {
+                $errores['leer'] = "Ha habido un problema al abrir el fichero";
+                
+            } else {
+                $leido = fread($fp, filesize('fichero'));
+                echo "<br>" . $leido;
+    
+                // Cerramos el fichero
+                fclose($fp);
+            }            
+        }
+    }
 ?>
