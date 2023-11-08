@@ -1,5 +1,5 @@
 <?php
-    include("./validarFichero.php");
+    include("./Validaciones.php");
 ?>
 
 <!DOCTYPE html>
@@ -15,17 +15,15 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         
-        <link rel="stylesheet" href="../../../css/estilos.css">
+        <link rel="stylesheet" href="../../../../css/estilos.css">
 
         <style>
-            h6 {
-                font-weight: bold;
-                margin-top: 30px;
-                margin-left: 50px;
+            .error {
+                color: red;
             }
 
-            h1 {
-                text-align: center;
+            h3 {
+                margin-top: 30px;
             }
 
             p {
@@ -34,7 +32,7 @@
 
             form {
                 text-align:center;
-                margin: 50px;
+                margin: 40px;
             }
 
         </style>
@@ -45,7 +43,7 @@
             
             <?php
 
-                include("../../../html/header.php");
+                include("../../../../html/header.php");
             ?>
 
             <!-- NAV -->
@@ -57,19 +55,19 @@
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 10</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Tarea 10</a>
                             </li>
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./leer.php?">Leer</a>
+                                <a class="nav-link navTema" href="./LeeFichero.php?">Leer</a>
                             </li>                      
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./escribir.php?">Escribir</a>
+                                <a class="nav-link navTema" href="./EditaFichero.php?">Editar</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -79,34 +77,51 @@
             <main>
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Seleccionar.php</h3>
+                    <h3 style="text-align: center">Elige Fichero</h3>
 
-                    <?php
-                        $errores = array();
 
-                        // Si ha ido todo bien
-                        // if (enviado() && validaFormulario($errores)) {
-                        //     subirFichero('fichero');
+                    <form action="" method="post" name="formularioT10" enctype="multipart/form-data">
+
+                        <label for="fichero">Fichero: </label>
                             
+                        <input type="text" name="fichero" id="fichero" value="<?php
+                        
+                            if (!textVacio() && botonUsado('leer')) {
 
-                        // Si hay algún error
-                        // } else {
-                    ?>
+                                if (existeFichero('fichero')) {
+                                    header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
+                                    exit;
+                                }
+                            
+                            } elseif (!textVacio() && botonUsado('editar')) {
+                                header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
+                                exit;
+                            }
+                        ?>">
 
-                    <form action="" method="post" name="formularioT09" enctype="multipart/form-data">
+                        <?php
 
-                        <label for="fichero"><input type="text" name="fichero" id="fichero"></label>
+                            if (textVacio('fichero') && (botonUsado('leer') || botonUsado('editar'))) {
+                                ?>
+                                    <span class="error">Debe escribir el nombre de un fichero</span>
+                                <?php
+                            
+                            } elseif (!textVacio('fichero') && !existeFichero('fichero') && botonUsado('leer')) {
+                                ?>
+                                    <span class="error">El fichero no existe</span>
+                                <?php
+                            
+                            } 
+
+                        ?>
 
                         <br><br>
 
-                        <input type="button" value="Leer">
-                        <input type="button" value="Escribir">
+                        <input type="submit" value="Leer" name="leer">
+                        <input type="submit" value="Editar" name="editar">
 
                     </form>
 
-                    <?php
-                        // }
-                    ?>
                 </div>
             </main>
 
@@ -116,7 +131,7 @@
 
                 echo "<br>";
 
-                include("../../../html/footer.html");
+                include("../../../../html/footer.html");
             ?>
         </div>
             

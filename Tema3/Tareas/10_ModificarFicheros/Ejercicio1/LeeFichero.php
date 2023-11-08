@@ -11,21 +11,20 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
         
-        <link rel="stylesheet" href="../../../css/estilos.css">
+        <link rel="stylesheet" href="../../../../css/estilos.css">
 
         <style>
-            h6 {
-                font-weight: bold;
+            h3 {
                 margin-top: 30px;
-                margin-left: 50px;
-            }
-
-            h1 {
-                text-align: center;
             }
 
             p {
                 margin-left: 70px;
+            }
+
+            form {
+                text-align:center;
+                margin: 40px;
             }
         </style>
     </head>
@@ -35,7 +34,7 @@
             
             <?php
 
-                include("../../../html/header.php");
+                include("../../../../html/header.php");
             ?>
 
             <!-- NAV -->
@@ -47,19 +46,19 @@
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="index.php" id="anterior">Tarea 10</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Tarea 10</a>
                             </li>
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./seleccionar.php?">Seleccionar</a>
+                                <a class="nav-link navTema" href="./EligeFichero.php?">Elige</a>
                             </li>                      
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./leer.php?">Leer</a>
+                                <a class="nav-link navTema" href="./EditaFichero.php?">Editar</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -67,10 +66,35 @@
             </nav>
 
             <main>
+
+                <?php
+                    // include("./Validaciones.php");
+
+                    // if (existeBoton('Volver')) {
+                    //     header('Location: ./EligeFichero.php');
+                    //     exit;
+                    // }
+
+                    // if (existe('editar')) {
+                    //     header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
+                    //     exit();
+                    // }
+                ?>
+
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Escribir.php</h3>
+                    <h3 style="text-align: center">Leer Fichero</h3>
 
+                    <form action="" method="post" name="formularioT09" enctype="multipart/form-data">
+
+                        <textarea name="leer" id="leer" cols="30" rows="10" readonly></textarea>
+
+                        <br><br>
+
+                        <input type="submit" value="Volver" name="volver">
+                        <input type="submit" value="Modificar" name="modificar">
+
+                    </form>
 
                 </div>
             </main>
@@ -81,7 +105,7 @@
 
                 echo "<br>";
 
-                include("../../../html/footer.html");
+                include("../../../../html/footer.html");
             ?>
         </div>
             

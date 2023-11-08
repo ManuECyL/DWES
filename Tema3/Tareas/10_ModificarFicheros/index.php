@@ -14,12 +14,6 @@
         <link rel="stylesheet" href="../../../css/estilos.css">
 
         <style>
-            h6 {
-                font-weight: bold;
-                margin-top: 30px;
-                margin-left: 50px;
-            }
-
             h1 {
                 text-align: center;
             }
@@ -46,15 +40,21 @@
                     <ul class="navbar-nav row row-cols">
 
                         <div class="col-md-6 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="../index.php" id="anterior">Tareas Tema 3</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Tareas Tema 3</a>
+                            </li>
                         </div>
 
                         <div class="col-md-6 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="./seleccionar.php?">Modificar Ficheros</a>
-                        </li>                      
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./Ejercicio1/EligeFichero.php?">Ejercicio 1</a>
+                            </li>                      
+                        </div>
+
+                        <div class="col-md-6 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./Ejercicio2/ejercicio2.php?">Ejercicio 2</a>
+                            </li>                      
                         </div>
                     </ul> 
                 </div>
