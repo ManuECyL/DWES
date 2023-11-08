@@ -61,13 +61,13 @@
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./LeeFichero.php?">Leer</a>
+                                <a class="nav-link navTema" href="./LeeFichero.php">Leer</a>
                             </li>                      
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./EditaFichero.php?">Editar</a>
+                                <a class="nav-link navTema" href="./EditaFichero.php">Editar</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -75,44 +75,46 @@
             </nav>
 
             <main>
+
                 <div style="border: 1px black solid; margin: 10px;">
 
                     <h3 style="text-align: center">Elige Fichero</h3>
 
 
-                    <form action="" method="post" name="formularioT10" enctype="multipart/form-data">
+                    <form action="./EligeFichero.php" method="post" name="formularioT10" enctype="multipart/form-data">
 
-                        <label for="fichero">Fichero: </label>
+                        <label for="idFichero">Fichero: </label>
                             
-                        <input type="text" name="fichero" id="fichero" value="<?php
-                        
-                            if (!textVacio() && botonUsado('leer')) {
-
-                                if (existeFichero('fichero')) {
-                                    header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
+                        <input type="text" name="fichero" id="idFichero" 
+                            value="<?php
+                                 
+                                if (!textVacio() && existe('editar')) {
+    
+                                    header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
                                     exit;
+                                
+                                } elseif (!textVacio() && existe('leer')) {
+    
+                                    if (existeFichero('fichero')) {
+                                        header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
+                                        exit;
+                                    }
                                 }
-                            
-                            } elseif (!textVacio() && botonUsado('editar')) {
-                                header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
-                                exit;
-                            }
-                        ?>">
+                            ?>">
 
                         <?php
 
-                            if (textVacio('fichero') && (botonUsado('leer') || botonUsado('editar'))) {
+                            if (textVacio('fichero') && (existe('leer') || existe('editar'))) {
                                 ?>
                                     <span class="error">Debe escribir el nombre de un fichero</span>
                                 <?php
                             
-                            } elseif (!textVacio('fichero') && !existeFichero('fichero') && botonUsado('leer')) {
+                            } elseif (!textVacio('fichero') && !existeFichero('fichero') && existe('leer')) {
                                 ?>
                                     <span class="error">El fichero no existe</span>
                                 <?php
                             
                             } 
-
                         ?>
 
                         <br><br>

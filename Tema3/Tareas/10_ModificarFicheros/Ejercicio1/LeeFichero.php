@@ -1,3 +1,7 @@
+<?php
+    include("./Validaciones.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -52,13 +56,13 @@
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./EligeFichero.php?">Elige</a>
+                                <a class="nav-link navTema" href="./EligeFichero.php">Elige</a>
                             </li>                      
                         </div>
 
                         <div class="col-md-4 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./EditaFichero.php?">Editar</a>
+                                <a class="nav-link navTema" href="./EditaFichero.php">Editar</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -68,26 +72,48 @@
             <main>
 
                 <?php
-                    // include("./Validaciones.php");
+                    
+                    if (existe('volver')) {
+                        header('Location: ./EligeFichero.php');
+                        exit;
+                    }
 
-                    // if (existeBoton('Volver')) {
-                    //     header('Location: ./EligeFichero.php');
-                    //     exit;
-                    // }
-
-                    // if (existe('editar')) {
-                    //     header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
-                    //     exit();
-                    // }
+                    if (existe('editar') ) {
+                        header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
+                        exit();
+                    }
                 ?>
 
                 <div style="border: 1px black solid; margin: 10px;">
 
                     <h3 style="text-align: center">Leer Fichero</h3>
 
-                    <form action="" method="post" name="formularioT09" enctype="multipart/form-data">
+                    <form action="./LeeFichero.php" method="post" name="formularioT09" enctype="multipart/form-data">
 
-                        <textarea name="leer" id="leer" cols="30" rows="10" readonly></textarea>
+                        <input type="hidden" name="fichero" value="<?php
+                            echo $_REQUEST['fichero'];
+                        ?>">
+
+                        <textarea name="area" id="idArea" cols="30" rows="10" readonly>
+
+                            <?php
+                                if ($abierto = fopen($_REQUEST['fichero'], 'r')) {
+                                    
+                                    if (filesize($_REQUEST['fichero']) == 0) {
+                                        echo "El fichero está vacío";
+                                    
+                                    } else {
+                                        
+                                        while ($linea = fgets($abierto, filesize($_REQUEST['fichero']))) {
+                                            echo "<br>" . $linea;
+                                        }
+                                    }
+
+                                    fclose($abierto);
+                                }
+                            ?>
+
+                        </textarea>
 
                         <br><br>
 
