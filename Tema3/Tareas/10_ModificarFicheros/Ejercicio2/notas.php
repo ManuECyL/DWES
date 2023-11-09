@@ -19,11 +19,35 @@
             }
 
             h3 {
-                margin-top: 30px;
+                margin: 30px;
             }
 
             p {
                 margin-left: 70px;
+            }
+
+            table {
+                margin: auto;
+            }
+
+            td {
+                padding: 16px;
+                text-align: center;
+                border: gray 1px solid;
+            }
+
+            th {
+                padding: 10px;
+                text-align: center;
+                border: gray 1px solid;
+            }
+
+            thead td {
+                font-weight: bold;
+            }
+
+            #clase {
+                background-color: lightblue;
             }
         </style>
     </head>
@@ -60,7 +84,7 @@
 
                     <?php
 
-                        $Notas = array();
+                        $clase = array_map('str_getcsv', file("notas.csv"));
 
                         if (file_exists("notas.csv")) {
                             
@@ -72,18 +96,88 @@
                                 
                                 } else {
                                     
-                                    while ($linea = fgets($abrir, filesize("notas.csv"))) {
-                                        echo $linea . "<br>";
+                                    while ($datos = fgetcsv($abrir, filesize("notas.csv"), ";")) {
+
+                                        // $numero = count($datos);
+
+                                        // for ($i = 0; $i < $numero; $i++) { 
+                                        //     echo $datos[$i] . "<br />\n";
+                                        // }
                                     }
+
+                    ?>
+
+                                    <table border="1">
+                                    <thead>
+                    <?php
+            
+                                            echo "<th id='clase'>CLASE</th>";
+            
+                                            $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
+                                    
+                                            // Valores fila superior
+                                            foreach ($filaSuperior as $clave => $value) {
+                                                echo "<th>$value</th>";
+                                            }
+                    ?>
+                                    </thead>
+            
+                                    <tbody>
+                                        <?php
+                                        // Valores 1ª columna
+                                            foreach ($clase as $arrayInterior => $alumnos) {
+                                                echo "<tr>";
+                                                $i = 0;
+            
+
+                                                echo "<th></th>";
+                                                
+                                                    foreach ($alumnos as $posicion => $datos) {
+                   
+                                                        echo "<td>";
+
+                                                        // echo $nombre;
+                                                        echo $posicion;
+            
+                                                        $cont = 0;
+                                                        
+            
+                                                        foreach ($datos as $alumno => $nota) {
+                                                            
+                                                            if ($cont == 0) {
+                                                                echo $nota;
+                                                            
+                                                            }
+                                                            
+                                                            $cont ++;
+                                                        }
+            
+                                                        echo "</td>";
+            
+                                                        $i++;
+                                                    }
+            
+                                                echo "</tr>";
+                                            }
+            
+                    ?>
+                                    </tbody>
+                                </table>
+
+                    <?php
+                                    echo "<pre>";
+                                    print_r($clase);
+                                    echo "</pre>";
+                                    
                                 }
     
                                 fclose($abrir);
                             }
                         
                         } else {
-                            ?>
+                    ?>
                                 <span class="error">El fichero no existe</span>
-                            <?php
+                    <?php
                         }
 
                     ?>
