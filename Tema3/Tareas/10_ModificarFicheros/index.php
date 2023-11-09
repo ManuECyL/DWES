@@ -14,8 +14,12 @@
         <link rel="stylesheet" href="../../../css/estilos.css">
 
         <style>
-            h1 {
-                text-align: center;
+            h3 {
+                margin: 20px;
+            }
+
+            h6 {
+                margin-left: 40px;
             }
 
             p {
@@ -53,7 +57,7 @@
 
                         <div class="col-md-6 col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./Ejercicio2/ejercicio2.php?">Ejercicio 2</a>
+                                <a class="nav-link navTema" href="./Ejercicio2/notas.php?">Ejercicio 2</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -65,10 +69,40 @@
 
                     <h3 style="text-align: center">Tarea 10</h3>
 
+                    <h6>1. Realiza una página EligeFichero.php que rellenes el nombre de un fichero y puedas elegir:</h6>
+
+                        <p>Editar (si no existe lo crea) o Leer.</p>
+
                         <p>
-                            Aquí va el enunciado de la tarea
+                            a) La página EditaFichero.php lee lo que hay en un fichero y lo escribe en un textarea 
+                                editable, en el que se puede escribir y darle a un botón modificar. Al guardar me 
+                                envía otra página donde lo lee denominada LeeFichero.php.
                         </p>
 
+                        <p>
+                            b) En esta página LeeFichero.php lee lo que tiene escrito y lo escribe en un textarea no 
+                                editable, y un botón Editar, que vuelve a la página donde se puede editar. 
+                        </p>
+
+                    <br>
+
+                    <h6>2. Lee el fichero notas.csv</h6>
+
+                        <p>
+                            a) Muéstralo como una tabla: Alumno, nota1, nota2, nota3, Editar.
+                        </p>
+
+                        <p>
+                            b) Abre una nueva página que muestre el nombre del alumno de forma no editable y 
+                                tres inputs que si podamos modificar. Al guardar los cambios volverá a la página 
+                                anterior y mostrará en la tabla los cambios 
+                        </p>
+
+                        <p>
+                            c) El tamaño de la tabla es variable en función de los alumnos que hubiera.
+                        </p>
+
+                    <br>
                 </div>
             </main>
 
