@@ -104,42 +104,34 @@
                             echo $_REQUEST['fichero'];
                         ?>">
 
-                        <textarea name="area" id="idArea" cols="30" rows="10">
+                        <textarea name="area" id="idArea" cols="80" rows="10"><?php
 
-                            <?php
-                                if (!existeFichero($_REQUEST['fichero'])) {
+                            // Si el fichero NO existe que lo abra con opción de solo escritura 'w'
+                                if (!existeFichero('fichero')) {
 
                                     if ($abrir = fopen($_REQUEST['fichero'], 'w')) {
-                                        fclose($abierto);    
-                                    
-                                    } else {
+                                        fclose($abrir);    
+                                    }
+                                   
+                            // Si el fichero existe que lo abra con opción de lectura y escritura 'r+'
+                                } else {
 
-                                        if ($abrir = fopen($_REQUEST['fichero'], 'r+')) {
+                                    if ($abrir = fopen($_REQUEST['fichero'], 'r+')) {
                                     
-                                            if (filesize($_REQUEST['fichero']) == 0) {
-                                                echo "El fichero está vacío, escribe algo";
-                                            
-                                            } else {
-                                                
-                                                while($linea = fgets($abierto,filesize($_REQUEST['fichero']))){
-                                                    echo $linea;
-                                                }
-                                            }
+                                        if (filesize($_REQUEST['fichero']) == 0) {
+                                            echo "El fichero está vacío, escribe algo";
                                         
                                         } else {
-
-                                            while($linea = fgets($abierto,filesize($_REQUEST['fichero']))){
+                                            
+                                            while($linea = fgets($abrir,filesize($_REQUEST['fichero']))){
                                                 echo $linea;
                                             }
                                         }
+                                
+                                        fclose($abrir);
                                     }
-
-                                    fclose($abierto);
                                 }
-
-                            ?>
-
-                        </textarea>
+                        ?></textarea>
 
                         <br><br>
 

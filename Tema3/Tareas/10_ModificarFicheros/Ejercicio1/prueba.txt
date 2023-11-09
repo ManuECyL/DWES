@@ -1,0 +1,3 @@
+Esto es un fichero de prueba. Funciona Correctamente.
+
+Fdo: Manu

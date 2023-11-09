@@ -78,7 +78,7 @@
                         exit;
                     }
 
-                    if (existe('editar') ) {
+                    if (existe('modificar') ) {
                         header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
                         exit();
                     }
@@ -94,26 +94,24 @@
                             echo $_REQUEST['fichero'];
                         ?>">
 
-                        <textarea name="area" id="idArea" cols="30" rows="10" readonly>
+                        <textarea name="area" id="idArea" cols="80" rows="10" readonly><?php
 
-                            <?php
-                                if ($abierto = fopen($_REQUEST['fichero'], 'r')) {
+                            // Abrir fichero con opción de solo lectura 'r'
+                                if ($abrir = fopen($_REQUEST['fichero'], 'r')) {
                                     
                                     if (filesize($_REQUEST['fichero']) == 0) {
                                         echo "El fichero está vacío";
                                     
                                     } else {
                                         
-                                        while ($linea = fgets($abierto, filesize($_REQUEST['fichero']))) {
-                                            echo "<br>" . $linea;
+                                        while ($linea = fgets($abrir, filesize($_REQUEST['fichero']))) {
+                                            echo $linea;
                                         }
                                     }
 
-                                    fclose($abierto);
+                                    fclose($abrir);
                                 }
-                            ?>
-
-                        </textarea>
+                        ?></textarea>
 
                         <br><br>
 

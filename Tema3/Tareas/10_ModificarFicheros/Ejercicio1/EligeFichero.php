@@ -80,21 +80,6 @@
 
                     <h3 style="text-align: center">Elige Fichero</h3>
 
-
-                    <?php
-                        if (!textVacio($_REQUEST['fichero']) && existe('editar')) {
-                            
-                            header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
-                            exit;
-
-                        } elseif (!textVacio($_REQUEST['fichero']) && existe('leer')) {
-
-                            if (existeFichero('fichero')) {
-                                header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
-                                exit;
-                            }
-                        }
-                    ?>
                     
                     <form action="./EligeFichero.php" method="post" name="formularioT10" enctype="multipart/form-data">
 
@@ -104,7 +89,19 @@
 
                         <?php
 
-                            if (textVacio('fichero') && (existe('leer') || existe('editar'))) {
+                            if (!textVacio('fichero') && existe('editar')) {
+                                
+                                header('Location: ./EditaFichero.php?fichero='. $_REQUEST['fichero']);
+                                exit;
+
+                            } elseif (!textVacio('fichero') && existe('leer') && existeFichero('fichero')) {
+
+                                if (existeFichero('fichero')) {
+                                    header('Location: ./LeeFichero.php?fichero='. $_REQUEST['fichero']);
+                                    exit;
+                                }
+
+                            } else if (textVacio('fichero') && (existe('leer') || existe('editar'))) {
                                 ?>
                                     <span class="error">Debe escribir el nombre de un fichero</span>
                                 <?php
