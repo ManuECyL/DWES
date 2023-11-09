@@ -53,22 +53,10 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-4 col-lg">
+                        <div class="col-md col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tarea 10</a>
                             </li>
-                        </div>
-
-                        <div class="col-md-4 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="./LeeFichero.php">Leer</a>
-                            </li>                      
-                        </div>
-
-                        <div class="col-md-4 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="./EditaFichero.php">Editar</a>
-                            </li>                      
                         </div>
                     </ul> 
                 </div>
