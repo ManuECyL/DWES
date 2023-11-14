@@ -1,3 +1,8 @@
+<?php
+    include("./validaciones.php");
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +33,7 @@
 
             table {
                 margin: auto;
+                margin-bottom: 50px;
             }
 
             td {
@@ -84,79 +90,74 @@
 
                     <?php
 
-                        // $aula = array_map('str_getcsv', file("notas.csv"));
+                        if (file_exists("notas.csv") && existe("editar")) {
+                                                        
+                            header('Location: ./editar.php');
+                            exit;
+                        }
+                    ?>
 
-                        if (file_exists("notas.csv")) {
+                    <table border="1">
+                        <thead>
+                            <?php
+                                // echo "<th id='clase'>CLASE</th>";
+    
+                                $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
                             
-                            // Abrir fichero con opción de solo lectura 'r'
-                            if ($abrir = fopen("notas.csv", 'r')) {
+                                // Valores fila superior
+                                foreach ($filaSuperior as $clave => $value) {
+                                    echo "<th>$value</th>";
+                                }
+                            ?>
+                        </thead>
             
-                                if (filesize("notas.csv") == 0) {
-                                    echo "El fichero está vacío";
+                        <tbody>
+                            <?php
+
+                                if (file_exists("notas.csv")) {
+                                                            
+                                    // Abrir fichero con opción de solo lectura 'r'
+                                    if ($abrir = fopen("notas.csv", 'r')) {
+
+                                        if (filesize("notas.csv") == 0) {
+                                            echo "El fichero está vacío";
+                                        
+                                        } else {
+                                            
+                                            // Lee el fichero .csv
+                                            while ($datos = fgetcsv($abrir, filesize("notas.csv"), ";")) {
+
+                                                echo "<tr>";
+
+                                                    // Rellenar las celdas
+                                                    foreach ($datos as $fila) {
+                                                        ?><form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data"><?php
+                                                        echo "<td>" . $fila . "</td>";      
+                                                    }
+
+                                                    echo "<td>";
+                                                        ?><input type="submit" value="Editar" name="editar"><?php
+                                                    echo "</td>";
+
+                                                echo "</tr>";
+                                            }
+                            ?>
+                        </tbody>
+                    </table>
+
+                            <?php                                       
+                                        }
+            
+                                        fclose($abrir);
+                                    }
                                 
                                 } else {
-                                    
-                                    // Lee el fichero .csv
-                                    while ($datos = fgetcsv($abrir, filesize("notas.csv"), ";")) {
-
-                                        $numero = count($datos);
-
-                                        // Muestra los datos del fichero .csv
-                                        for ($i = 0; $i < $numero; $i++) { 
-                                            // echo $datos[$i] . "<br />\n"; 
-                                        }
-                                    }
-
-                    ?>
-
-                                <table border="1">
-                                    <thead>
-                    <?php
-                                        // echo "<th id='clase'>CLASE</th>";
-            
-                                        $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
-                                    
-                                        // Valores fila superior
-                                        foreach ($filaSuperior as $clave => $value) {
-                                            echo "<th>$value</th>";
-                                        }
-                    ?>
-                                    </thead>
-            
-                                    <tbody>
-                                        <?php
-                                        // Valores 1ª Columna
-                                        foreach ($aula as $fila) {
-                                            echo "<tr>";
-
-                                            foreach ($fila as $valor) {
-                                                echo "<td>" . $valor . "</td>";
-                                            }
-
-                                            echo "</tr>";
-                                        }
-                    ?>
-                                    </tbody>
-                                </table>
-
-                    <?php
-                                    // echo "<pre>";
-                                    // print_r($clase);
-                                    // echo "</pre>";
-                                    
+                            ?>
+                                    <span class="error">El fichero no existe</span>
+                            <?php
                                 }
-    
-                                fclose($abrir);
-                            }
-                        
-                        } else {
-                    ?>
-                                <span class="error">El fichero no existe</span>
-                    <?php
-                        }
 
-                    ?>
-
+                            ?>
                 </div>
             </main>
 
