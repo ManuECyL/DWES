@@ -89,7 +89,7 @@
                     <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
 
 
-                        <label for="nombre">Nombre:</label> <input type="text" name="nombre" id="nombre" readonly>
+                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly>
 
                         <br><br>
 

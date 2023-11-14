@@ -33,7 +33,6 @@
 
             table {
                 margin: auto;
-                margin-bottom: 50px;
             }
 
             td {
@@ -54,6 +53,13 @@
 
             #clase {
                 background-color: lightblue;
+            }
+
+            #inputAñadir {
+                display: flex;
+                text-align: center;
+                margin: auto;
+                margin-bottom: 20px;
             }
         </style>
     </head>
@@ -93,6 +99,10 @@
                         if (file_exists("notas.csv") && existe("editar")) {
                                                         
                             header('Location: ./editar.php');
+                            exit;
+                        
+                        } elseif (file_exists("notas.csv") && existe("añadir")) {
+                            header('Location: ./añadir.php');
                             exit;
                         }
                     ?>
@@ -156,8 +166,11 @@
                                     <span class="error">El fichero no existe</span>
                             <?php
                                 }
-
                             ?>
+
+                    <br><br>
+
+                    <input type="submit" value="Añadir" name="añadir" id="inputAñadir">
                 </div>
             </main>
 
