@@ -105,31 +105,28 @@
 
                      <?php
 
-                        // // Si el fichero NO existe que lo abra con opción de solo escritura 'w'
-                        //     if (!file_exists('fichero')) {
 
-                        //         if ($abrir = fopen($_REQUEST['fichero'], 'w')) {
-                        //             fclose($abrir);    
-                        //         }
-                                
-                        // // Si el fichero existe que lo abra con opción de lectura y escritura 'r+'
-                        //     } else {
-
-                        //         if ($abrir = fopen($_REQUEST['fichero'], 'r+')) {
-                                
-                        //             if (filesize($_REQUEST['fichero']) == 0) {
-                        //                 echo "El fichero está vacío, escribe algo";
-                                    
-                        //             } else {
-                                        
-                        //                 while($linea = fgets($abrir,filesize($_REQUEST['fichero']))){
-                        //                     echo $linea;
-                        //                 }
-                        //             }
+                            if ($abrir = fopen("notas.csv", 'r')) {
                             
-                        //             fclose($abrir);
-                        //         }
-                        //     }
+                                if (filesize("notas.csv") == 0) {
+                                    echo "El fichero está vacío";
+                                
+                                } else {
+                                    
+                                    while($datos = fgetcsv($abrir, filesize("notas.csv"), ";")){
+
+                                        foreach ($datos as $fila) {
+                                            
+                                            // $nombre = trim($fila[0]);
+                                        }
+                                    }
+
+                                    // echo '<script>document.getElementById("alumno").value = "' . $nombre . '";</script>';
+                                }
+                        
+                                fclose($abrir);
+                            }
+                            
                         ?>
 
                         <br><br>
