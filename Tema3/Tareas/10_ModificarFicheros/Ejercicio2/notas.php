@@ -84,7 +84,7 @@
 
                     <?php
 
-                        $clase = array_map('str_getcsv', file("notas.csv"));
+                        // $aula = array_map('str_getcsv', file("notas.csv"));
 
                         if (file_exists("notas.csv")) {
                             
@@ -96,78 +96,53 @@
                                 
                                 } else {
                                     
+                                    // Lee el fichero .csv
                                     while ($datos = fgetcsv($abrir, filesize("notas.csv"), ";")) {
 
-                                        // $numero = count($datos);
+                                        $numero = count($datos);
 
-                                        // for ($i = 0; $i < $numero; $i++) { 
-                                        //     echo $datos[$i] . "<br />\n";
-                                        // }
+                                        // Muestra los datos del fichero .csv
+                                        for ($i = 0; $i < $numero; $i++) { 
+                                            // echo $datos[$i] . "<br />\n"; 
+                                        }
                                     }
 
                     ?>
 
-                                    <table border="1">
+                                <table border="1">
                                     <thead>
                     <?php
+                                        // echo "<th id='clase'>CLASE</th>";
             
-                                            echo "<th id='clase'>CLASE</th>";
-            
-                                            $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
+                                        $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
                                     
-                                            // Valores fila superior
-                                            foreach ($filaSuperior as $clave => $value) {
-                                                echo "<th>$value</th>";
-                                            }
+                                        // Valores fila superior
+                                        foreach ($filaSuperior as $clave => $value) {
+                                            echo "<th>$value</th>";
+                                        }
                     ?>
                                     </thead>
             
                                     <tbody>
                                         <?php
-                                        // Valores 1ª columna
-                                            foreach ($clase as $arrayInterior => $alumnos) {
-                                                echo "<tr>";
-                                                $i = 0;
-            
+                                        // Valores 1ª Columna
+                                        foreach ($aula as $fila) {
+                                            echo "<tr>";
 
-                                                echo "<th></th>";
-                                                
-                                                    foreach ($alumnos as $posicion => $datos) {
-                   
-                                                        echo "<td>";
-
-                                                        // echo $nombre;
-                                                        echo $posicion;
-            
-                                                        $cont = 0;
-                                                        
-            
-                                                        foreach ($datos as $alumno => $nota) {
-                                                            
-                                                            if ($cont == 0) {
-                                                                echo $nota;
-                                                            
-                                                            }
-                                                            
-                                                            $cont ++;
-                                                        }
-            
-                                                        echo "</td>";
-            
-                                                        $i++;
-                                                    }
-            
-                                                echo "</tr>";
+                                            foreach ($fila as $valor) {
+                                                echo "<td>" . $valor . "</td>";
                                             }
-            
+
+                                            echo "</tr>";
+                                        }
                     ?>
                                     </tbody>
                                 </table>
 
                     <?php
-                                    echo "<pre>";
-                                    print_r($clase);
-                                    echo "</pre>";
+                                    // echo "<pre>";
+                                    // print_r($clase);
+                                    // echo "</pre>";
                                     
                                 }
     
@@ -201,3 +176,44 @@
     </body>
 
 </html>
+
+<!-- // Valores 1ª columna
+// foreach ($clase as $arrayInterior => $alumnos) {
+//     echo "<tr>";
+//     $i = 0;
+
+
+//     echo "<th></th>";
+    
+//         foreach ($alumnos as $posicion => $datos) {
+
+//             echo "<td>";
+
+//             // echo $nombre;
+//             echo $posicion;
+
+//             $cont = 0;
+            
+
+//             foreach ($datos as $alumno => $nota) {
+                
+//                 if ($cont == 0) {
+//                     echo $nota;
+                
+//                 }
+                
+//                 $cont ++;
+//             }
+
+//             echo "</td>";
+
+//             $i++;
+//         }
+
+    // echo "</tr>";
+// }
+
+
+// echo "<pre>";
+    // print_r($clase);
+// echo "</pre>"; -->
