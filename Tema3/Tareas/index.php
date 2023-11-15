@@ -75,6 +75,12 @@
                                 <a class="nav-link navTema" href="10_ModificarFicheros/index.php">Tarea 10</a>
                             </li>
                         </div>
+
+                        <div class="col-md-2 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="11_Ficheros_XML/index.php">Tarea 11</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>
