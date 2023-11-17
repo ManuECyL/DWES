@@ -116,8 +116,8 @@
                                     while($datos = fgetcsv($abrir, filesize("notas.csv"), ";")){
 
                                         foreach ($datos as $fila) {
-                                            
-                                            // $nombre = trim($fila[0]);
+                                                                                       
+                                            // $nombre = $fila[0];
                                         }
                                     }
 

@@ -83,7 +83,7 @@
 
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Editar</h3>
+                    <h3 style="text-align: center">Añadir</h3>
 
                     
                     <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">

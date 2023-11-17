@@ -142,7 +142,7 @@
                                                     // Rellenar las celdas
                                                     foreach ($datos as $fila) {
                                                         ?><form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data"><?php
-                                                        echo "<td>" . $fila . "</td>";      
+                                                        echo "<td>" . $fila . "</td>";  
                                                     }
 
                                                     echo "<td>";
