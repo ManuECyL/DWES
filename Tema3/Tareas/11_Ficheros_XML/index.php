@@ -25,6 +25,12 @@
             p {
                 margin-left: 70px;
             }
+
+            #divImagen {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
         </style>
     </head>
 
@@ -43,15 +49,21 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-6 col-lg">
+                        <div class="col-md col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tareas Tema 3</a>
                             </li>
                         </div>
 
-                        <div class="col-md-6 col-lg">
+                        <div class="col-md col-lg">
                             <li class="nav-item">
                                 <a class="nav-link navTema" href="./TransformaFichero.php?">Transforma Fichero</a>
+                            </li>                      
+                        </div>
+
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./LeeFicheroXML.php?">Lee Fichero XML</a>
                             </li>                      
                         </div>
                     </ul> 
@@ -67,6 +79,7 @@
                 
                         <p>
                             a) El formato es:
+                                <div id="divImagen"><img src="./imagenes/Tarea11_Ejercicio1.png" alt="Tarea11_Ejercicio1.png"></div>
                         </p>
 
                         <p>
@@ -74,7 +87,7 @@
                         </p>
                     <br>
 
-                    <h6>2. Lee el fichero notas.csv</h6>
+                    <h6>2. Realiza una página LeeFicheroXML.php que lea el fichero anterior y lo muestre igual que en la tabla del ejercicio anterior</h6>
 
                         <p>
                             a) Muéstralo como una tabla: Alumno, nota1, nota2, nota3, Editar.
