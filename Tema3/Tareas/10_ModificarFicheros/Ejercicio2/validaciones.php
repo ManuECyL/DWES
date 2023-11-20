@@ -2,7 +2,7 @@
 
     function enviado() {
 
-        if (isset($_REQUEST['leer']) || isset($_REQUEST['editar']) || isset($_REQUEST['volver']) || isset($_REQUEST['guardar'])) 
+        if (isset($_REQUEST['editar']) || isset($_REQUEST['volver']) || isset($_REQUEST['guardar']) || isset($_REQUEST['añadir'])) 
             return true;
 
         return false;

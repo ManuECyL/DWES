@@ -112,7 +112,7 @@
                             <?php
                                 // echo "<th id='clase'>CLASE</th>";
     
-                                $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3");
+                                $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3", "EDITAR");
                             
                                 // Valores fila superior
                                 foreach ($filaSuperior as $clave => $value) {
@@ -141,12 +141,20 @@
 
                                                     // Rellenar las celdas
                                                     foreach ($datos as $fila) {
-                                                        ?><form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data"><?php
                                                         echo "<td>" . $fila . "</td>";  
                                                     }
 
                                                     echo "<td>";
-                                                        ?><input type="submit" value="Editar" name="editar"><?php
+                                                        ?>
+                                                            <form action="./editar.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                                                                    <input type="hidden" name="alumno" value="<?= $datos[0] ?>">
+                                                                    <input type="hidden" name="nota1" value="<?= $datos[1] ?>">
+                                                                    <input type="hidden" name="nota2" value="<?= $datos[2] ?>">
+                                                                    <input type="hidden" name="nota3" value="<?= $datos[3] ?>">
+                                                                    
+                                                                <input type="submit" value="Editar" name="editar">
+                                                            </form>
+                                                        <?php
                                                     echo "</td>";
 
                                                 echo "</tr>";
@@ -170,7 +178,10 @@
 
                     <br><br>
 
-                    <input type="submit" value="Añadir" name="añadir" id="inputAñadir">
+                    <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                        <input type="submit" value="Añadir" name="añadir" id="inputAñadir">
+                    </form>
+                    
                 </div>
             </main>
 
@@ -190,44 +201,3 @@
     </body>
 
 </html>
-
-<!-- // Valores 1ª columna
-// foreach ($clase as $arrayInterior => $alumnos) {
-//     echo "<tr>";
-//     $i = 0;
-
-
-//     echo "<th></th>";
-    
-//         foreach ($alumnos as $posicion => $datos) {
-
-//             echo "<td>";
-
-//             // echo $nombre;
-//             echo $posicion;
-
-//             $cont = 0;
-            
-
-//             foreach ($datos as $alumno => $nota) {
-                
-//                 if ($cont == 0) {
-//                     echo $nota;
-                
-//                 }
-                
-//                 $cont ++;
-//             }
-
-//             echo "</td>";
-
-//             $i++;
-//         }
-
-    // echo "</tr>";
-// }
-
-
-// echo "<pre>";
-    // print_r($clase);
-// echo "</pre>"; -->

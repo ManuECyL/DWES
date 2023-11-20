@@ -65,19 +65,67 @@
                         exit;
                     }
 
-                    if (enviado()) {
-                        
-                        if (($abrir = fopen($_REQUEST['fichero'],'w')) && existe("guardar")){
+                    if (enviado() && existe("guardar")) {
 
-                            $escribir = $_REQUEST['area'];
-                            fwrite($abrir,$escribir,strlen($escribir));
-                            fclose($abrir);
-                        }
-        
-                        header('Location: ./notas.php');
-        
-                        exit();
+                        // Obtener datos del formulario
+                        $alumno = $_POST['alumno'];
+                        $nota1 = $_POST['nota1'];
+                        $nota2 = $_POST['nota2'];
+                        $nota3 = $_POST['nota3'];
+
+                        // Nombre del archivo original
+                        $archivo_original = "notas.csv";
+
+                        // Nombre del archivo temporal
+                        $archivo_temporal = "notas_temp.csv";
                         
+                        // Abre el archivo original para lectura
+                        if ($lectura = fopen($archivo_original,'r')){
+
+                            // Abre el archivo temporal para escritura
+                            if ($escritura = fopen($archivo_temporal,'w')){
+                            
+                                // Itera sobre cada línea del archivo original
+                                while (($linea = fgets($lectura)) !== false) {
+
+                                    // Divide la línea en partes usando el delimitador ";"
+                                    $datos = explode(";", trim($linea));
+
+                                    // Verifica si la línea corresponde al alumno que se está editando
+                                    if ($datos[0] === $alumno) {
+
+                                        // Actualiza los valores
+                                        $datos[1] = $nota1;
+                                        $datos[2] = $nota2;
+                                        $datos[3] = $nota3;
+                                    }
+
+                                    // Escribe la línea actualizada en el archivo temporal
+                                    fwrite($escritura, implode(";", $datos) . "\n");
+                                }
+
+                                // Cierra el archivo temporal
+                                fclose($escritura);
+
+                                // Cierra el archivo original
+                                fclose($lectura);
+
+                                // Reemplaza el archivo original con el archivo temporal
+                                rename($archivo_temporal, $archivo_original);
+
+                                // Redirige a notas.php después de guardar
+                                header('Location: ./notas.php');
+            
+                                exit();
+
+                            } else {
+            
+                                echo "Error al abrir el archivo temporal para escritura.";
+                            }
+
+                        } else {
+                            echo "Error al abrir el archivo original para lectura.";
+                        }
                     }
                 ?>
 
@@ -86,48 +134,22 @@
                     <h3 style="text-align: center">Editar</h3>
 
                     
-                    <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                    <form action="./editar.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
 
 
-                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly>
-
-                        <br><br>
-
-                        <label for="nota1">Nota 1:</label> <input type="text" name="nota" id="nota1">
+                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly value="<?= $_POST['alumno'] ?>">
 
                         <br><br>
 
-                        <label for="nota2">Nota 2:</label> <input type="text" name="nota" id="nota2">
+                        <label for="nota1">Nota 1:</label> <input type="text" name="nota1" id="nota1" value="<?= $_POST['nota1'] ?>">
 
                         <br><br>
 
-                        <label for="nota3">Nota 3:</label> <input type="text" name="nota" id="nota3">
+                        <label for="nota2">Nota 2:</label> <input type="text" name="nota2" id="nota2" value="<?= $_POST['nota2'] ?>">
 
-                     <?php
+                        <br><br>
 
-
-                            if ($abrir = fopen("notas.csv", 'r')) {
-                            
-                                if (filesize("notas.csv") == 0) {
-                                    echo "El fichero está vacío";
-                                
-                                } else {
-                                    
-                                    while($datos = fgetcsv($abrir, filesize("notas.csv"), ";")){
-
-                                        foreach ($datos as $fila) {
-                                                                                       
-                                            // $nombre = $fila[0];
-                                        }
-                                    }
-
-                                    // echo '<script>document.getElementById("alumno").value = "' . $nombre . '";</script>';
-                                }
-                        
-                                fclose($abrir);
-                            }
-                            
-                        ?>
+                        <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3" value="<?= $_POST['nota3'] ?>">
 
                         <br><br>
 

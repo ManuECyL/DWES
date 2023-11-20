@@ -65,19 +65,45 @@
                         exit;
                     }
 
-                    if (enviado()) {
-                        
-                        if (($abrir = fopen($_REQUEST['fichero'],'w')) && existe("añadir")){
+                    if (enviado() && existe("añadir")) {
 
-                            $escribir = $_REQUEST['area'];
-                            fwrite($abrir,$escribir,strlen($escribir));
-                            fclose($abrir);
+                        // Obtener datos del formulario
+                        $alumno = $_POST['alumno'];
+                        $nota1 = $_POST['nota1'];
+                        $nota2 = $_POST['nota2'];
+                        $nota3 = $_POST['nota3'];
+
+                        // Comprueba que los campos no están vacíos
+                        if (!empty($alumno) && !empty($nota1) && !empty($nota2) && !empty($nota3)) {
+
+                            // Nombre del archivo original
+                            $archivo_original = "notas.csv";
+
+                            // Abre el archivo original para escritura al final
+                            if ($escritura = fopen($archivo_original,'a')){
+                            
+                                // Escribe la nueva línea al archivo 
+                                fwrite($escritura, "\n$alumno;$nota1;$nota2;$nota3");
+                                
+                                // Cierra el archivo 
+                                fclose($escritura);
+
+                                // Redirige a notas.php después de guardar
+                                header('Location: ./notas.php');
+        
+                                exit();
+
+                            } else {
+                                echo "Error al abrir el archivo original para lectura.";
+                            }
+
+                        // Si los campos están vacíos y se pulsa "Añadir", vuelve al fichero notas.php sin añadir ningún alumno
+                        } else {
+                            
+                            header('Location: ./notas.php');
+        
+                            exit();
                         }
-        
-                        header('Location: ./notas.php');
-        
-                        exit();
-                        
                     }
                 ?>
 
@@ -86,22 +112,21 @@
                     <h3 style="text-align: center">Añadir</h3>
 
                     
-                    <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
-
+                    <form action="./añadir.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
 
                         <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno">
 
                         <br><br>
 
-                        <label for="nota1">Nota 1:</label> <input type="text" name="nota" id="nota1">
+                        <label for="nota1">Nota 1:</label> <input type="text" name="nota1" id="nota1">
 
                         <br><br>
 
-                        <label for="nota2">Nota 2:</label> <input type="text" name="nota" id="nota2">
+                        <label for="nota2">Nota 2:</label> <input type="text" name="nota2" id="nota2">
 
                         <br><br>
 
-                        <label for="nota3">Nota 3:</label> <input type="text" name="nota" id="nota3">
+                        <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3">
 
                      <?php
 
