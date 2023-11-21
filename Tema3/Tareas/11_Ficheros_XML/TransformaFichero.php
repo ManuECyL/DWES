@@ -65,40 +65,52 @@
 
                     <?php
         
+                        $notasCSV = "notas.csv";
+                        $notasXML = "notas.xml";
+
 
                         if (file_exists("notas.csv")) {
-                                                    
-                            // Abrir fichero con opción de solo lectura 'r'
-                            if ($abrir = fopen("notas.csv", 'r')) {
-
-                                if (filesize("notas.csv") == 0) {
-                                    echo "El fichero está vacío";
                                 
-                                } else {
+                            // Lee el contenido del archivo CSV
+                            $contenidoCSV = file_get_contents($notasCSV);
 
-                                    echo "<pre>";
-                                    
-                                    // Lee el fichero .csv
-                                    while ($datos = fgetcsv($abrir, filesize("notas.csv"), ";")) {
-                    
-                                        // print_r($datos);
+                            // Divide el contenido del CSV por líneas
+                            $lineas = explode("\n", $contenidoCSV);
 
-                                        foreach ($datos as $fila) {
-                                            echo "\n" . $fila;
-                                        }
-                                    }
-                                
-                                    // echo "Fichero leído";
-                                }
-    
-                                fclose($abrir);
+                            // Crea un nuevo objeto SimpleXMLElement para el XML
+                            $xml = new SimpleXMLElement('<notas></notas>');
+                                                  
+                            // Recorre cada línea del CSV
+                            foreach ($lineas as $linea) {
+
+                                // Divide cada línea por punto y coma
+                                $datos = explode(';', $linea);
+
+                                // Crea un elemento <alumno> para cada línea
+                                $alumno = $xml->addChild('alumno');
+
+                                // Añade un elemento <nombre> con el valor correspondiente
+                                $alumno->addChild('nombre', $datos[0]);
+
+                                // Añade elementos <nota1>, <nota2>, <nota3> con los valores correspondientes
+                                $alumno->addChild('nota1', $datos[1]);
+                                $alumno->addChild('nota2', $datos[2]);
+                                $alumno->addChild('nota3', $datos[3]);
                             }
+
+                            // Guarda el contenido del XML en el archivo de salida
+                            $xml->asXML($notasXML);
+
+                            echo 'Transformación completada.';
                         
                         } else {
                     ?>
                             <span class="error">El fichero no existe</span>
                     <?php
                         }
+
+                        // header('Location: ./LeeFicheroXML.php');
+                        // exit;
                     ?>
 
                     <br><br>
