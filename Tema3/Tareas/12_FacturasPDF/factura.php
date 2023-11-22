@@ -3,109 +3,115 @@
 
     require('../../../fpdf186/fpdf.php');
     require('./HeaderC.php');
-?>
 
-<!DOCTYPE html>
-<html lang="en">
+    // Crear objeto PDF usando la clase de Header que extiende de FPDF
+    $pdf = new HeaderC;
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    // Añadir una página
+    $pdf -> AddPage();
 
-        <title>Tarea 12 - Facturas PDF</title>
+    // Array de clientes para insertar en una tabla
+    $clientes = array(
+        array("Mario Alvarez","71048321B","Vaguada, 3","49018 Zamora","Zamora, Espana")
+    );
 
-    <!-- BOOTSTRAP -->
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
+    // Llamar a la función creaCliente
+    creaCliente($clientes,$pdf);
+
+    // Grosor de las líneas
+    // $pdf -> SetLineWidth(1);
+
+    // Crear una líneas verticales
+    $pdf -> Line(110, 10, 110, 55);
+    $pdf -> Line(205, 10, 205, 55);
+
+    // Crear una líneas horizontales
+    $pdf -> Line(110, 10, 205, 10);
+    $pdf -> Line(110, 55, 205, 55);
+
+
+    // Array con los Productos
+    $productos = array(
+        array("Cazadora Nike",1,80),
+        array("Pantalon Adidas",2,75),
+        array("Sudadera Supreme",1,250),
+        array("Camiseta Nike",4,35),
+    );
+
+
+
+    // Llamar a la función creaFactura
+    creaFactura($productos,$pdf);
+    
+    // Guardar el fichero pdf
+    $pdf -> Output();
+
+
+    // Función para insertar datos del array clientes en una tabla dentro del PDF
+    function creaCliente($clientes, $pdf) {
+
+        $pdf -> SetY(14);
+        $pdf -> SetX(120);
+
+        // Datos de la tabla Clientes
+        $pdf -> SetFont("Courier", "B", 15);
+        $pdf -> Cell(80,6,'Cliente',1,2,'C', false);
+
+        $pdf -> SetY(22);
+        $pdf -> SetX(121);
+        $pdf -> SetFont("Courier", "B", 10);
+        $pdf -> Cell(18,6,'Nombre:',0,2,'L', false);
+        $pdf -> Cell(18,6,'CIF/NIF:',0,2,'L', false);
+        $pdf -> Cell(18,6,'Calle:',0,2,'L', false);
+        $pdf -> Cell(18,6,'CP:',0,2,'L', false);
+        $pdf -> Cell(18,6,'Ciudad:',0,0,'L', false);
+
+        $pdf -> SetY(22);
+        $pdf -> SetX(140);
         
-        <link rel="stylesheet" href="../../../../css/estilos.css">
 
-        <style>
-            .error {
-                color: red;
+        $pdf -> SetFont("Courier", "", 10);
+        // Resto de celdas recorriendo el array
+        foreach ($clientes as $cliente) {
+
+            foreach ($cliente as $datos) {
+                $pdf -> Cell(60,6,$datos,0,2,'L', false);                
             }
+        }
+    }
 
-            h3 {
-                margin: 30px;
-            }
 
-            p {
-                margin-left: 70px;
-            }
+    // Función para insertar datos del array productos la factura
+    function creaFactura($productos,$pdf) {
 
-            form {
-                text-align:center;
-                margin: 40px;
-            }
+        // Posición de la tabla
+        $pdf -> SetY(70);
+        $pdf -> SetX(5);
 
-        </style>
-    </head>
+        $pdf -> SetFont("Courier", "B", 12);
+        // Primeras 4 celdas superiores
+        $pdf -> Cell(40,10,'Producto',1,0,'C', false);
+        $pdf -> Cell(40,10,'Cantidad',1,0,'C', false);
+        $pdf -> Cell(40,10,'Precio Ud.',1,0,'C', false);
+        $pdf -> Cell(40,10,'Importe',1,0,'C', false);
+        $pdf -> Cell(40,10,'IVA',1,0,'C', false);
 
-    <body>
-        <div class="container-fluid">
+        // Salto de línea
+        $pdf -> Ln();
+
+        $pdf -> SetFont("Courier", "", 10);
+        
+
+        // Resto de celdas recorriendo el array
+        foreach ($productos as $producto) {
+            $pdf -> SetX(5);
             
-            <?php
+            foreach ($producto as $datos) {
+                $pdf -> Cell(40,10,$datos,1,0,'C', false);
+            }
 
-                include("../../../html/header.php");
-            ?>
-
-            <!-- NAV -->
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-gradient lg-sticky-top d-flex">
-
-                <div class="navbar row container-fluid d-flex text-center">
-
-                    <ul class="navbar-nav row row-cols">
-
-                        <div class="col-md col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 12</a>
-                            </li>
-                        </div>
-                    </ul> 
-                </div>
-            </nav>
-
-            <main>
-
-                <div style="border: 1px black solid; margin: 10px;">
-
-                    <h3 style="text-align: center">Factura PDF</h3>
-
-                    <form action="./factura.php" method="post" name="formularioT12" enctype="multipart/form-data">
-
-                        <input type="submit" value="Descargar Factura">
-
-                    </form>
-
-                    <?php
-                        // Crear objeto PDF usando la clase de Header que extiende de FPDF
-                        $factura = new HeaderC;
-
-                        // Añadir una página
-                        $factura -> AddPage();
-
-                        // Guardar el fichero pdf
-                        $factura -> Output();
-
-                    ?>
-
-                </div>
-            </main>
-
-            <?php
-                // Ver Código del fichero actual
-                echo "<center><a href='http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'] . "' target='_blank'>Ver Código PHP</a></center>";
-
-                echo "<br>";
-
-                include("../../../html/footer.html");
-            ?>
-        </div>
-            
-            
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
-    </body>
-
-</html>
-
+            // Salto de línea
+            $pdf -> Ln();
+        }
+    }
+?>

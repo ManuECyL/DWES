@@ -1,3 +1,7 @@
+<?php
+    include("./validaciones.php");
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -31,6 +35,11 @@
                 justify-content: center;
                 align-items: center;
             }
+
+            form {
+                text-align:center;
+                margin: 40px;
+            }
         </style>
     </head>
 
@@ -54,18 +63,20 @@
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tareas Tema 3</a>
                             </li>
                         </div>
-
-                        <div class="col-md col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="./factura.php?">Factura PDF</a>
-                            </li>                      
-                        </div>
                     </ul> 
                 </div>
             </nav>
 
             <main>
                 <div style="border: 1px black solid; margin: 10px;">
+
+                    <?php
+                        if (existe("descargar")) {
+                                                                            
+                            header('Location: ./factura.php');
+                            exit;
+                        }
+                    ?>
 
                     <h3 style="text-align: center">Tarea 12 - Facturas PDF</h3>
 
@@ -85,6 +96,12 @@
                             <div id="divImagen"><img src="./imagenes/Tarea12_FacturasPDF.png" alt="Tarea11_Ejercicio1.png"></div>
                         </p>
                     <br>
+
+                    <form action="./factura.php" method="post" name="formularioT12" enctype="multipart/form-data">
+
+                        <input type="submit" value="Descargar Factura" name="descargar">
+
+                    </form>
                 </div>
             </main>
 
