@@ -39,6 +39,10 @@
     );
 
 
+    // Escribir algo en la página
+    $pdf -> Write(5, "Numero de factura: " . $now . "-" . $idFactura);
+    $pdf -> Write(5, "Fecha de factura: " . $now);
+
 
     // Llamar a la función creaFactura
     creaFactura($productos,$pdf);
