@@ -1,4 +1,5 @@
 <?php
+    header('Content-Type: text/html; charset=utf-8');
     include("./validaciones.php");
 
     require('../../../fpdf186/fpdf.php');
@@ -34,10 +35,10 @@
 
     // Array con los Productos
     $productos = array(
-        array("Cazadora Nike",1,80),
-        array("Pantalon Adidas",2,75),
-        array("Sudadera Supreme",1,250),
-        array("Camiseta Nike",4,35),
+        array("Cazadora Nike",2,80,21),
+        array("Pantalon Adidas",3,75,10),
+        array("Sudadera Supreme",1,250,21),
+        array("Camiseta Nike",4,35,4),
     );
 
 
@@ -158,12 +159,43 @@
         foreach ($productos as $producto) {
             $pdf -> SetX(5);
             
+            // Obtener el importe de cada producto multiplicando la cantidad por el precio ud.
+            $importe = ($producto[1] * $producto[2]);
+
+            // Obtener última posición/índice del array Producto, es decir, la posición del IVA
+            $ultimaPosicion = count($producto) - 1;
+
+            // Obtener el porcentaje de IVA del array
+            $porcentajeIVA = $producto[$ultimaPosicion];
+
+            // Calcular el IVA a pagar de cada producto
+            $precioIVA = calcularIVA($importe, $porcentajeIVA);
+
+            // Añadir el importe al array de cada producto antes del IVA
+            array_splice($producto, $ultimaPosicion, 0, $importe); // 0 son los elementos a eliminar desde el índice especificado
+
+            // Añadir el IVA ya calculado al array de cada producto
+            $producto[$ultimaPosicion + 1] = $precioIVA . "€ (".$porcentajeIVA."%)";
+
+
             foreach ($producto as $datos) {
-                $pdf -> Cell(40,10,$datos,1,0,'C', false);
-            }
+                $pdf -> Cell(40,10,$datos,1,0,'C', false);                
+            }           
 
             // Salto de línea
             $pdf -> Ln();
         }
+    }
+
+
+    // Calcula el IVA de un precio
+    function calcularIVA($precio, $IVA) {
+
+        // Obtener el dato númerico del porcentaje de IVA para multiplicarlo por el precio
+        $datoIVA = ((100 + $IVA) / 100);
+
+        $resultado = $precio * $datoIVA;
+
+        return $resultado;
     }
 ?>
