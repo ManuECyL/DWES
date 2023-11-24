@@ -189,7 +189,7 @@
 
             // Sumamos cada Importe y cada IVA con el anterior
             $totalBaseImponible += $importe;
-            $totalIVA += $precio;
+            $totalIVA += $precioIVA;
 
             
             foreach ($producto as $indice => $datos) {
@@ -211,7 +211,7 @@
         $pdf -> SetY(170);
         $pdf -> SetX(120);
 
-        $pdf -> SetFont("Courier", "B", 10);
+        $pdf -> SetFont("Courier", "B", 11);
         $pdf -> Cell(85,8,'Total Base Imponible:',1,2,'L', false);
         $pdf -> Cell(85,8,'Total IVA:',1,2,'L', false);
 
@@ -222,12 +222,12 @@
         $pdf -> SetY(170);
         $pdf -> SetX(180);
 
-        $pdf -> SetFont("Courier", "", 10);
+        $pdf -> SetFont("Courier", "", 11);
 
         $pdf -> Cell(18,8,$totalBaseImponible . ' $',0,2,'L', false);
         $pdf -> Cell(18,8,$totalIVA . ' $',0,2,'L', false);
 
-        $pdf -> SetFont("Courier", "B", 10);
+        $pdf -> SetFont("Courier", "B", 15);
         $pdf -> Cell(18,15,$totalFactura . ' $',0,2,'L', false);
 
         // Grosor de las línea
@@ -241,10 +241,7 @@
     // Calcula el IVA de un precio
     function calcularIVA($precio, $IVA) {
 
-        // Obtener el dato númerico del porcentaje de IVA para multiplicarlo por el precio
-        $datoIVA = ((100 + $IVA) / 100);
-
-        $resultado = $precio * $datoIVA;
+        $resultado = (($precio * $IVA) / 100);
 
         return $resultado;
     }
