@@ -62,10 +62,18 @@
     // Llamar a la función creaFactura
     creaFactura($productos, $pdf, $euro);
     
+    // Ver Código del fichero actual
+    $verCodigo = "http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'];
+    $pdf -> SetFont("Courier", "B", 12);
+    $pdf -> SetY(220);
+    $pdf -> Cell(0,10,"Ver codigo PHP",0,1,'C',false,$verCodigo);
+    // $pdf -> Link(10, $pdf->GetY(), $pdf->GetStringWidth('Ver Codigo PHP: '), 10,$verCodigo, '_blank');
+    
+
     // Guardar el fichero pdf
     $pdf -> Output();
 
-
+    
     // Función para insertar datos del array clientes en una tabla dentro del PDF
     function creaCliente($clientes, $pdf) {
         
