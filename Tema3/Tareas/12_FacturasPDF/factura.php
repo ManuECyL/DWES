@@ -111,7 +111,6 @@
         // Añadir tres ceros delante del id
         $idFactura = str_pad($contadorFactura, 4, '0', STR_PAD_LEFT);
 
-
         $pdf -> SetY(70);
         $pdf -> SetX(10);
 
@@ -152,17 +151,27 @@
         $pdf -> Ln();
 
         $pdf -> SetFont("Courier", "", 10);
-        
+
+        // Variables para guardar el valor total del Importe y del IVA
+        $totalBaseImponible = 0;
+        $totalIVA = 0;        
 
         // Resto de celdas recorriendo el array
         foreach ($productos as $producto) {
+
             $pdf -> SetX(5);
-            
-            // Obtener el importe de cada producto multiplicando la cantidad por el precio ud.
-            $importe = ($producto[1] * $producto[2]);
 
             // Obtener última posición/índice del array Producto, es decir, la posición del IVA
             $ultimaPosicion = count($producto) - 1;
+
+            // Posicion de los precios.Ud
+            $precio = $producto[$ultimaPosicion - 1];
+
+            // Añadir símbolo del € al precio.Ud
+            $producto[$ultimaPosicion - 1] = $precio;
+            
+            // Obtener el importe de cada producto multiplicando la cantidad por el precio ud.
+            $importe = ($producto[1] * $producto[2]);
 
             // Obtener el porcentaje de IVA del array
             $porcentajeIVA = $producto[$ultimaPosicion];
@@ -170,27 +179,62 @@
             // Calcular el IVA a pagar de cada producto
             $precioIVA = calcularIVA($importe, $porcentajeIVA);
 
-            $precio = $producto[$ultimaPosicion - 1];
-
-            // Añadir símbolo del € al precio
-            $producto[$ultimaPosicion - 1] = $precio.'&euro;';
-
             // Añadir el importe al array de cada producto antes del IVA
                 // array_splice($producto, $ultimaPosicion, 0, $importe); // 0 son los elementos a eliminar desde el índice especificado
-            $producto[$ultimaPosicion] = $importe.'€';
-
+            $producto[$ultimaPosicion] = $importe;
 
             // Añadir el IVA ya calculado al array de cada producto
-            $producto[$ultimaPosicion + 1] = $precioIVA.'€ ('.$porcentajeIVA.'%)';
+            $producto[$ultimaPosicion + 1] = $precioIVA.' $ ('.$porcentajeIVA.'%)';
 
 
-            foreach ($producto as $datos) {
+            // Sumamos cada Importe y cada IVA con el anterior
+            $totalBaseImponible += $importe;
+            $totalIVA += $precio;
+
+            
+            foreach ($producto as $indice => $datos) {
+                // Agregar el símbolo € después de los valores numéricos
+                $datos = (($indice !== 0) && ($indice !== 1) && ($indice !== $ultimaPosicion + 1)) ? $datos . ' $' : $datos;
+
+                // Insertar los datos en la tabla
                 $pdf -> Cell(40,10,$datos,1,0,'C', false);                
             }           
 
             // Salto de línea
             $pdf -> Ln();
         }
+
+        // Variable que calcula la suma de todos los Importes + la suma de todos los IVAs
+        $totalFactura = $totalBaseImponible + $totalIVA;
+
+        // Texto Total Base Imponible, Total IVA y TOTAL 
+        $pdf -> SetY(170);
+        $pdf -> SetX(120);
+
+        $pdf -> SetFont("Courier", "B", 10);
+        $pdf -> Cell(85,8,'Total Base Imponible:',1,2,'L', false);
+        $pdf -> Cell(85,8,'Total IVA:',1,2,'L', false);
+
+        $pdf -> SetFont("Courier", "B", 15);
+        $pdf -> Cell(85,15,'TOTAL:',1,0,'L', false);
+
+        // Datos Total Base Imponible, Total IVA y TOTAL
+        $pdf -> SetY(170);
+        $pdf -> SetX(180);
+
+        $pdf -> SetFont("Courier", "", 10);
+
+        $pdf -> Cell(18,8,$totalBaseImponible . ' $',0,2,'L', false);
+        $pdf -> Cell(18,8,$totalIVA . ' $',0,2,'L', false);
+
+        $pdf -> SetFont("Courier", "B", 10);
+        $pdf -> Cell(18,15,$totalFactura . ' $',0,2,'L', false);
+
+        // Grosor de las línea
+        $pdf -> SetLineWidth(1);
+
+        // Crea una línea horizontal debajo del TOTAL
+        $pdf -> Line(5, 205, 205, 205);
     }
 
 
