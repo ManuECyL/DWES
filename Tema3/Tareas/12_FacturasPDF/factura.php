@@ -1,5 +1,5 @@
 <?php
-    header('Content-Type: text/html; charset=utf-8');
+    // header('Content-Type: application/pdf');
     include("./validaciones.php");
 
     require('../../../fpdf186/fpdf.php');
@@ -9,6 +9,7 @@
 
     // Crear objeto PDF usando la clase de Header que extiende de FPDF
     $pdf = new HeaderC;
+    // $pdf->SetCharset('UTF-8');
 
     // Añadir una página
     $pdf -> AddPage();
