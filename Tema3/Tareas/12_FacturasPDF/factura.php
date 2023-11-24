@@ -8,9 +8,12 @@
 
     // Crear objeto PDF usando la clase de Header que extiende de FPDF
     $pdf = new HeaderC;
-
+    
     // Añadir una página
     $pdf -> AddPage();
+
+    // $text = "€";
+    $euro = iconv('UTF-8', 'windows-1252', '€');
 
     // Array de clientes para insertar en una tabla
     $clientes = array(
@@ -57,7 +60,7 @@
     identificadorFactura($contadorFactura, $pdf);
 
     // Llamar a la función creaFactura
-    creaFactura($productos,$pdf);
+    creaFactura($productos, $pdf, $euro);
     
     // Guardar el fichero pdf
     $pdf -> Output();
@@ -133,7 +136,7 @@
 
 
     // Función para insertar datos del array productos la factura
-    function creaFactura($productos,$pdf) {
+    function creaFactura($productos,$pdf, $euro) {
 
         // Posición de la tabla
         $pdf -> SetY(110);
@@ -172,7 +175,7 @@
             
             // Obtener el importe de cada producto multiplicando la cantidad por el precio ud.
             $importe = ($producto[1] * $producto[2]);
-
+            
             // Obtener el porcentaje de IVA del array
             $porcentajeIVA = $producto[$ultimaPosicion];
 
@@ -184,8 +187,7 @@
             $producto[$ultimaPosicion] = $importe;
 
             // Añadir el IVA ya calculado al array de cada producto
-            $producto[$ultimaPosicion + 1] = $precioIVA.' $ ('.$porcentajeIVA.'%)';
-
+            $producto[$ultimaPosicion + 1] = formatearNumero($precioIVA). $euro . ' ('.$porcentajeIVA.'%)';
 
             // Sumamos cada Importe y cada IVA con el anterior
             $totalBaseImponible += $importe;
@@ -194,7 +196,7 @@
             
             foreach ($producto as $indice => $datos) {
                 // Agregar el símbolo € después de los valores numéricos
-                $datos = (($indice !== 0) && ($indice !== 1) && ($indice !== $ultimaPosicion + 1)) ? $datos . ' $' : $datos;
+                $datos = (($indice !== 0) && ($indice !== 1) && ($indice !== $ultimaPosicion + 1)) ? formatearNumero($datos) . $euro : $datos;
 
                 // Insertar los datos en la tabla
                 $pdf -> Cell(40,10,$datos,1,0,'C', false);                
@@ -224,11 +226,11 @@
 
         $pdf -> SetFont("Courier", "", 11);
 
-        $pdf -> Cell(18,8,$totalBaseImponible . ' $',0,2,'L', false);
-        $pdf -> Cell(18,8,$totalIVA . ' $',0,2,'L', false);
+        $pdf -> Cell(18,8,formatearNumero($totalBaseImponible) . $euro,0,2,'L', false);
+        $pdf -> Cell(18,8,formatearNumero($totalIVA) . $euro,0,2,'L', false);
 
         $pdf -> SetFont("Courier", "B", 15);
-        $pdf -> Cell(18,15,$totalFactura . ' $',0,2,'L', false);
+        $pdf -> Cell(18,15,formatearNumero($totalFactura) . $euro,0,2,'L', false);
 
         // Grosor de las línea
         $pdf -> SetLineWidth(1);
@@ -244,5 +246,13 @@
         $resultado = (($precio * $IVA) / 100);
 
         return $resultado;
+    }
+
+    // Funcion para mostrar un numero con 2 decimales
+    function formatearNumero($numero) {
+        
+        $numeroFormateado = number_format($numero, 2, ',', '');
+
+        return $numeroFormateado;
     }
 ?>
