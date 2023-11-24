@@ -1,5 +1,4 @@
 <?php
-    // header('Content-Type: application/pdf');
     include("./validaciones.php");
 
     require('../../../fpdf186/fpdf.php');
@@ -9,7 +8,6 @@
 
     // Crear objeto PDF usando la clase de Header que extiende de FPDF
     $pdf = new HeaderC;
-    // $pdf->SetCharset('UTF-8');
 
     // Añadir una página
     $pdf -> AddPage();
@@ -172,11 +170,18 @@
             // Calcular el IVA a pagar de cada producto
             $precioIVA = calcularIVA($importe, $porcentajeIVA);
 
+            $precio = $producto[$ultimaPosicion - 1];
+
+            // Añadir símbolo del € al precio
+            $producto[$ultimaPosicion - 1] = $precio.'&euro;';
+
             // Añadir el importe al array de cada producto antes del IVA
-            array_splice($producto, $ultimaPosicion, 0, $importe); // 0 son los elementos a eliminar desde el índice especificado
+                // array_splice($producto, $ultimaPosicion, 0, $importe); // 0 son los elementos a eliminar desde el índice especificado
+            $producto[$ultimaPosicion] = $importe.'€';
+
 
             // Añadir el IVA ya calculado al array de cada producto
-            $producto[$ultimaPosicion + 1] = $precioIVA . "€ (".$porcentajeIVA."%)";
+            $producto[$ultimaPosicion + 1] = $precioIVA.'€ ('.$porcentajeIVA.'%)';
 
 
             foreach ($producto as $datos) {
