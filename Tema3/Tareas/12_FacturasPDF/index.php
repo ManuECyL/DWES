@@ -3,7 +3,7 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
     <head>
         <meta charset="UTF-8">
@@ -97,7 +97,7 @@
                         </p>
                     <br>
 
-                    <form action="./factura.php" method="post" name="formularioT12" enctype="multipart/form-data">
+                    <form action="./factura.php" method="post" name="formularioT12" enctype="multipart/form-data" target="_blank">
 
                         <input type="submit" value="Descargar Factura" name="descargar">
 

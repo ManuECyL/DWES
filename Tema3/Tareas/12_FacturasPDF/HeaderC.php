@@ -71,13 +71,23 @@
             $this -> SetTextColor(100,100,100);
 
             // Posición Alto del texto: Abajo cerca del lado derecho
-            $this -> SetY(-20);
+            $this -> SetY(-17);
 
             // Posición Ancho del texto: Cerca del lado derecho
             $this -> SetX(-20);
 
             // Escribir número de página
             $this -> Write(5, $this -> PageNo());
+
+
+            // Posición Alto del texto: Centrada
+            $this -> SetY(-20);
+
+            // Posición Ancho del texto: Centrada
+            $this -> SetX(80);
+
+            // Escribir marca
+            $this -> Write(10, "StreetWear");
 
             // Añadir un salto de línea
             $this -> Ln();
