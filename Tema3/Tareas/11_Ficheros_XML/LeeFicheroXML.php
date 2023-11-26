@@ -130,7 +130,7 @@
                                     $xml = simplexml_load_file("notas.xml");
 
                             ?>
-                                    <form action="./editar.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                                    <form action="./EditarXML.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
 
                             <?
                                     foreach ($xml -> alumno as $alumno) {

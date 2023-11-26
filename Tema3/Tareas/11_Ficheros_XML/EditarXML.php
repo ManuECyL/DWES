@@ -55,11 +55,9 @@
                 background-color: lightblue;
             }
 
-            #inputAñadir {
-                display: flex;
-                text-align: center;
-                margin: auto;
-                margin-bottom: 20px;
+            form {
+                text-align:center;
+                margin: 40px;
             }
         </style>
     </head>
@@ -105,61 +103,51 @@
                             header('Location: ./AñadirXML.php');
                             exit;
                         }
+
+
+                        if (file_exists("notas.xml")) {
+
+                            // Crea un nuevo objeto SimpleXMLElement para el XML
+                            $xml = simplexml_load_file("notas.xml");
+
+                            // foreach ($xml -> alumno as $alumno) {
+                                    
+                            // }
+                    ?>
+                             </form>
+
+                    <?php                                       
+                            
+                        } else {
+                    ?>
+                            <span class="error">El fichero no existe</span>
+                    <?php
+                        }
                     ?>
 
-                    <table border="1">
-                        <thead>
-                            <?php
-                                
-    
-                                $filaSuperior = array("ALUMNO", "NOTA 1", "NOTA 2", "NOTA 3", "EDITAR");
-                            
-                                // Valores fila superior
-                                foreach ($filaSuperior as $clave => $value) {
-                                    echo "<th>$value</th>";
-                                }
-                            ?>
-                        </thead>
-            
-                        <tbody>
-                            <?php
 
-                                if (file_exists("notas.xml")) {
+                    <form action="./EditarXML.php" method="post" name="formularioT11" enctype="multipart/form-data">
 
-                                    // Crea un nuevo objeto SimpleXMLElement para el XML
-                                    $xml = simplexml_load_file("notas.xml");
 
-                            ?>
-                                    <form action="./editar.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly>
 
-                            <?
-                                    foreach ($xml -> alumno as $alumno) {
-                                        echo "<tr>";
-                                            echo "<td>" . $alumno -> nombre . "</td>";
-                                            echo "<td>" . $alumno -> nota1 . "</td>";
-                                            echo "<td>" . $alumno -> nota2 . "</td>";
-                                            echo "<td>" . $alumno -> nota3 . "</td>";
-                                            echo "<td><input type=submit value=Editar name=editar></td>";
-                                        echo "</tr>";
-                                    }
-                            ?>
-                                    </form>
-                        </tbody>
-                    </table>
+                        <br><br>
 
-                            <?php                                       
-                                
-                                } else {
-                            ?>
-                                    <span class="error">El fichero no existe</span>
-                            <?php
-                                }
-                            ?>
+                        <label for="nota1">Nota 1:</label> <input type="text" name="nota1" id="nota1">
 
-                    <br><br>
+                        <br><br>
 
-                    <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
-                        <input type="submit" value="Añadir" name="añadir" id="inputAñadir">
+                        <label for="nota2">Nota 2:</label> <input type="text" name="nota2" id="nota2">
+
+                        <br><br>
+
+                        <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3">
+
+                        <br><br>
+
+                        <input type="submit" value="Volver" name="volver">
+                        <input type="submit" value="Guardar" name="guardar">
+
                     </form>
                     
                 </div>
