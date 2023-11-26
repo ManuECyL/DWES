@@ -92,7 +92,7 @@
 
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Leer Notas.xml</h3>
+                    <h3 style="text-align: center">Notas.xml</h3>
 
                     <?php
 

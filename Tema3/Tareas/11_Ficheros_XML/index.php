@@ -60,12 +60,6 @@
                                 <a class="nav-link navTema" href="./TransformaFichero.php?">Transforma Fichero</a>
                             </li>                      
                         </div>
-
-                        <div class="col-md col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="./LeeFicheroXML.php?">Lee Fichero XML</a>
-                            </li>                      
-                        </div>
                     </ul> 
                 </div>
             </nav>

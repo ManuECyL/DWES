@@ -101,7 +101,7 @@
                             // Guarda el contenido del XML en el archivo de salida
                             $xml->asXML($notasXML);
 
-                            echo 'Transformación completada.';
+                            echo 'Transformación completada';
                         
                         } else {
                     ?>
@@ -109,8 +109,8 @@
                     <?php
                         }
 
-                        // header('Location: ./LeeFicheroXML.php');
-                        // exit;
+                        header('Location: ./LeeFicheroXML.php');
+                        exit;
                     ?>
 
                     <br><br>
