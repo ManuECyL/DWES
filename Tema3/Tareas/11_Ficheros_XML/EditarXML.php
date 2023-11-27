@@ -90,58 +90,65 @@
 
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Notas.xml</h3>
+                    <h3 style="text-align: center">Editar Notas.xml</h3>
 
                     <?php
 
-                        if (file_exists("notas.xml") && existe("editar")) {
+                        if (existe("volver")) {
                                                         
-                            header('Location: ./EditarXML.php');
+                            header('Location: ./LeeFicheroXML.php');
                             exit;
                         
-                        } elseif (file_exists("notas.xml") && existe("añadir")) {
-                            header('Location: ./AñadirXML.php');
-                            exit;
-                        }
+                        } elseif (enviado() && existe("guardar")) {
 
+                            // Obtener datos del formulario
+                            $alumno = $_POST['alumno'];
+                            $nota1 = $_POST['nota1'];
+                            $nota2 = $_POST['nota2'];
+                            $nota3 = $_POST['nota3'];
 
-                        if (file_exists("notas.xml")) {
-
-                            // Crea un nuevo objeto SimpleXMLElement para el XML
+                            // Cargar el archivo XML
                             $xml = simplexml_load_file("notas.xml");
 
-                            // foreach ($xml -> alumno as $alumno) {
-                                    
-                            // }
-                    ?>
-                             </form>
+                            // Buscar el alumno en el XML y actualizar las notas
+                            foreach ($xml->alumno as $alumnoXML) {
 
-                    <?php                                       
-                            
-                        } else {
-                    ?>
-                            <span class="error">El fichero no existe</span>
-                    <?php
-                        }
+                                if ((string)$alumnoXML->nombre === $alumno) {
+
+                                    $alumnoXML->nota1 = $nota1;
+                                    $alumnoXML->nota2 = $nota2;
+                                    $alumnoXML->nota3 = $nota3;
+
+                                    break;
+                                }
+                            }
+
+                            // Guardar los cambios en el archivo XML
+                            $xml->asXML("notas.xml");
+
+                            // // Redirigir de vuelta a la página de lectura
+                            header('Location: ./LeeFicheroXML.php');
+                            exit; 
+                        } 
                     ?>
 
 
                     <form action="./EditarXML.php" method="post" name="formularioT11" enctype="multipart/form-data">
 
 
-                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly>
+                        <label for="alumno">Alumno:</label> <input type="text" name="alumno" id="alumno" readonly value="<?= $_POST['alumno'] ?>">
 
                         <br><br>
 
-                        <label for="nota1">Nota 1:</label> <input type="text" name="nota1" id="nota1">
+                        <label for="nota1">Nota 1:</label> <input type="text" name="nota1" id="nota1" value="<?= $_POST['nota1'] ?>">
 
                         <br><br>
 
-                        <label for="nota2">Nota 2:</label> <input type="text" name="nota2" id="nota2">
+                        <label for="nota2">Nota 2:</label> <input type="text" name="nota2" id="nota2" value="<?= $_POST['nota2'] ?>">
 
                         <br><br>
 
-                        <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3">
+                        <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3" value="<?= $_POST['nota3'] ?>">
 
                         <br><br>
 

@@ -129,21 +129,26 @@
                                     // Crea un nuevo objeto SimpleXMLElement para el XML
                                     $xml = simplexml_load_file("notas.xml");
 
-                            ?>
-                                    <form action="./EditarXML.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
-
-                            <?
                                     foreach ($xml -> alumno as $alumno) {
                                         echo "<tr>";
                                             echo "<td>" . $alumno -> nombre . "</td>";
                                             echo "<td>" . $alumno -> nota1 . "</td>";
                                             echo "<td>" . $alumno -> nota2 . "</td>";
                                             echo "<td>" . $alumno -> nota3 . "</td>";
-                                            echo "<td><input type=submit value=Editar name=editar></td>";
+                                            echo "<td>" 
+                                                ?>
+                                                    <form action="./EditarXML.php" method="post" name="formularioT11" enctype="multipart/form-data">
+                                                        <input type="hidden" name="alumno" value="<? echo $alumno->nombre?>">
+                                                        <input type="hidden" name="nota1" value="<? echo $alumno->nota1?>">
+                                                        <input type="hidden" name="nota2" value="<? echo $alumno->nota2?>">
+                                                        <input type="hidden" name="nota3" value="<? echo $alumno->nota3?>">
+                                                        <input type="submit" value="Editar" name="editar">
+                                                    </form>
+                                                <?php
+                                            "</td>";                                            
                                         echo "</tr>";
                                     }
                             ?>
-                                    </form>
                         </tbody>
                     </table>
 
@@ -156,9 +161,9 @@
                                 }
                             ?>
 
-                    <br><br>
+                    <br>
 
-                    <form action="./notas.php" method="post" name="formularioT10_2" enctype="multipart/form-data">
+                    <form action="./LeeFicheroXML.php" method="post" name="formularioT11" enctype="multipart/form-data">
                         <input type="submit" value="Añadir" name="añadir" id="inputAñadir">
                     </form>
                     

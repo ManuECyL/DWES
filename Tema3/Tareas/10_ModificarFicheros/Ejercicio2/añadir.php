@@ -128,10 +128,6 @@
 
                         <label for="nota3">Nota 3:</label> <input type="text" name="nota3" id="nota3">
 
-                     <?php
-
-                        ?>
-
                         <br><br>
 
                         <input type="submit" value="Volver" name="volver">
