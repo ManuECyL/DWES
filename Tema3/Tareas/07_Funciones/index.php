@@ -27,6 +27,10 @@
             p {
                 text-align: center;
             }
+
+            pre {
+                text-align: center;
+            }
         </style>
     </head>
 
@@ -55,13 +59,14 @@
 
                         <div class="col-md-4 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio1.php">Ejercicio 1</a>
+                        <a class="nav-link navTema" href="http://<?php echo $_SERVER['SERVER_ADDR']; ?>/verCodigo.php?fichero=<?php echo dirname($_SERVER['SCRIPT_FILENAME']) . '/Ejercicios/ejercicio1.php'; ?>" target="_blank">Ejercicio 1</a>
                         </li>
                         </div>
 
                         <div class="col-md-4 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./Ejercicios/ejercicio2.php?variable=">Ejercicio 2</a>
+                            <a class="nav-link navTema" href="http://<?php echo $_SERVER['SERVER_ADDR']; ?>/verCodigo.php?fichero=<?php echo dirname($_SERVER['SCRIPT_FILENAME']) . '/Ejercicios/ejercicio2.php'; ?>" target="_blank">Ejercicio 2</a>
+
                         </li>                      
                         </div>
                     </ul> 
@@ -135,14 +140,18 @@
                             e. True si pueden repetirse/ False si no pueden repetirse.
                         </p>
                         
-                        <?php
-                            $array = array();
-                            $repetirse = false;
+                        <p>
+                            <pre>
+                                <?php
+                                    // Ejemplo de uso:
+                                    $misNumeros = [];
 
-                            numAleatorios($array, 0, 15, 10, $repetirse);
-
-                            
-                        ?>
+                                    if (numAleatorios($misNumeros, 1, 10, 10, false)) {
+                                        print_r($misNumeros);
+                                    } 
+                                ?>
+                            </pre>
+                        </p>
                 </div>
             </main>
 

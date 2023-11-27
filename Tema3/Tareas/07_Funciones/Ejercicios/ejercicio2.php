@@ -1,24 +1,33 @@
 <?php
 
-    function numAleatorios(&$array, $min, $max, $numeros, &$repetirse) {
+    function numAleatorios(&$array, $min, $max, $numeros, $repetirse) {
 
-        for ($i = 0; $i < $numeros; $i++) { 
-            
-            $num = rand($min, $max);
+        $rango = $max - $min + 1;
 
-            array_push($array, $num);
+        // Verifica si la cantidad de números a generar es mayor que el rango
+        if ($repetirse || $numeros <= $rango) {
 
-            // echo $num . "\n";
+            for ($i = 0; $i < $numeros; $i++) { 
+                
+                $numero = rand($min,$max);
 
-            // if ($repetirse && (array_values($array) != $num)) {
-            //     array_push($array, $num);
+                // Verifica si se permiten repeticiones o si el número no está en el array
+                while (!$repetirse && in_array($numero, $array)) {
+                    $numero = rand($min, $max);
+                }
+    
+                // Agrega el número al array
+                $array[] = $numero;
+            }
 
-            //     print_r($array);
+            return true; 
 
-            // }
-        }    
+        } else {
+            // Si no se permiten repeticiones y la cantidad es mayor que el rango, devuelve false
+            echo 'Error: No se pueden generar ' . $numeros . ' números distintos en el rango [' . $min . ', ' . $max . ']';
 
-        print_r($array);
+            return false;
+        }
     }
-
 ?>  
+
