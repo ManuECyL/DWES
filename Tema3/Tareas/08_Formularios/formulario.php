@@ -73,15 +73,15 @@
 
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
-                            echo "<pre>";
-                            print_r($_REQUEST);
+                            mostrarTodo();
 
                         // Si hay algún error
                         } else {
                     ?>
 
-                            <form action="" method="get" name="formulario1" enctype="multipart/form-data">
+                            <form action="./formulario.php" method="post" name="formulario1" enctype="multipart/form-data">
 
+                            <!-- NOMBRE -->
                                 <label for="nombre">Alfabetico: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value=<?php recuerda('nombre')?>></label>
                                 <span class="error">
                                     <?php            
@@ -91,10 +91,13 @@
 
                                 <br><br>
 
-                                <label for="nombre">Alfabetico Opcional: <input type="text" name="nombreOp" id="nombreOp" placeholder="Nombre"></label>
+                            <!-- NOMBRE OPCIONAL -->
+                                <label for="nombre">Alfabetico Opcional: <input type="text" name="nombreOp" id="nombreOp" placeholder="Nombre Opcional" value=<?php recuerda('nombreOp')?>></label>
 
                                 <br><br>
 
+
+                            <!-- APELLIDO -->
                                 <label for="apellido">Alfanumérico: <input type="text" name="apellido" id="apellido" placeholder="Apellido" value=<?php recuerda('apellido')?>></label>
                                 <span class="error">
                                     <?php            
@@ -104,11 +107,14 @@
 
                                 <br><br>
 
-                                <label for="apellido">Alfanumérico Opcional: <input type="text" name="apellidoOp" id="apellidoOp" placeholder="Apellido"></label>
+                            <!-- APELLIDO OPCIONAL -->
+                                <label for="apellido">Alfanumérico Opcional: <input type="text" name="apellidoOp" id="apellidoOp" placeholder="Apellido Opcional" value=<?php recuerda('apellidoOp')?>></label>
 
                                 <br><br>
 
-                                <label for="numérico">Numérico: <input type="number" name="numérico" id="numérico" placeholder="Numérico" value=<?php recuerda('apellidoN')?>></label>
+
+                            <!-- NUMÉRICO -->
+                                <label for="numérico">Numérico: <input type="number" name="numérico" id="numérico" placeholder="Numérico" value=<?php recuerda('numérico')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'numérico');
@@ -117,14 +123,15 @@
 
                                 <br><br>
 
-                                <label for="numéricoOP">Numérico Opcional: <input type="number" name="numéricoOp" id="numéricoOp" placeholder="Numérico"></label>
+                            <!-- NUMÉRICO OPCIONAL -->
+                                <label for="numéricoOP">Numérico Opcional: <input type="number" name="numéricoOp" id="numéricoOp" placeholder="Numérico" value=<?php recuerda('numérico')?>></label>
 
                                 <br><br><br>
 
-                                <!-- 
-                                    Formato de la fecha: AAAA-mm-dd
-                                -->
-                                <label for="fecha">Fecha: <input type="date" name="fecha" id="fecha" value=<?php recuerda('fecha')?>></label>
+
+                            <!-- FECHA - Formato de la fecha: dd-mm-yyyy -->
+                                
+                                <label for="fecha">Fecha: <input type="date" name="fecha" id="fecha" placeholder="Formato dd-mm-yyyy" value=<?php recuerda('fecha')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'fecha');
@@ -133,10 +140,13 @@
 
                                 <br><br>
 
-                                <label for="fecha_n">Fecha Opcional: <input type="date" name="fechaOp" id="fechaOp"></label>
+                            <!-- FECHA OPCIONAL -->
+                                <label for="fecha_n">Fecha Opcional: <input type="date" name="fechaOp" id="fechaOp" placeholder="Formato dd-mm-yyyy" value=<?php recuerda('fechaOp')?>></label>
 
                                 <br><br><br>
 
+
+                            <!-- RADIO -->
                                 <p>Radio Obligatorio:</p>
                                 <!-- 
                                     Si queremos que solo se pueda elegir 1, hay que poner el mismo name.
@@ -156,6 +166,8 @@
 
                                 <br><br>
 
+
+                            <!-- SELECT -->
                                 <p>Select</p>
                                 <!-- 
                                     Primera opción con value = 0 y texto de seleccionar opción para ayudar al usuario y que esa opción no se envíe
@@ -179,26 +191,27 @@
 
                                 <br><br>
 
-                                <p>Check</p>
-                                <!-- 
-                                    Para enviar más de una del grupo, se envía el name con corchetes para que lo introduzca en un array.
-                                        value => Para determinar que valor queremos que se envíe.
+
+                            <!-- CHECK -->
+                                <p>CheckBox</p>
+                             <!-- 
+                                Para enviar más de una del grupo, se envía el name con corchetes para que lo introduzca en un array.
+                                value => Para determinar que valor queremos que se envíe.
                                 -->
-                                <label for="ch1">Check1 <input <?php recuerdaCheck('checks', 'Check1')?> type="checkbox" name="checks[]" id="ch1" value="Check1"></label>
-
-                                <label for="ch2">Check2 <input <?php recuerdaCheck('checks', 'Check2')?> type="checkbox" name="checks[]" id="ch2" value="Check2"></label>
-                                
-                                <label for="ch3">Check3 <input <?php recuerdaCheck('checks', 'Check3')?> type="checkbox" name="checks[]" id="ch3" value="Check3"></label>
-
                                 <span class="error">
                                     <?php            
                                         errores($errores,'checks');
                                     ?>
                                 </span>
 
-                                <br><br><br>
+                                <?php
+                                    generaChecks();
+                                ?>
+
+                                <br>
 
                     
+                            <!-- TELÉFONO -->
                                 <label for="telefono">Nº Teléfono: <input type="text" name="telefono" id="telefono" placeholder="654987321" value=<?php recuerda('telefono')?>></label>
                                 <span class="error">
                                     <?php            
@@ -208,6 +221,8 @@
 
                                 <br><br>
 
+
+                            <!-- EMAIL -->
                                 <label for="email">Email: <input type="email" name="email" id="email" placeholder="prueba@prueba.com" value=<?php recuerda('email')?>></label>
                                 <span class="error">
                                     <?php            
@@ -217,6 +232,8 @@
 
                                 <br><br>
 
+
+                            <!-- CONTRASEÑA -->
                                 <label for="contraseña">Contraseña: <input type="password" name="contraseña" id="contraseña" value=<?php recuerda('contraseña')?>></label>
                                 <span class="error">
                                     <?php            
@@ -227,7 +244,7 @@
                                 <br><br>
                                 
 
-                                <!-- Fichero que recibe el servidor en $_FILES-->
+                            <!-- FICHERO - Fichero que recibe el servidor en $_FILES-->
                                 <label for="fichero">Subir documento <input type="file" name="fichero" id="fichero" value=<?php recuerda('fichero')?>></label>                                
                                 <span class="error">
                                     <?php            

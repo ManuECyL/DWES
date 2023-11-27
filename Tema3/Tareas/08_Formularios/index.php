@@ -73,7 +73,7 @@
 
                         <p>
                             b) Si hay alguno de los campos del formulario que no están correctos, se muestra un mensaje en rojo, diciendo que está vacío.
-                            <img src="./Imagen_b.png" alt="Imagen_b">
+                            <img src="./imagenes/Imagen_b.png" alt="Imagen_b">
                         </p>
 
                         <p>
