@@ -73,13 +73,14 @@
 
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
+                            subirFichero('fichero');
                             mostrarTodo();
 
                         // Si hay algún error
                         } else {
                     ?>
 
-                            <form action="./formulario.php" method="post" name="formulario1" enctype="multipart/form-data">
+                            <form action="" method="post" name="formulario1" enctype="multipart/form-data">
 
                             <!-- NOMBRE -->
                                 <label for="nombre">Alfabetico: <input type="text" name="nombre" id="nombre" placeholder="Nombre" value=<?php recuerda('nombre')?>></label>
@@ -114,7 +115,7 @@
 
 
                             <!-- NUMÉRICO -->
-                                <label for="numérico">Numérico: <input type="number" name="numérico" id="numérico" placeholder="Numérico" value=<?php recuerda('numérico')?>></label>
+                                <label for="numérico">Numérico: <input type="text" name="numérico" id="numérico" placeholder="Numérico" value="<?php recuerda('numérico')?>"></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'numérico');
@@ -124,14 +125,18 @@
                                 <br><br>
 
                             <!-- NUMÉRICO OPCIONAL -->
-                                <label for="numéricoOP">Numérico Opcional: <input type="number" name="numéricoOp" id="numéricoOp" placeholder="Numérico" value=<?php recuerda('numérico')?>></label>
-
+                                <label for="numéricoOP">Numérico Opcional: <input type="text" name="numéricoOp" id="numéricoOp" placeholder="Numérico" value=<?php recuerda('numéricoOp')?>></label>
+                                <span class="error">
+                                    <?php            
+                                        errores($errores,'numéricoOp');
+                                    ?>
+                                </span>
                                 <br><br><br>
 
 
                             <!-- FECHA - Formato de la fecha: dd-mm-yyyy -->
                                 
-                                <label for="fecha">Fecha: <input type="date" name="fecha" id="fecha" placeholder="Formato dd-mm-yyyy" value=<?php recuerda('fecha')?>></label>
+                                <label for="fecha">Fecha: <input type="date" name="fecha" id="fecha" placeholder="Formato dd/mm/yyyy" value=<?php recuerda('fecha')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'fecha');
@@ -141,8 +146,12 @@
                                 <br><br>
 
                             <!-- FECHA OPCIONAL -->
-                                <label for="fecha_n">Fecha Opcional: <input type="date" name="fechaOp" id="fechaOp" placeholder="Formato dd-mm-yyyy" value=<?php recuerda('fechaOp')?>></label>
-
+                                <label for="fecha_n">Fecha Opcional: <input type="date" name="fechaOp" id="fechaOp" placeholder="Formato dd/mm/yyyy" value=<?php recuerda('fechaOp')?>></label>
+                                <span class="error">
+                                    <?php            
+                                        errores($errores,'fechaOp');
+                                    ?>
+                                </span>
                                 <br><br><br>
 
 
@@ -223,7 +232,7 @@
 
 
                             <!-- EMAIL -->
-                                <label for="email">Email: <input type="email" name="email" id="email" placeholder="prueba@prueba.com" value=<?php recuerda('email')?>></label>
+                                <label for="email">Email: <input type="text" name="email" id="email" placeholder="prueba@prueba.com" value=<?php recuerda('email')?>></label>
                                 <span class="error">
                                     <?php            
                                         errores($errores,'email');
