@@ -20,8 +20,7 @@
                 margin-left: 50px;
             }
 
-            p {
-                /* margin-left: 190px; */
+            .figuras {
                 text-align: center;
             }
         </style>
@@ -57,77 +56,170 @@
 
                     <h6>1. Realiza un programa utilizando bucles que muestre una pirámide, teniendo en cuenta el numero de filas que pase el usuario por la URL.</h6>
                         <p>
-                            <?php
-                                $filas = $_GET["filas"];
+                            <div class="figuras">
+                                <?php
+                                    // Obtener el número de filas desde la URL
+                                    $filas = $_GET["filas"];
 
-                                for ($i = 1; $i <= $filas; $i++) { 
+                                    // Imprimir la pirámide
+                                    echo 'Pirámide con ' . $filas . ' filas';
+                                    echo '<br>';
+
+                                    for ($i = 1; $i <= $filas; $i++) {
+
+                                        // Imprimir espacios en blanco para alinear a la derecha
+                                        for ($j = 1; $j <= $filas - $i; $j++) {
+                                            echo '&nbsp;';
+                                        }
                                     
-                                    for ($asterisco = 1; $asterisco <= $i; $asterisco++) { 
-                                        echo "* ";
+                                        // Imprimir asteriscos para formar la pirámide
+                                        for ($j = 1; $j <= 2 * $i - 1; $j++) {
+                                            echo '*';
+                                        }
+                                    
+                                        echo '<br>';
                                     }
-
-                                    echo "<br>";
-                                }
-
-                                // for ($i = 1; $i < ($filas / 2); $i++) { 
-                                    
-                                //     for ($espacio = 1; $espacio < ($filas - $i); $espacio++) { 
-                                //         echo "&nbsp;";
-                                //         echo "&nbsp;";
-                                //     }
-
-                                //     for ($asterisco = 1; $asterisco <= (($i * 2) - 1); $asterisco++) { 
-                                        
-                                //         if ($asterisco == 1 || $asterisco == (($i * 2) - 1)) {
-                                //             echo "*";
-                                            
-                                //         } else {
-                                //             echo "&nbsp;";
-                                //             echo "&nbsp;";
-                                //         }
-                                        
-                                //     }
-
-                                //     echo "<br>";
-                                // }
-
-                            ?>
+                                ?>
+                            </div>
                         </p>   
             
                     <h6>2. Realiza un programa utilizando bucles que muestre un rombo, teniendo en cuenta el número de filas que pase el usuario por la URL.</h6>
                         <p>
-                            <?php
-                                // $filas = $_GET["filas"];
+                            <div class="figuras">
+                                <?php
+                                    // Imprimir el rombo
+                                    echo 'Rombo con ' . $filas . ' filas';
+                                    echo '<br>';
 
-                                // for ($i = 1; $i <= $filas; $i++) { 
+                                    for ($i = 1; $i <= $filas; $i++) {
+
+                                        for ($j = 1; $j <= $filas - $i; $j++) {
+                                            echo '&nbsp;';
+                                        }
+
+                                        for ($j = 1; $j <= 2 * $i - 1; $j++) {
+                                            echo '*';
+                                        }
+
+                                        echo '<br>';
+                                    }
                                     
-                                //     for ($asterisco = 1; $asterisco <= $i; $asterisco++) { 
-                                //         echo "* ";
-                                //     }
+                                    for ($i = $filas - 1; $i >= 1; $i--) {
 
-                                //     echo "<br>";
+                                        for ($j = 1; $j <= $filas - $i; $j++) {
+                                            echo '&nbsp;';
+                                        }
 
-                                    // for ($j = $filas - 1; $j <= $filas ; $j--) { 
-                                    //     echo " *";
-                                    // }
+                                        for ($j = 1; $j <= 2 * $i - 1; $j++) {
+                                            echo '*';
+                                        }
 
-                                    // echo "<br>";
-                                // }
-                            ?>
+                                        echo '<br>';
+                                    }
+                                ?>
+                            </div>
                         </p>
 
                     <h6>3. Realiza un programa utilizando bucles que muestre un rombo hueco, teniendo en cuenta el numero de filas que pase el usuario por la URL.</h6>
                         <p>
+                            <div class="figuras">
+                                <?php
+                                    // Imprimir el rombo hueco
+                                    echo 'Rombo Hueco con ' . $filas . ' filas';
+                                    echo '<br>';
 
+                                    for ($i = 1; $i <= $filas; $i++) {
+
+                                        for ($j = 1; $j <= $filas - $i; $j++) {
+                                            echo '&nbsp;&nbsp;';
+                                        }
+
+                                        for ($j = 1; $j <= 2 * $i - 1; $j++) {
+
+                                            if ($j == 1 || $j == 2 * $i - 1 || $i == $filas ) {
+                                                echo '*';
+
+                                            } else {
+                                                echo '&nbsp;&nbsp;';
+                                            }
+                                        }
+                                        echo '<br>';
+                                    }
+
+                                    for ($i = $filas - 1; $i >= 1; $i--) {
+
+                                        for ($j = 1; $j <= $filas - $i; $j++) {
+                                            echo '&nbsp;&nbsp;';
+                                        }
+
+                                        for ($j = 1; $j <= 2 * $i - 1; $j++) {
+                                            
+                                            if ($j == 1 || $j == 2 * $i - 1 || $i == $filas) {
+                                                echo '*';
+
+                                            } else {
+                                                echo '&nbsp;&nbsp;';
+                                            }
+                                        }
+                                        echo '<br>';
+                                    }
+                                ?>
+                            </div>
                         </p>
 
                     <h6>4. Realiza un programa que le introduzca un valor (pasado por la URL) de un producto con 2 decimales y posteriormente un valor con el que pagar por encima (Valor del producto 6.33€ y ha pagado con 10€). Muestra el número mínimo de monedas con las que puedes devolver el cambio.</h6>
                         <p>
+                            <div class="figuras">
+                                <?php
+                                    // Obtener valores de la URL
+                                    $precioProducto = $_GET['precio'];
+                                    $pagado = $_GET['pagado'];
 
+                                    // Calcular el cambio
+                                    $cambio = $pagado - $precioProducto;
+
+                                    // Definir los valores de las monedas
+                                    $monedas = [2, 1, 0.5, 0.2, 0.1, 0.05, 0.02, 0.01];
+
+                                    // Inicializar el contador de monedas
+                                    $contadorMonedas = 0;
+
+                                    // Calcular el cambio en monedas
+                                    foreach ($monedas as $valorMoneda) {
+                                        // Calcular la cantidad de esta moneda en el cambio
+                                        $cantidadMoneda = floor($cambio / $valorMoneda);
+
+                                        // Actualizar el contador de monedas
+                                        $contadorMonedas += $cantidadMoneda;
+
+                                        // Actualizar el cambio
+                                        $cambio -= $cantidadMoneda * $valorMoneda;
+                                    }
+
+                                    echo '<p>Precio del producto: ' . number_format($precioProducto, 2) . ' €</p>';
+                                    echo '<p>Pagado: ' . number_format($pagado, 2) . ' €</p>';
+                                    echo '<p>Cambio: ' . number_format($pagado - $precioProducto, 2) . ' €</p>';
+                                    echo '<p>Número mínimo de monedas para el cambio: ' . $contadorMonedas . '</p>';
+                                ?>
+                            </div>
                         </p>
                             
                     <h6>5. Escriba un programa que se le pase un año por la URL y que escriba si es bisiesto o no.</h6>
                         <p>
+                            <div class="figuras">
+                                <?php
+                                    // Obtener el año de la URL
+                                    $anio = $_GET['anio'];
+
+                                    // Verificar si es bisiesto
+                                    if ((($anio % 4 == 0) && ($anio % 100 != 0)) || ($anio % 400 == 0)) {
+                                        echo "El año $anio es bisiesto";
+
+                                    } else {
+                                        echo "El año $anio no es bisiesto";
+                                    }
+                                ?>
+                            </div>
 
                         </p>
                 </div>
