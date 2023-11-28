@@ -78,7 +78,8 @@
 
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
-                            mostrarResultado();
+                            
+                            buscarPelicula('peliculas.xml', $_REQUEST['buscarText']);
                             
                         // Si hay algún error
                         } else {
@@ -104,6 +105,8 @@
 
                     <?php // Abrir php
                         } // Cerrar el else
+
+                            echo "<br>";
 
                          // Ver Código del fichero actual
                             echo "<center><a href='http://". $_SERVER['SERVER_ADDR'] ."/verCodigo.php?fichero=". $_SERVER['SCRIPT_FILENAME'] . "' target='_blank'>Ver Código PHP</a></center>";

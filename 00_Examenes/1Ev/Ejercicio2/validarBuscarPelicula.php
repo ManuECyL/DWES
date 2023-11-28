@@ -41,75 +41,43 @@
     }
 
 
-    function buscarPelicula($dato) {
-
-        if ($dato == $titulo || $dato == $actor) {
-            
-        }
-
-    }
-
-
-    function leerFichero($archivo) {
+    function buscarPelicula($archivo, $busqueda) {
 
         // Crear archivo XML con DOM
         $dom = new DOMDocument('1.0','utf-8');
         
         // Leer un archivo XML
-        $dom -> load($archivo);
+        $dom -> load('../Ejercicio1/'.$archivo);
 
-        // Bucle para ver los peliculas. Hijos del dom.
-        foreach ($dom->childNodes as $peliculas) {
-        
-            // Bucle para ver cada instrumento. Hijos de peliculas
-            foreach ($peliculas->childNodes as $pelicula) {
+        // Obtener los elementos pelicula
+        $peliculaLista = $dom->getElementsByTagName('pelicula');
 
-                // Evitar el fallo al formatear el archivo XML
-                if ($pelicula->nodeType == 1) {
+        // Bucle para recorrer cada pelicula y obtener el titulo y los actores
+        foreach ($peliculaLista as $pelicula) {
+            
+            $tagTitulo = $pelicula->getElementsByTagName('titulo');
+            $titulo = $tagTitulo->item(0)->nodeValue;
 
-                    // Muestra el id del pelicula
-                    echo "\n" . $pelicula->getAttribute('id');
+            $tagActores = $pelicula->getElementsByTagName('actoresPrin');
+            $actores = $tagActores->item(0)->nodeValue;
 
-                    $nodo = $pelicula->firstChild;
 
-                    // Recorre el bucle siempre que haya hermanos 
-                    do {
-                        
-                        // Si el nodo es de tipo texto entra y muestra la etiqueta y el valor
-                        if ($nodo->nodeType == 1) {
-                            // echo "\n" . $nodo->tagName . ": " . $nodo->nodeValue;
-                            mostrarResultado();
-                        }
+            if ($titulo == $busqueda || $actores == $busqueda) {
 
-                    } while ($nodo = $nodo->nextSibling);
-                }
-            }
+                $nodo = $pelicula->firstChild;
+
+                do {
+                    
+                    // Si el nodo es de tipo texto entra y muestra la etiqueta y el valor
+                    if ($nodo->nodeType == 1) {
+                        echo "\n<b>" . $nodo->tagName . ":</b> " . $nodo->nodeValue;
+                        echo "<br>";
+                    }
+
+                } while ($nodo = $nodo->nextSibling);
+            }                 
         }
-    }
 
-    function mostrarResultado() {
-        // ID PELÍCULA
-        echo "<b>El idPelícula es:</b> " . $_REQUEST['idPelicula'];
-        
-        // TÍTULO
-        echo "<br><b>El título es:</b> " . $_REQUEST['titulo'];
-
-        // DIRECTOR
-        echo "<br><b>El director es:</b> " . $_REQUEST['director'];
-
-        // AÑO LANZAMIENTO
-        echo "<br><b>El año de lanzamiento es:</b> " . $_REQUEST['añoLanzamiento'];
-
-        // GÉNERO
-        echo "<br><b>El género es:</b> " . $_REQUEST['genero'];
-                
-        // DURACIÓN
-        echo "<br><b>La duración es:</b> " . $_REQUEST['duracion'];
-
-        // ACTORES PRINCIPALES
-        echo "<br><b>Los actores principales son:</b> " . $_REQUEST['actoresPrin'];
-
-        // SINOPSIS
-        echo "<br><b>Sinopsis:</b> " . $_REQUEST['sinopsis'];
+        echo "La película no se encuentra en nuestra base de datos";
     }
 ?>
