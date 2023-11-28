@@ -8,6 +8,14 @@
         return false;
     }
 
+    function existe($name) {
+
+        if (isset($_REQUEST[$name])) {
+            return true;
+        }
+
+        return false;
+    }
 
     function textVacio($name) {
 
@@ -61,7 +69,7 @@
             $tagActores = $pelicula->getElementsByTagName('actoresPrin');
             $actores = $tagActores->item(0)->nodeValue;
 
-
+            // Si el titulo o alguno de los actores coincide con la búsqueda muestra los datos de la película
             if ($titulo == $busqueda || $actores == $busqueda) {
 
                 $nodo = $pelicula->firstChild;
@@ -78,6 +86,6 @@
             }                 
         }
 
-        echo "La película no se encuentra en nuestra base de datos";
+        echo "La película no se encuentra en nuestra base de datos";        
     }
 ?>
