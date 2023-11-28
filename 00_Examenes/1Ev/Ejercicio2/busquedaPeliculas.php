@@ -1,5 +1,5 @@
 <?php
-    include("./validarPelicula.php");
+    include("./validarBuscarPelicula.php");
 ?>
 
 <!DOCTYPE html>
@@ -88,12 +88,18 @@
 
 
                                 <label for="Buscar Película">
-                                    <input type="text" name="buscarText" id="buscarText" placeholder="Escriba un Título o Actor">
+                                    <input type="text" name="buscarText" id="buscarText" placeholder="Escriba un Título o Actor">                                
                                 </label>
                                 
                                 <input type="submit" value="Buscar Película" name="buscar" id="buscar">
 
-                                <br><br><br> 
+                                <span class="error">
+                                        <?php            
+                                            errores($errores,'buscarText');
+                                        ?>
+                                </span>
+
+                                <br><br>
                             </form>
 
                     <?php // Abrir php

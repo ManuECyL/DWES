@@ -184,9 +184,10 @@
 
         if (file_exists($archivo)) {
 
-            // Crea un nuevo objeto SimpleXMLElement para el XML
+            // Carga el fichero XML
             $xml = simplexml_load_file($archivo);
                 
+            // Añade los elementos al fichero existente
             $pelicula = $xml->addChild('pelicula');
             $pelicula->addChild('idPelicula', $_REQUEST['idPelicula']);
             $pelicula->addChild('titulo', $_REQUEST['titulo']);
@@ -207,7 +208,7 @@
             // Crea un nuevo objeto SimpleXMLElement para el XML
             $xml = new SimpleXMLElement('<peliculas></peliculas>');
 
-            // Crea un nuevo objeto SimpleXMLElement para el XML
+            // Añade los elementos respectivamente
             $raiz = $dom->appendChild($dom->createElement('peliculas'));
     
             $pelicula = $raiz -> appendChild($dom->createElement('pelicula'));
@@ -224,8 +225,6 @@
     
             $xml->asXML($archivo);           
         }
-
-        // subirFichero($archivo);
     }
 
     function subirFichero($archivo) {
