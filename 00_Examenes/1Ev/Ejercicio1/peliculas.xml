@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<peliculas>
+    <pelicula>
+        <idPelicula>2024sd-234</idPelicula>
+        <titulo>Vikingos</titulo>
+        <director>Luis P&#xE9;rez</director>
+        <añoLanzamiento>2018</añoLanzamiento>
+        <genero>accion</genero>
+        <duracion>02:24:35</duracion>
+        <actoresPrin>Vikingo1,vikingo2</actoresPrin>
+        <sinopsis>Vikingo (del n&#xF3;rdico antiguo v&#xED;kingr) es el principal nombre dado a los
+            guerreros que realizaban incursiones de saqueos, provenientes de los pueblos
+            n&#xF3;rdicos procedentes de Escandinavia, famosos por ser grandes navegantes y por
+            llevar a cabo pillajes y ataques en Europa. Dependiendo del contexto y de la
+            interpretaci&#xF3;n del autor, puede usarse el nombre para referirse a los incursores de
+            esta procedencia o a sus pa&#xED;ses de origen. La metonimia ha llevado a que el nombre
+            se siga usando a&#xFA;n hoy en d&#xED;a de forma coloquial para referirse a los
+            pa&#xED;ses escandinavos. Su lengua era el n&#xF3;rdico antiguo.</sinopsis>
+    </pelicula>
+    <pelicula>
+        <idPelicula>3041PB-100</idPelicula>
+        <titulo>Peaky Blinders</titulo>
+        <director>Jose Luis</director>
+        <añoLanzamiento>2016</añoLanzamiento>
+        <genero>drama</genero>
+        <duracion>03:12:48</duracion>
+        <actoresPrin>Actor1,Actor2,Actor3</actoresPrin>
+        <sinopsis>Es una serie de televisi&#xF3;n inglesa de drama hist&#xF3;rico, emitida por el
+            canal BBC Two. La serie est&#xE1; protagonizada por Cillian Murphy y se centra en una
+            familia de g&#xE1;nsteres de Birmingham, durante los a&#xF1;os veinte y del ascenso de
+            su jefe, Thomas Shelby, un mafioso que dominar&#xE1; toda Inglaterra, despu&#xE9;s de
+            afrontar una terrible guerra. Shelby, pese a ser un criminal y un mafioso, tiene rasgos
+            antiheroicos, pues es un personaje ambivalente que, pese a su brutalidad, en muchas
+            ocasiones es la &#xFA;nica esperanza para terminar con otros villanos que pueden
+            considerarse m&#xE1;s viles y mezquinos que &#xE9;l</sinopsis>
+    </pelicula>
+</peliculas>
