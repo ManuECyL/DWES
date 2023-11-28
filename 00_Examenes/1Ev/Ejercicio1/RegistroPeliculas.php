@@ -79,7 +79,9 @@
                         // Si ha ido todo bien
                         if (enviado() && validaFormulario($errores)) {
                             // mostrarResultado();
-                            if(almacenarInformacion('peliculas.xml')) {
+
+                            // Si todo ha funcionado correctamente, sube el archivo al servidor
+                            if (almacenarInformacion('peliculas.xml')) {
                                 subirFichero('peliculas.xml');
                             }
 
