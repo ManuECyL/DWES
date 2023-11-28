@@ -38,7 +38,6 @@
     // BUSCADOR PELÍCULA 
         if (textVacio('buscarText')) {
             $errores['buscarText'] = "<br><br>Debe introducir algún dato";
-     
         } 
 
         if (count($errores) == 0) {
@@ -69,7 +68,7 @@
             $tagActores = $pelicula->getElementsByTagName('actoresPrin');
             $actores = $tagActores->item(0)->nodeValue;
 
-            // Si el titulo o alguno de los actores coincide con la búsqueda muestra los datos de la película
+            // Si el titulo o los actores coinciden con la búsqueda muestra los datos de la película
             if ($titulo == $busqueda || $actores == $busqueda) {
 
                 $nodo = $pelicula->firstChild;
