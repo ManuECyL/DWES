@@ -30,6 +30,17 @@
                 justify-content: center;
                 align-items: center;
             }
+
+            table {
+                margin: auto;
+            }
+
+            td {
+                padding: 16px;
+                text-align: center;
+                border: black 1px solid;
+            }
+                
         </style>
     </head>
 
@@ -129,50 +140,46 @@
 
                     <h6>3. Escribe un programa que pida por url el tamaño de una matriz (Ej lado=4). Rellene de la siguiente manera:</h6>
                         <div id="divImagen"><img src="./imagenes/Tarea05_Ejercicio3.png" alt="Tarea05_Ejercicio3.png"></div>
-                        <br><br>                        
+                        <br>                       
                         <p>
-                            <table border = ""1>
-                                <thead>
-                                    <?php
+                            Resultado:
+                            <br>
+                            <table border = "1">
+                                <?php
 
-                                        $matriz = array();
+                                    // Obtener el tamaño de la matriz desde la URL
+                                    $tamanoMatriz = $_GET['lado'];
 
-                                        for ($i = 0; $i <= $_GET["tamaño"]; $i++) { 
-                                            
-                                            $matriz[$i] = array();
+                                    for ($i = 0; $i < $tamanoMatriz; $i++) {
 
-                                            for ($j = 0; $j <= $_GET["tamaño"]; $j++) { 
+                                        echo "<tr>";
 
-                                                if ($i = 0 || $j = 0) {
-                                                    
-                                                }
-                                                // $matriz[$i][$j] = $matriz[$i - 1][$j] + $matriz[$i][$j - 1];
+                                        for ($j = 0; $j < $tamanoMatriz; $j++) {
+
+                                            if ($i == 0 || $j == 0) {
+                                                echo "<td>1</td>";
+
+                                            } else {
+                                                // Calcular el valor según el patrón dado
+                                                $valor = calcularValor($i, $j);
+                                                echo "<td>$valor</td>";
                                             }
                                         }
+                                        echo "</tr>";
+                                    }
 
-                                        // Valores fila superior
-                                        foreach ($matriz as $key => $value) {
-                                            echo "<th>$key</th>";
+                                    function calcularValor($fila, $columna) {
+
+                                        // Utilizar la fórmula del triángulo de Pascal para calcular el valor
+                                        $resultado = 1;
+                                    
+                                        for ($j = 1; $j <= $columna; $j++) {
+                                            $resultado = ($fila + $columna);
                                         }
-                                    ?>
-                                </thead>
-
-                                <tbody>
-                                    <?php
-                                        // Valores 1ª columna
-                                        foreach ($matriz as $key => $value) {
-                                            echo "<tr>";
-                                                echo "<td>$key</td>";
-
-                                                // Recorrer el value
-                                                foreach ($value as $resultado) {
-                                                    echo "<td>$resultado</td>";
-                                                }
-
-                                            echo "</tr>";
-                                        }
-                                    ?>
-                                </tbody>
+                                    
+                                        return $resultado;
+                                    }
+                                ?>
                             </table>
                         </p>
                 </div>
