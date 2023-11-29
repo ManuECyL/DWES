@@ -40,7 +40,7 @@
 
 
         // Ejecutamos la sentencia
-        mysqli_query($con,$sql);      
+        //mysqli_query($con,$sql);      
 
         // Cerramos la conexion
         mysqli_close($con);
