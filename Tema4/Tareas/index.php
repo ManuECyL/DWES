@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Apuntes Tema 3</title>
+        <title>Tareas Tema 4</title>
 
     <!-- BOOTSTRAP -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -28,33 +28,9 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-3 col-lg">
+                        <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="../index.php" id="anterior">Tema 3</a>
-                            </li>
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="Operadores.php">Operadores</a>
-                            </li>
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="Arrays.php">Arrays</a>
-                            </li>
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="Formularios/formulario.php">Formularios</a>
-                            </li>
-                        </div>
-
-                        <div class="col-md-3 col-lg">
-                            <li class="nav-item">
-                                <a class="nav-link navTema" href="Formularios/Fichero/fichero.php">Subir Fichero</a>
+                                <a class="nav-link navTema" href="../index.php" id="anterior">Tema 4</a>
                             </li>
                         </div>
                     </ul>
@@ -62,7 +38,7 @@
             </nav>
 
             <div class="divImagen"></div>
-            
+
             <?php
                 include("../../html/footer.html");
             ?>
