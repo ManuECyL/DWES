@@ -57,7 +57,7 @@
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 09</a>
+                                <a class="nav-link navTema" href="./busquedaPeliculas.php" id="anterior">Ejercicio 2</a>
                             </li>
                         </div>
                     </ul>

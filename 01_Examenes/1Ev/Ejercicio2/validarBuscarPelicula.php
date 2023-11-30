@@ -69,7 +69,7 @@
             $actores = $tagActores->item(0)->nodeValue;
 
             // Si el titulo o los actores coinciden con la búsqueda muestra los datos de la película
-            if ($titulo == $busqueda || $actores == $busqueda) {
+            if (str_contains($titulo, $busqueda) || str_contains($actores, $busqueda)) {
 
                 $nodo = $pelicula->firstChild;
 
