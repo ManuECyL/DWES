@@ -28,46 +28,52 @@
 
                     <ul class="navbar-nav row row-cols">
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema1">Tema 1</a>
-                        </li>
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="01_Examenes">Examenes</a>
+                            </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema2">Tema 2</a>
-                        </li>
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema1">Tema 1</a>
+                            </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema3">Tema 3</a>
-                        </li>                      
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema2">Tema 2</a>
+                            </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema4">Tema 4</a>
-                        </li>                    
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema3">Tema 3</a>
+                            </li>                      
+                        </div>
+
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema4">Tema 4</a>
+                            </li>                    
                         </div>              
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema5">Tema 5</a>
-                        </li>
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema5">Tema 5</a>
+                            </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema6">Tema 6</a>
-                        </li>
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema6">Tema 6</a>
+                            </li>
                         </div>
 
-                        <div class="col-md-3 col-lg">
-                        <li class="nav-item">
-                            <a class="nav-link navTema" href="Tema7">Tema 7</a>
-                        </li>
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="Tema7">Tema 7</a>
+                            </li>
                         </div>
                     </ul>
                 </div>
