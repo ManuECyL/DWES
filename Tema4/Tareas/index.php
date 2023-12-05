@@ -33,6 +33,12 @@
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tema 4</a>
                             </li>
                         </div>
+
+                        <div class="col-md col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./13_CRUD/index.php">Tarea 13</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>
