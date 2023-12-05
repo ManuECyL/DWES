@@ -58,12 +58,16 @@
         // Preparamos la consulta
         $stmt -> prepare($sql);
 
-        $nombre = 'Raul';
-        $edad = 35;
-        $id = 9;
 
-        // Establecemos los parametros. 'sssid' -> String, String, String, Entero, Double  
-        $stmt -> bind_param('sssid', $edad, $nombre, $id);
+        $id = '';
+        $nombre = '';
+        $compañia = '';
+        $stock = 0;
+        $precio = 0;
+        $fecha_Lanzamiento = '';
+
+        // Establecemos los parametros. 'sssid' -> String, String, String, Entero, Double, String(Aunque sea fecha)  
+        $stmt -> bind_param('sssids', $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento);
 
         // Ejecutar la consulta
         $stmt -> execute();
