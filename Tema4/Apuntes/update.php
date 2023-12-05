@@ -4,7 +4,6 @@
     // Creamos un objeto que maneje todo lo relacionado con mySQLi
     $con = new mysqli();
 
-
     try {
         
         $con -> connect(IP, USER, PASS, 'prueba');

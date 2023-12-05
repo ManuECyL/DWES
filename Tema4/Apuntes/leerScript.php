@@ -13,7 +13,17 @@
 
         // Lee el contenido del script
         $con -> multi_query($script);
-               
+            
+        // Comprobamos si hay un error de sintaxis y no lo muestra
+        do {
+            $con -> store_result();
+
+            if (!$con -> next_result()) {
+                break;
+            }
+
+        } while(true);
+
         // Cerramos la conexion
         $con -> close();
 
