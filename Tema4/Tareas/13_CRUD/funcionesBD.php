@@ -8,7 +8,12 @@
         // Iniciamos la conexion
         $con -> connect(IP, USER, PASS);
 
-      
+        // Verificar que la conexión se realiza correctamente
+        if ($con -> connect_error) {
+            echo "Error en la conexión con la Base de Datos: " . $con -> connect_error;
+            exit;
+        }
+
 
         // Cerrar la conexion
         $con -> close();
@@ -59,7 +64,7 @@
     }
 
 
-
+// Función para consultar los datos de la base de datos
     function consultarBD($con) {
 
         // Creamos la sentencia
@@ -67,65 +72,50 @@
 
         // Ejecutamos la sentencia
         $result = $con -> query($sql);
+
+        return $result;
     }
 
 
+// Función para actualizar los datos de la base de datos    
     function actualizarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
         
         // Creamos la sentencia
-        $sql = 'update alumnos set edad = ?, nombre = ?  where id = ?';
+        $sql = "update videojuegos set nombre='$nombre', compañia='$compañia', stock=$stock, precio=$precio, fecha_Lanzamiento='$fecha_Lanzamiento'  where id = '$id'";
 
-        // Iniciamos la conexión
-        $stmt = $con -> stmt_init();
+        // Ejecutamos la sentencia
+        $result = $con -> query($sql);
+    
+        return $result;
 
-        // Preparamos la consulta
-        $stmt -> prepare($sql);
-
-
-        $id = '';
-        $nombre = '';
-        $compañia = '';
-        $stock = 0;
-        $precio = 0;
-        $fecha_Lanzamiento = '';
-
-        // Establecemos los parametros. 'sssid' -> String, String, String, Entero, Double, String(Aunque sea fecha)  
-        $stmt -> bind_param('sssids', $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento);
-
-        // Ejecutar la consulta
-        $stmt -> execute();
     }
 
 
+
+// Función para insertar datos en la base de datos
     function insertarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento){
 
         // Consultas preparadas
-        $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values (?,?,?,?,?,?)";
+        $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values ('$id','$nombre','$compañia','$stock','$precio','$fecha_Lanzamiento')";
 
-        // Iniciamos la conexión
-        $stmt = $con -> stmt_init();
-
-        // Preparamos la consulta
-        $stmt -> prepare($sql);
-
-         // Introducimos los parametros en el statement
-         $stmt -> bind_param('sssids', $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento);
- 
-         // Ejecutamos el statement
-         $stmt -> execute();
+        // Ejecutamos la sentencia
+        $result = $con -> query($sql);
+    
+        return $result;
     }
 
 
+
+// Función para borrar datos de la base de datos
     function borrarBD($con, $id) {
 
          // Creamos la sentencia
-         $sql = 'delete from videojuegos where id = ' . $id . '';
+         $sql = "delete from videojuegos where id='$id'";
 
         // Ejecutamos la sentencia
         $result = $con -> query($sql);
          
-         // Muestra el número de los registros eliminados
-         echo mysqli_affected_rows($con);
+        return $result;
     }
 
 ?>

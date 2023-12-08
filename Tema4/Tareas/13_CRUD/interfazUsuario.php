@@ -1,5 +1,6 @@
 <?php
     require('./conexionBD.php');
+    require('./validaciones.php');
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +41,10 @@
                 text-align:center;
                 margin: 40px;
             }
+
+            input {
+                margin: 5px;
+            }
         </style>
     </head>
 
@@ -68,19 +73,119 @@
             </nav>
 
             <main>
+
+                <?php
+
+                    // Creamos un objeto que maneje todo lo relacionado con mySQLi
+                    $con = new mysqli();
+
+                    try {
+
+                        // Iniciamos la conexion
+                        $con -> connect(IP, USER, PASS);
+
+                        echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
+
+                        if (existe('crear') && !comprobarBD($con, 'tienda.sql')) {
+
+                            // Obtenemos el contenido del fichero sql
+                            $script = file_get_contents("./tienda.sql");
+
+                            // Lee el contenido del script
+                            $result = $con -> multi_query($script);
+
+                            // Comprobamos si hay un error de sintaxis y no lo muestra
+                            do {
+                                $con -> store_result();
+
+                                if (!$con -> next_result()) {
+                                    break;
+                                }
+
+                            } while(true);
+
+                            if ($result) {
+                                echo "Base de datos creada";
+                            
+                            } else {
+                                echo "Error al crear la base de datos";
+                            }
+                        
+                        } elseif (existe('crear') && comprobarBD($con, 'tienda.sql')) {
+                            echo "La base de datos ya existe";
+                        } 
+                            
+                        
+/*
+                        if (isset($_POST['leer'])) {
+                            // Realizar la operación de lectura de la tabla
+                            $consultaResult = consultarBD($con);
+                    
+                            // Procesar resultados de la consulta
+                            if ($consultaResult) {
+                                while ($fila = $consultaResult->fetch_assoc()) {
+                                    echo "<p>ID: " . $fila['id'] . ", Nombre: " . $fila['nombre'] . ", Compañía: " . $fila['compañia'] . "</p>";
+                                }
+                            } else {
+                                echo "<p>Error en la consulta</p>";
+                            }
+                        }
+
+                        if (isset($_POST['insertar'])) {
+                            // Mostrar formulario de inserción
+                            echo '<label for="nombre">Nombre:</label>';
+                            echo '<input type="text" name="nombre" id="nombre" required>';
+                    
+                            echo '<label for="compañia">Compañía:</label>';
+                            echo '<input type="text" name="compañia" id="compañia" required>';
+                    
+                            // Agregar más campos según sea necesario
+                    
+                            echo '<button type="submit" name="insertar_registro">Insertar Registro</button>';
+                        }
+                        
+                        echo '</form>';
+*/
+                    } catch (\Throwable $th) {
+                        switch ($th->getCode()) {
+                            // Manejo de errores según tu código
+                        }
+                    
+                        mysqli_close($con);
+                    }
+/*
+                    if (isset($_POST['insertar_registro'])) {
+                        // Realizar la operación de inserción
+                        $nombre = $_POST['nombre'];
+                        $compañia = $_POST['compañia'];
+                    
+                        // Validar datos (aquí deberías tener las funciones de validación en validaciones.php)
+                        if (validarNombre($nombre) && validarCompañia($compañia)) {
+                            // Llamar a la función de inserción
+                            $insercionResult = insertarBD($con, $nombre, $compañia);
+                    
+                            // Manejar el resultado de la inserción
+                            if ($insercionResult) {
+                                echo "<p>Inserción exitosa</p>";
+                            } else {
+                                echo "<p>Error en la inserción</p>";
+                            }
+                        } else {
+                            echo "<p>Error en la validación de datos</p>";
+                        }
+                    }
+                    
+                    mysqli_close($con);
+*/
+                ?>
+
+
                 <div style="border: 1px black solid; margin: 10px;">
 
                     <h3 style="text-align: center">Interfaz Usuario</h3>
-
-                    <br>
-
-                    <?php 
-
-                    ?>
-
                 </div>
             </main>
-
+*/
             <?php
 
                 include("../../../html/footer.html");
