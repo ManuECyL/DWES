@@ -87,7 +87,6 @@
         $result = $con -> query($sql);
     
         return $result;
-
     }
 
 
@@ -118,4 +117,8 @@
         return $result;
     }
 
+
+    function crearScript($con) {
+        
+    }
 ?>

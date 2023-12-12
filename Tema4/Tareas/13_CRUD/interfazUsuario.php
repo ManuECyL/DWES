@@ -1,6 +1,7 @@
 <?php
     require('./conexionBD.php');
     require('./validaciones.php');
+    require('./funcionesBD.php');
 ?>
 
 <!DOCTYPE html>
@@ -74,64 +75,59 @@
 
             <main>
 
-                <?php
-
-                    // Creamos un objeto que maneje todo lo relacionado con mySQLi
-                    $con = new mysqli();
-
-                    try {
-
-                        // Iniciamos la conexion
-                        $con -> connect(IP, USER, PASS);
-
-                        echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
-
-                        if (existe('crear') && !comprobarBD($con, 'tienda.sql')) {
-
-                            // Obtenemos el contenido del fichero sql
-                            $script = file_get_contents("./tienda.sql");
-
-                            // Lee el contenido del script
-                            $result = $con -> multi_query($script);
-
-                            // Comprobamos si hay un error de sintaxis y no lo muestra
-                            do {
-                                $con -> store_result();
-
-                                if (!$con -> next_result()) {
-                                    break;
-                                }
-
-                            } while(true);
-
-                            if ($result) {
-                                echo "Base de datos creada";
-                            
-                            } else {
-                                echo "Error al crear la base de datos";
-                            }
-                        
-                        } elseif (existe('crear') && comprobarBD($con, 'tienda.sql')) {
-                            echo "La base de datos ya existe";
-                        } 
-                            
-                    } catch (\Throwable $th) {
-                        switch ($th->getCode()) {
-                            // Manejo de errores según tu código
-                        }
-                    
-                        mysqli_close($con);
-                    }
-
-                ?>
-
-
                 <div style="border: 1px black solid; margin: 10px;">
 
                     <h3 style="text-align: center">Interfaz Usuario</h3>
+
+                    <?php
+                        // Creamos un objeto que maneje todo lo relacionado con mySQLi
+                        $con = new mysqli();
+
+                        if (existe("crear")) {
+                            crearScript($con);
+                        }
+
+
+                        if (existe("leer")) {
+                                                        
+                            header('Location: ./LeerBBDD.php');
+                            exit;
+
+                        } elseif (existe("insertar")) {
+                            header('Location: ./InsertarBBDD.php');
+                            exit;
+                        }
+
+                        try {
+
+                            // Iniciamos la conexion
+                            $con -> connect(IP, USER, PASS);
+    
+                            echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
+    
+                            if (!comprobarBD($con, 'tienda.sql')) {
+    
+                                echo "<input type='submit' value='Crear BBDD' name='crear'>";
+                            } 
+                                
+                        } catch (\Throwable $th) {
+                            switch ($th->getCode()) {
+                                // Manejo de errores según tu código
+                            }
+                        
+                            mysqli_close($con);
+                        }      
+                    ?>
+
+                    <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data" target="_blank">
+
+                        <input type="submit" value="Leer BBDD" name="leer">
+                        <input type="submit" value="Insertar Registro" name="insertar">
+
+                    </form>
                 </div>
             </main>
-*/
+
             <?php
 
                 include("../../../html/footer.html");
