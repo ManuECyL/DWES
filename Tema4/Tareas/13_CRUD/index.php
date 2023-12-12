@@ -26,12 +26,6 @@
                 margin-left: 70px;
             }
 
-            #divImagen {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
             form {
                 text-align:center;
                 margin: 40px;

@@ -115,6 +115,37 @@
                             echo "La base de datos ya existe";
                         } 
                             
+                        
+/*
+                        if (isset($_POST['leer'])) {
+                            // Realizar la operación de lectura de la tabla
+                            $consultaResult = consultarBD($con);
+                    
+                            // Procesar resultados de la consulta
+                            if ($consultaResult) {
+                                while ($fila = $consultaResult->fetch_assoc()) {
+                                    echo "<p>ID: " . $fila['id'] . ", Nombre: " . $fila['nombre'] . ", Compañía: " . $fila['compañia'] . "</p>";
+                                }
+                            } else {
+                                echo "<p>Error en la consulta</p>";
+                            }
+                        }
+
+                        if (isset($_POST['insertar'])) {
+                            // Mostrar formulario de inserción
+                            echo '<label for="nombre">Nombre:</label>';
+                            echo '<input type="text" name="nombre" id="nombre" required>';
+                    
+                            echo '<label for="compañia">Compañía:</label>';
+                            echo '<input type="text" name="compañia" id="compañia" required>';
+                    
+                            // Agregar más campos según sea necesario
+                    
+                            echo '<button type="submit" name="insertar_registro">Insertar Registro</button>';
+                        }
+                        
+                        echo '</form>';
+*/
                     } catch (\Throwable $th) {
                         switch ($th->getCode()) {
                             // Manejo de errores según tu código
@@ -122,7 +153,30 @@
                     
                         mysqli_close($con);
                     }
-
+/*
+                    if (isset($_POST['insertar_registro'])) {
+                        // Realizar la operación de inserción
+                        $nombre = $_POST['nombre'];
+                        $compañia = $_POST['compañia'];
+                    
+                        // Validar datos (aquí deberías tener las funciones de validación en validaciones.php)
+                        if (validarNombre($nombre) && validarCompañia($compañia)) {
+                            // Llamar a la función de inserción
+                            $insercionResult = insertarBD($con, $nombre, $compañia);
+                    
+                            // Manejar el resultado de la inserción
+                            if ($insercionResult) {
+                                echo "<p>Inserción exitosa</p>";
+                            } else {
+                                echo "<p>Error en la inserción</p>";
+                            }
+                        } else {
+                            echo "<p>Error en la validación de datos</p>";
+                        }
+                    }
+                    
+                    mysqli_close($con);
+*/
                 ?>
 
 
