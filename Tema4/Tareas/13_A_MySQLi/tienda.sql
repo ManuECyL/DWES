@@ -12,7 +12,7 @@ CREATE TABLE videojuegos (
     compañia VARCHAR(50) NOT NULL,
     stock INT NOT NULL,
     precio FLOAT NOT NULL, 
-    fecha_Lanzamiento DATE SFD
+    fecha_Lanzamiento DATE
 ) engine =innodb;
 
 

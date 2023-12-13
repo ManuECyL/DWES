@@ -1,4 +1,5 @@
 <?php
+    require('./conexionBD.php');
     require('./validaciones.php');
     require('./funcionesBD.php');
 ?>
@@ -27,13 +28,9 @@
                 margin-left: 40px;
             }
 
-            p {
-                margin-left: 70px;
-            }
-
             form {
                 text-align:center;
-                margin: 40px;
+                margin: 30px;
             }
 
             input {
@@ -76,42 +73,50 @@
                         // Creamos un objeto que maneje todo lo relacionado con mySQLi
                         $con = new mysqli();
 
-                        if (existe("crear")) {
-                            
-                            if (crearScript($con, './tienda.sql')) {
-                                echo "<input id='crearBD' type='hidden'>";
-                            }
-                        }
-
-                        if (existe("leer")) {
-                                                        
-                            header('Location: ./LeerBBDD.php');
+                        // Verificar que la conexión se realiza correctamente
+                        if ($con -> connect_error) {
+                            echo "Error en la conexión con la Base de Datos: " . $con -> connect_error;
                             exit;
 
-                        } elseif (existe("insertar")) {
-                            header('Location: ./InsertarBBDD.php');
-                            exit;
-                        }
+                        } else {
 
-                        try {
-
-                            // Iniciamos la conexion
-                            $con -> connect(IP, USER, PASS);
-    
-                            echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
-    
-                            if (!comprobarBD($con, 'tienda')) {
-    
-                                echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
-                            } 
+                            if (existe("crear")) {
                                 
-                        } catch (\Throwable $th) {
-                            switch ($th->getCode()) {
-                                // Manejo de errores según tu código
+                                if (crearScript($con, './tienda.sql')) {
+                                    echo "<input id='crearBD' type='hidden'>";
+                                }
                             }
-                        
-                            mysqli_close($con);
-                        }      
+    
+                            if (existe("leer")) {
+                                                            
+                                header('Location: ./LeerBBDD.php');
+                                exit;
+    
+                            } elseif (existe("insertar")) {
+                                header('Location: ./InsertarBBDD.php');
+                                exit;
+                            }
+    
+                            try {
+    
+                                // Iniciamos la conexion
+                                $con -> connect(IP, USER, PASS);
+        
+                                echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
+        
+                                if (!comprobarBD($con, 'tienda')) {
+                                    echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
+                                }
+                                
+                                    
+                            } catch (\Throwable $th) {
+                                switch ($th->getCode()) {
+                                    // Manejo de errores según tu código
+                                }
+                            
+                                mysqli_close($con);
+                            }      
+                        }
                     ?>
 
                     <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data" target="_blank">
