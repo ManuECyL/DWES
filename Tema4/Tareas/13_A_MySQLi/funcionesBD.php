@@ -118,7 +118,78 @@
     }
 
 
-    function crearScript($con) {
+// Función para generar un script de creación para la Base de Datos
+    function crearScript($con, $BD) {
+
+        // Iniciamos la conexion
+        $con -> connect(IP, USER, PASS);
         
+        try {   
+            // Obtenemos el contenido del fichero sql
+            $script = file_get_contents($BD);
+    
+            // Lee el contenido del script
+            $con -> multi_query($script);
+                
+            // Comprobamos si hay un error de sintaxis y nos lo muestra
+            do {
+                $con -> store_result();
+    
+                if (!$con -> next_result()) {
+                    break;
+                }
+    
+            } while(true);
+
+            // Cerramos la conexion
+            $con -> close();
+            
+        } catch (\Throwable $th) {
+
+            // Si hay un error borra la BD
+            $sql = "drop database tienda";
+            $con -> query($sql);
+    
+            switch ($th -> getCode()) {
+    
+                case 1062:
+                    echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
+                    break;
+    
+                case 111360:
+                    echo "<p style='text-align:center;color:red'> El número de campos introducido no coincide </p>";
+                    break;
+    
+                case 0:
+                    echo "<p style='text-align:center;color:red'> No encuentra todos los parámetros de la secuencia </p>";
+                    break;
+    
+                case 2002:
+                    echo "<p style='text-align:center;color:red'> La IP de acceso a la BD es incorrecta </p>";
+                    break;
+    
+                case 1045:
+                    echo "<p style='text-align:center;color:red'> Usuario o contraseña incorrectos </p>";
+                    break;
+    
+                case 1049:
+                    echo "<p style='text-align:center;color:red'> Error al conectarse a la base de datos indicada </p>";
+                    break;
+    
+                case 1146:
+                    echo "<p style='text-align:center;color:red'> Error al encontrar la tabla indicada </p>";
+                    break;
+    
+                case 1064:
+                    echo "<p style='text-align:center;color:red'> Error de sintaxis en el script de la Base de Datos </p>";
+                    break;
+                
+                default:
+                    echo $th -> getMessage();
+                    break;
+            }
+            
+            mysqli_close($con);
+        }
     }
 ?>

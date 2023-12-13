@@ -1,5 +1,4 @@
 <?php
-    require('./conexionBD.php');
     require('./validaciones.php');
     require('./funcionesBD.php');
 ?>
@@ -11,7 +10,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Tarea 13 - CRUD BBDD</title>
+        <title>Tarea 13 - A - MySQLi</title>
 
     <!-- BOOTSTRAP -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -30,12 +29,6 @@
 
             p {
                 margin-left: 70px;
-            }
-
-            #divImagen {
-                display: flex;
-                justify-content: center;
-                align-items: center;
             }
 
             form {
@@ -66,7 +59,7 @@
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 13</a>
+                                <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 13 A</a>
                             </li>
                         </div>
                     </ul> 
@@ -84,9 +77,11 @@
                         $con = new mysqli();
 
                         if (existe("crear")) {
-                            crearScript($con);
+                            
+                            if (crearScript($con, './tienda.sql')) {
+                                echo "<input id='crearBD' type='hidden'>";
+                            }
                         }
-
 
                         if (existe("leer")) {
                                                         
@@ -105,9 +100,9 @@
     
                             echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
     
-                            if (!comprobarBD($con, 'tienda.sql')) {
+                            if (!comprobarBD($con, 'tienda')) {
     
-                                echo "<input type='submit' value='Crear BBDD' name='crear'>";
+                                echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
                             } 
                                 
                         } catch (\Throwable $th) {

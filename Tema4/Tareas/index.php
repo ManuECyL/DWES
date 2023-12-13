@@ -36,13 +36,13 @@
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./13_CRUD/index.php">Tarea 13</a>
+                                <a class="nav-link navTema" href="./13_A_MySQLi/index.php">Tarea 13 A</a>
                             </li>
                         </div>
 
                         <div class="col-md col-lg">
                             <li class="nav-item">
-                                <a class="nav-link navTema" href="./14_PDO/index.php">Tarea 14</a>
+                                <a class="nav-link navTema" href="./13_B_PDO/index.php">Tarea 13 B</a>
                             </li>
                         </div>
                     </ul>
