@@ -4,7 +4,9 @@
     define('PASS', 'maria');
     define('DB', 'tienda');
 
-    $con = new mysqli(IP, USER, PASS);
+    $con = new PDO(IP, USER, PASS);
+
+    $DSN = 'pgsql:host='.IP.';dbname=tienda';
 
     // Verificar que la conexión se realiza correctamente
     if ($con -> connect_error) {
