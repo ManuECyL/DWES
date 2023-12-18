@@ -87,13 +87,12 @@
                                 }
                             }
     
-                            if (existe("leer")) {
-                                                            
-                                header('Location: ./LeerBBDD.php');
+                            if (existe("leer")) {                        
+                                header('Location: ./LeerTabla.php');
                                 exit;
     
                             } elseif (existe("insertar")) {
-                                header('Location: ./InsertarBBDD.php');
+                                header('Location: ./InsertarRegistro.php');
                                 exit;
                             }
     
@@ -121,7 +120,7 @@
 
                     <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data" target="_blank">
 
-                        <input type="submit" value="Leer BBDD" name="leer">
+                        <input type="submit" value="Leer Tabla" name="leer">
                         <input type="submit" value="Insertar Registro" name="insertar">
 
                     </form>

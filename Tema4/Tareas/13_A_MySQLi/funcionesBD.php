@@ -1,9 +1,9 @@
 <?php
 // Función para consultar los datos de la base de datos
-    function consultarBD($con) {
+    function consultarBD($con, $tabla) {
 
         // Creamos la sentencia
-        $sql = "select * from videojuegos";
+        $sql = "select * from $tabla";
 
         // Ejecutamos la sentencia
         $result = $con -> query($sql);
@@ -85,7 +85,7 @@
             
         } catch (\Throwable $th) {
 
-            // Si hay un error borra la BD
+            // Si hay un error, borra la BBDD
             $sql = "drop database tienda";
             $con -> query($sql);
     
