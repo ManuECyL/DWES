@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Insertar Registro</title>
+    <title>Modificar Registro</title>
 
 <!-- BOOTSTRAP -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -29,16 +29,15 @@
         }
 
         #divForm {
-
-            text-align:justify;
-            margin: 0px;
-        }
-        
-        #registros {
             display: flex;
             text-align: center;
             align-items: center;
             justify-content: center;
+        }
+        
+        #registros {
+            text-align:justify;
+            margin: 0px;
         }
 
         form {
@@ -81,9 +80,10 @@
 
             <div style="border: 1px black solid; margin: 10px;" id="divMain">
 
-                <h3 style="text-align: center">Insertar Registro</h3>
+                <h3 style="text-align: center">Modificar Registro</h3>
 
                 <?php
+
                     // Creamos un objeto que maneje todo lo relacionado con mySQLi
                     $con = new mysqli();
 
@@ -98,71 +98,47 @@
                             header('Location: ./LeerTabla.php');
                             exit;
 
-                        } elseif (existe("insertar")) {
+                        } elseif (existe("modificar")) {
                             header('Location: ./LeerTabla.php');
                             exit;
                         }
 
                         try {
-                            
+
                             // Iniciamos la conexion
                             $con -> connect(IP, USER, PASS, 'tienda');
 
                             $consulta = consultarBD($con, 'videojuegos');
-
+                                
                             // Comprobamos si hay resultados
                             if ($consulta -> num_rows > 0) {
 
-                                echo "<form action='./InsertarRegistro.php' method='post' id='registros' name='formularioT13' enctype='multipart/form-data'>";
-                                
-                                // Obtenemos los nombres de los campos que contiene la tabla
+                            // Obtenemos los nombres de los campos que contiene la tabla
                                 $camposTabla = array();
 
                                 while ($campo = $consulta -> fetch_field()) {
                                     $camposTabla[] = $campo -> name;
                                 }
 
-                                    echo "<div id='divForm'>";
+                                echo "<div id='divForm'>";
 
+                                    echo "<form action='./Modificar.php' method='post' id='registros' name='formularioT13' enctype='multipart/form-data'>";
 
                                         // Mostrar los campos en el encabezado de la tabla
-                                        foreach ($camposTabla as $columna) {
+                                        foreach ($camposTabla as $columna) {                                            
                                             echo "<label><b>" . $columna . "</b></label>: ";
-                                            echo "<input type='text' name='". $columna ."'>";
+                                            echo "<input type='text' name='dato'>";
                                             echo "<br>";
+                                            
                                         }
-                                        
-                                    echo "</div>";
 
-                                        // Verificar si se ha enviado el formulario
-                                        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['insertar'])) {
-
-                                            // Validar los datos del formulario aquí...
-
-                                            // Recupera los datos del formulario
-                                            $id = $_POST['id'];
-                                            $nombre = $_POST['nombre'];
-                                            $compañia = $_POST['compañia'];
-                                            $stock = $_POST['stock'];
-                                            $precio = $_POST['precio'];
-                                            $fecha_Lanzamiento = $_POST['fecha_Lanzamiento'];
-
-                                            // Insertamos los datos en la base de datos
-                                            if (insertarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento)) {
-                                                echo "Registro insertado correctamente.";
-
-                                            } else {
-                                                echo "Error al insertar el registro.";
-                                            }
-                                        }
-                                    
-                                echo "</form>";
-         
+                                    echo "</form>";
+                                
+                                echo "</div>";
 
                             } else {
                                 echo "No se encontraron resultados en la base de datos";
-                            }
-                            
+                            } 
                                 
                         } catch (\Throwable $th) {
 
@@ -175,10 +151,9 @@
                     }
                 ?>
 
-                <form action="./InsertarRegistro.php" method="post" name="formularioT13" enctype="multipart/form-data">
-
+                <form action="./Modificar.php" method="post" name="formularioT13" enctype="multipart/form-data">
                     <input type="submit" value="Volver" name="volver">
-                    <input type="submit" value="Insertar" name="insertar">
+                    <input type="submit" value="Modificar" name="modificar">
 
                 </form>
             </div>

@@ -28,9 +28,13 @@
             margin-left: 40px;
         }
 
+        #divBuscar {
+            text-align: right;
+            margin-right: 15%;
+        }
+
         form {
             text-align:center;
-            margin: 30px;
         }
 
         input {
@@ -89,6 +93,13 @@
 
                 <h3 style="text-align: center">Leer Tabla</h3>
 
+                <div id="divBuscar">
+                    <input type="text" name="buscar" id="buscar" placeholder="Buscar Dato">
+                    <input type="button" value="Buscar">                    
+                </div>
+
+                <br>
+
                 <?php
                     // Creamos un objeto que maneje todo lo relacionado con mySQLi
                     $con = new mysqli();
@@ -100,14 +111,21 @@
 
                     } else {
 
-                        if (existe("volver")) {                                      
+                        if (existe("modificar")) {
+                            header('Location: ./Modificar.php');
+                            exit;
+                        
+                        } elseif (existe("borrar")) {
+                            borrarBD($con, $id);
+
+                        } else if (existe("volver")) {                                      
                             header('Location: ./interfazUsuario.php');
                             exit;
 
                         } elseif (existe("insertar")) {
                             header('Location: ./InsertarRegistro.php');
                             exit;
-                        }
+                        } 
 
                         try {
 
@@ -134,9 +152,7 @@
                                     foreach ($camposTabla as $columna) {
                                         echo "<th>" . $columna . "</th>";
                                     }
-
                                         echo "<th> Modificar </th>";
-
                                         echo "<th> Borrar </th>";
 
                                     echo "</tr>";
@@ -152,13 +168,18 @@
 
                                         echo "<td>";
                                             ?>
-                                                <input type="submit" value="Modificar" name="modificar">
+                                                <form action="./Modificar.php" method="post" name="formularioT13" enctype="multipart/form-data">
+                                                    
+                                                    <input type="submit" value="Modificar" name="modificar">
+                                                </form>
                                             <?php
                                         echo "</td>";
 
                                         echo "<td>";
                                             ?>
-                                                <input type="submit" value="Borrar" name="borrar">
+                                                <form action="./LeerTabla.php" method="post" name="formularioT13_Borrar" enctype="multipart/form-data">
+                                                    <input type="submit" value="Borrar" name="borrar">
+                                                </form>                                               
                                             <?
                                         echo "</td>";
 
@@ -183,12 +204,16 @@
                     }
                 ?>
 
+                <br>
+
                 <form action="./LeerTabla.php" method="post" name="formularioT13" enctype="multipart/form-data">
 
                     <input type="submit" value="Volver" name="volver">
                     <input type="submit" value="Insertar Registro" name="insertar">
 
                 </form>
+
+                <br>
             </div>
         </main>
 
@@ -204,5 +229,3 @@
 </body>
 
 </html>
-
-?>
