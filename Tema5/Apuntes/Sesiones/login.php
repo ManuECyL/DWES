@@ -11,7 +11,6 @@
         if ($usuario) {
             
             $_SESSION['usuario'] = $usuario;
-
             header('Location: ./homeUser.php');
         
         } else {

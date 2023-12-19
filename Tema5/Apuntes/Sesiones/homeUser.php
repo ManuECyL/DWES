@@ -33,6 +33,10 @@
         
         <?php
             echo "Bienvenido " . $_SESSION['usuario']['nombre'];
+            echo "<br>";
+            echo $_SESSION['usuario']['perfil'];
+
+            // echo $_SESSION['accede']['codigoPagina'];
         ?>
 
         <br><br>
