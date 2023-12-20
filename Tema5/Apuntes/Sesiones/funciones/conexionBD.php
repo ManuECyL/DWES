@@ -11,7 +11,7 @@
             // Generamos un objeto PDO para realizar la conexión
             $con = new PDO($DSN, USER, PASS);
         
-            // Consulta a la BBDD con PDO
+            // Consulta a la BBDD
             $sql = 'select * from usuarios where usuario = ? and clave = ?';
 
             $stmt = $con -> prepare($sql);
@@ -38,7 +38,7 @@
     }
 
 
-    function muestraPaginas($codigoPerfil, $codigoPagina) {
+    function misPaginas() {
 
         try {
 
@@ -48,20 +48,28 @@
             // Generamos un objeto PDO para realizar la conexión
             $con = new PDO($DSN, USER, PASS);
         
-            // Consulta a la BBDD con PDO
-            $sql = 'select codigoPagina from accede where codigoPerfil = ?';
+            // Consulta a la BBDD
+            $sql = 'select url from paginas where codigo in (select codigoPagina from accede where codigoPerfil = ?)'; // Mejor hacer un JOIN
 
             $stmt = $con -> prepare($sql);
 
-            $stmt -> execute([$codigoPerfil, $codigoPagina]);
+            $stmt -> execute([$_SESSION['usuario']['perfil']]);
             
-            $paginas = $stmt->fetch(PDO::FETCH_ASSOC); // Lo guardamos en un array asociativo para trabajar posteriormente con él
+            $paginas = array();
 
-            if ($paginas) {
-                return $paginas;
+            // Lo guardamos en un array asociativo y lo recorremos
+            while ($pagina = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                array_push($paginas, $pagina['url']);
             }
-            
-            return false;
+
+            // Comprueba si tiene contenido, sino, devuelve false
+            if (count($paginas) > 0) {
+                $_SESSION['usuario']['paginas'] = $paginas;
+                return $paginas;   
+
+            } else {
+                return false;
+            }
 
         } catch (PDOException $e) {
             echo $e -> getMessage();

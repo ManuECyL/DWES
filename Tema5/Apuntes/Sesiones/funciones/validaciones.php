@@ -9,6 +9,7 @@
     }
 
 
+    // Botón Cerrar Sesión
     function cerrado() {
 
         if (isset($_REQUEST['cerrar'])) 
@@ -27,24 +28,28 @@
     }
 
 
+    // Comprobar si la sesión está iniciada
+    function sesionIniciada() {
 
-    function esNumerico($name) {
+        if (!isset($_SESSION['usuario'])) {
 
-        if (is_numeric($_REQUEST[$name])) {
-            return true;
+            $_SESSION['error'] = "No tiene sesión iniciada.";
+    
+            header('Location: ./login.php');
+            exit;
         }
-
-        return false;
     }
 
 
-    function recuerda($name) {
+    // Comprobar si tiene permiso para ver la página($url)
+    function permisosPagina($url) {
 
-        if (enviado() && !empty($_REQUEST[$name])) {
-            echo $_REQUEST[$name];
-
-        } elseif (isset($_REQUEST['borrar'])) {
-            echo '';
+        if (!in_array($url, $_SESSION['usuario']['paginas'])) {
+            
+            $_SESSION['error'] = "No tiene permiso para ir a la página: " . $url;
+    
+            header('Location: ./homeUser.php');
+            exit;
         }
     }
 ?>

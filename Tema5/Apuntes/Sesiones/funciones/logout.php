@@ -1,10 +1,10 @@
 <?php
 
-function cerrarSesion() {
-    // session_start();
-    session_destroy();
+    function cerrarSesion() {
+        // session_start();
+        session_destroy();
 
-    header('Location: ./home.php');
-    exit;
-}
+        header('Location: ./home.php');
+        exit;
+    }
 ?>

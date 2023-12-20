@@ -14,20 +14,6 @@
         exit;
  
     
-        if (enviado() && !textVacio('') && !textVacio('')) {
-            
-            $usuario = validaUsuario($_REQUEST[''], $_REQUEST['']);
-    
-            if ($usuario) {
-                
-                $_SESSION[''] = $usuario;
-                header('Location: ./homeUser.php');
-            
-            } else {
-                echo "No existe usuario o contraseña";
-            }
-        }
-    
     } elseif (cerrado()) {
         cerrarSesion();
     }
@@ -40,7 +26,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Document</title>
+        <title>Pagina Usuario</title>
 
     </head>
 
@@ -48,14 +34,29 @@
         <h1>Página User</h1>
         
         <?php
-            echo "Bienvenido " . $_SESSION['usuario']['nombre'];
-            echo "<br>";
-            echo $_SESSION['usuario']['perfil'];
+            echo "Bienvenido: " . $_SESSION['usuario']['nombre'];
+            echo "<br><br>";
 
-            // echo $_SESSION['accede']['codigoPagina'];
+            if (isset($_SESSION['error'])) {
+                echo "<span style='color:red'>". $_SESSION['error'] ."</span>";
+            }
+
+            echo "<br><br>";
+
+            $paginas = misPaginas();
+
+            echo "Puedes acceder a las páginas: ";
+
+            echo "<ul>";
+
+            foreach ($paginas as $pagina) {
+                echo "<li><a href='./". $pagina ."'>". $pagina ."</a></li>";
+            }
+
+            echo "</ul>";
         ?>
 
-        <br><br>
+        <br>
 
         <form action="" method="post">
             <input type="submit" value="Cerrar Sesión" name="cerrar">
