@@ -1,6 +1,5 @@
 <?php
     require('./conexionBD.php');
-    require('./validaciones.php');
     require('./funcionesBD.php');
 ?>
 

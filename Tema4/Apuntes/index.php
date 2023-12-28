@@ -33,6 +33,18 @@
                                 <a class="nav-link navTema" href="../index.php" id="anterior">Tema 4</a>
                             </li>
                         </div>
+
+                        <div class="col-md-3 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./MySQL/consultar.php">MySQL</a>
+                            </li>
+                        </div>
+
+                        <div class="col-md-3 col-lg">
+                            <li class="nav-item">
+                                <a class="nav-link navTema" href="./PDO/pdoSelect.php">PDO</a>
+                            </li>
+                        </div>
                     </ul>
                 </div>
             </nav>

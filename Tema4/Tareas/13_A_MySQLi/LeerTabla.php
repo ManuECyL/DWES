@@ -1,6 +1,5 @@
 <?php
     require('./conexionBD.php');
-    require('./validaciones.php');
     require('./funcionesBD.php');
 ?>
 
@@ -102,12 +101,13 @@
 
                 <?php
 
+
                     if (existe("modificar")) {
                         header('Location: ./Modificar.php');
                         exit;
                     
                     } elseif (existe("borrar")) {
-                        borrarBD($con, $id);
+                        borrarBD($id);
 
                     } else if (existe("volver")) {                                      
                         header('Location: ./interfazUsuario.php');
@@ -118,81 +118,65 @@
                         exit;
                     } 
 
-                    try {
 
-                        // Iniciamos la conexion
-                        $con -> connect(IP, USER, PASS, 'tienda');
+                    $consulta = consultarBD('videojuegos');
 
-                        $consulta = consultarBD($con, 'videojuegos');
+                    // Comprobamos si hay resultados
+                    if ($consulta -> num_rows > 0) {
+                        
+                        // Obtenemos los nombres de los campos que contiene la tabla
+                        $camposTabla = array();
 
-                        // Comprobamos si hay resultados
-                        if ($consulta -> num_rows > 0) {
-                            
-                            // Obtenemos los nombres de los campos que contiene la tabla
-                            $camposTabla = array();
+                        while ($campo = $consulta -> fetch_field()) {
+                            $camposTabla[] = $campo -> name;
+                        }
 
-                            while ($campo = $consulta -> fetch_field()) {
-                                $camposTabla[] = $campo -> name;
+                        echo "<table>";
+
+                            echo "<tr>";
+
+                            // Mostrar los campos en el encabezado de la tabla
+                            foreach ($camposTabla as $columna) {
+                                echo "<th>" . $columna . "</th>";
                             }
+                                echo "<th> Modificar </th>";
+                                echo "<th> Borrar </th>";
 
-                            echo "<table>";
+                            echo "</tr>";
 
+                            // Mostrar los datos de la tabla
+                            while ($fila = $consulta -> fetch_assoc()) {
+                                
                                 echo "<tr>";
 
-                                // Mostrar los campos en el encabezado de la tabla
                                 foreach ($camposTabla as $columna) {
-                                    echo "<th>" . $columna . "</th>";
+                                    echo "<td>" . $fila[$columna] . "</td>";
                                 }
-                                    echo "<th> Modificar </th>";
-                                    echo "<th> Borrar </th>";
+
+                                echo "<td>";
+                                    ?>
+                                        <form action="./Modificar.php" method="post" name="formularioT13_Modificar" enctype="multipart/form-data">
+                                            <input type="submit" value="Modificar" name="modificar">
+                                        </form>
+                                    <?php
+                                echo "</td>";
+
+                                echo "<td>";
+                                    ?>
+                                        <form action="./LeerTabla.php" method="post" name="formularioT13" enctype="multipart/form-data">
+                                            <input type="submit" value="Borrar" name="borrar">
+                                        </form>                                               
+                                    <?
+                                echo "</td>";
 
                                 echo "</tr>";
+                            }
 
-                                // Mostrar los datos de la tabla
-                                while ($fila = $consulta -> fetch_assoc()) {
-                                    
-                                    echo "<tr>";
+                        echo "</table>";
 
-                                    foreach ($camposTabla as $columna) {
-                                        echo "<td>" . $fila[$columna] . "</td>";
-                                    }
-
-                                    echo "<td>";
-                                        ?>
-                                            <form action="./Modificar.php" method="post" name="formularioT13" enctype="multipart/form-data">
-                                                
-                                                <input type="submit" value="Modificar" name="modificar">
-                                            </form>
-                                        <?php
-                                    echo "</td>";
-
-                                    echo "<td>";
-                                        ?>
-                                            <form action="./LeerTabla.php" method="post" name="formularioT13_Borrar" enctype="multipart/form-data">
-                                                <input type="submit" value="Borrar" name="borrar">
-                                            </form>                                               
-                                        <?
-                                    echo "</td>";
-
-                                    echo "</tr>";
-                                }
-
-                            echo "</table>";
-
-                        } else {
-                            echo "No se encontraron resultados en la base de datos";
-                        }
-                        
-                            
-                    } catch (\Throwable $th) {
-
-                        switch ($th->getCode()) {
-                            // Manejo de errores según tu código
-                        }
-                    
-                        mysqli_close($con);
-                    }      
-                    
+                    } else {
+                        echo "No se encontraron resultados en la base de datos";
+                    }                    
                 ?>
 
                 <br>

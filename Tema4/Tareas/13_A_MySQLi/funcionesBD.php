@@ -1,6 +1,8 @@
 <?php
 // Función para consultar los datos de la base de datos
-    function consultarBD($con, $tabla) {
+    function consultarBD($tabla) {
+
+        $con = mysqli_connect(IP, USER, PASS, "tienda");
 
         // Creamos la sentencia
         $sql = "select * from $tabla";
@@ -41,7 +43,7 @@
 
 
 // Función para borrar datos de la base de datos
-    function borrarBD($con, $id) {
+    function borrarBD($id) {
 
          // Creamos la sentencia
          $sql = "delete from videojuegos where id='$id'";
@@ -53,15 +55,63 @@
     }
 
 
-// Función para generar un script de creación para la Base de Datos
-    function crearScript($con, $BD) {
+
+
+    function enviado() {
+
+        if (isset($_REQUEST['crear']) || isset($_REQUEST['leer']) || isset($_REQUEST['insertar'])) 
+            return true;
+
+        return false;
+    }
+    
+    function existe($name) {
+
+        if (isset($_REQUEST[$name])) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    function comprobarBD() {
+
+        // Establecemos la conexion
+        $con = new mysqli();
 
         // Iniciamos la conexion
         $con -> connect(IP, USER, PASS);
-        
+
+        // Consulta para obtener la lista de bases de datos
+        $consultaBD = $con -> query('show databases');
+
+        // Comprobar si la base de datos existe
+        while ($array = $consultaBD -> fetch_assoc()) {
+
+            if ($array['Database'] == 'tienda') {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
+
+
+// Función para generar un script de creación para la Base de Datos
+    function crearScript() {
+
+        // Establecemos la conexion
+        $con = new mysqli();
+
         try {   
+            // Iniciamos la conexion
+            $con -> connect(IP, USER, PASS);
+
             // Obtenemos el contenido del fichero sql
-            $script = file_get_contents($BD);
+            $script = file_get_contents('./tienda.sql');
     
             // Lee el contenido del script
             $con -> multi_query($script);
