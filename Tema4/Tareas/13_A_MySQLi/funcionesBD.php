@@ -1,6 +1,6 @@
 <?php
 // Función para consultar los datos de la base de datos
-    function consultarBD($tabla) {
+    function consultar($tabla) {
 
         $con = mysqli_connect(IP, USER, PASS, "tienda");
 
@@ -14,11 +14,28 @@
     }
 
 
+// Función para consultar los datos de la base de datos por id
+    function consultarId($tabla) {
+
+        $con = mysqli_connect(IP, USER, PASS, "tienda");
+
+        // Creamos la sentencia
+        $sql = "select * from $tabla where id='" . $_REQUEST["id"] . "'";
+
+        // Ejecutamos la sentencia
+        $result = $con -> query($sql);
+
+        return $result;
+    }
+
+
 // Función para actualizar los datos de la base de datos    
-    function actualizarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
+    function actualizar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
+
+        $con = mysqli_connect(IP, USER, PASS, "tienda");
         
         // Creamos la sentencia
-        $sql = "update videojuegos set nombre='$nombre', compañia='$compañia', stock=$stock, precio=$precio, fecha_Lanzamiento='$fecha_Lanzamiento'  where id = '$id'";
+        $sql = "update videojuegos set nombre='" . $nombre . "', compañia='" . $compañia . "', stock=" . $stock . ", precio=" . $precio . ", fecha_Lanzamiento='" . $fecha_Lanzamiento . "' where id = '" . $id . "'";
 
         // Ejecutamos la sentencia
         $result = $con -> query($sql);
@@ -29,7 +46,7 @@
 
 
 // Función para insertar datos en la base de datos
-    function insertarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento){
+    function insertar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento){
 
         // Consultas preparadas
         $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values ('$id','$nombre','$compañia','$stock','$precio','$fecha_Lanzamiento')";
@@ -43,7 +60,7 @@
 
 
 // Función para borrar datos de la base de datos
-    function borrarBD($id) {
+    function borrar() {
 
          // Creamos la sentencia
          $sql = "delete from videojuegos where id='$id'";
@@ -54,16 +71,6 @@
         return $result;
     }
 
-
-
-
-    function enviado() {
-
-        if (isset($_REQUEST['crear']) || isset($_REQUEST['leer']) || isset($_REQUEST['insertar'])) 
-            return true;
-
-        return false;
-    }
     
     function existe($name) {
 

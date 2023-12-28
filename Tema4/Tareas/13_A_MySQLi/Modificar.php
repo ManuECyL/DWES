@@ -1,6 +1,17 @@
 <?php
     require('./conexionBD.php');
     require('./funcionesBD.php');
+
+    
+    if (existe("volver")) {                                  
+        header('Location: ./LeerTabla.php');
+        exit;
+
+    } elseif (existe("guardar")) {
+        actualizar($_REQUEST['id'], $_REQUEST['nombre'], $_REQUEST['compañia'], $_REQUEST['stock'], $_REQUEST['precio'], $_REQUEST['fecha_Lanzamiento']);    
+        header('Location: ./LeerTabla.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -48,6 +59,11 @@
             margin: 5px;
         }
 
+        .botones {
+            margin-left: 70px;
+            margin-bottom: 20px;
+        }
+
     </style>
 </head>
 
@@ -82,55 +98,52 @@
                 <h3 style="text-align: center">Modificar Registro</h3>
 
                 <?php
-
-                    if (existe("volver")) {                                      
-                        header('Location: ./LeerTabla.php');
-                        exit;
-
-                    } elseif (existe("guardar")) {
-                        header('Location: ./LeerTabla.php');
-                        exit;
-                    }
-
-
-                    // $consulta = consultarBD('videojuegos');
+                    $consulta = consultarId('videojuegos');
                         
-                    // // Comprobamos si hay resultados
-                    // if ($consulta -> num_rows > 0) {
+                    // Comprobamos si hay resultados
+                    if ($consulta -> num_rows > 0) {
 
-                    // // Obtenemos los nombres de los campos que contiene la tabla
-                    //     $camposTabla = array();
+                    // Obtenemos los nombres de los campos que contiene la tabla
+                        $camposTabla = array();
 
-                    //     while ($campo = $consulta -> fetch_field()) {
-                    //         $camposTabla[] = $campo -> name;
-                    //     }
+                    // Obtenemos los valores de los campos que contiene la tabla
+                        $fila = $consulta -> fetch_assoc();
 
-                    //     echo "<div id='divForm'>";
+                        while ($campo = $consulta -> fetch_field()) {
+                            $camposTabla[] = $campo -> name;
+                        }
 
-                    //         echo "<form action='./Modificar.php' method='post' id='registros' name='formularioT13' enctype='multipart/form-data'>";
+                        echo "<div id='divForm'>";
 
-                    //             // Mostrar los campos en el encabezado de la tabla
-                    //             foreach ($camposTabla as $columna) {                                            
-                    //                 echo "<label><b>" . $columna . "</b></label>: ";
-                    //                 echo "<input type='text' name='dato'>";
-                    //                 echo "<br>";
+                            echo "<form action='./Modificar.php' method='post' id='registros' name='formularioT13_Modificar' enctype='multipart/form-data'>";
+
+                                // Mostrar los campos en el encabezado de la tabla
+                                foreach ($camposTabla as $columna) {                                            
+                                    echo "<label><b>" . $columna . "</b></label>: ";
+                                    echo '<input type="text" name="' . $columna . '" value="' . $fila[$columna] . '" size="25px">';
+                                    echo "<br>";
                                     
-                    //             }
+                                }
 
-                    //         echo "</form>";
+                            ?>
+                            
+                                <br>
+
+                                <input type="submit" value="Volver" name="volver" class="botones">
+                                <input type="submit" value="Guardar" name="guardar" class="botones">
+
+                            <?php
+
+                            echo "</form>";
                         
-                    //     echo "</div>";
+                        echo "</div>";
 
-                    // } else {
-                    //     echo "No se encontraron resultados en la base de datos";
-                    // } 
+                    } else {
+                        echo "No se encontraron resultados en la base de datos";
+                    } 
                 ?>
 
-                <form action="./Modificar.php" method="post" name="formularioT13" enctype="multipart/form-data">
-                    <input type="submit" value="Volver" name="volver">
-                    <input type="submit" value="Guardar" name="guardar">
 
-                </form>
             </div>
         </main>
 

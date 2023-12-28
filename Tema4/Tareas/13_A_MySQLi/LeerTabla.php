@@ -1,6 +1,22 @@
 <?php
     require('./conexionBD.php');
     require('./funcionesBD.php');
+
+    if (existe("modificar")) {
+        header("Location: ./Modificar.php");
+        exit;
+    
+    } elseif (existe("borrar")) {
+        borrar();
+
+    } else if (existe("volver")) {                                      
+        header('Location: ./interfazUsuario.php');
+        exit;
+
+    } elseif (existe("insertar")) {
+        header('Location: ./InsertarRegistro.php');
+        exit;
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -101,25 +117,7 @@
 
                 <?php
 
-
-                    if (existe("modificar")) {
-                        header('Location: ./Modificar.php');
-                        exit;
-                    
-                    } elseif (existe("borrar")) {
-                        borrarBD($id);
-
-                    } else if (existe("volver")) {                                      
-                        header('Location: ./interfazUsuario.php');
-                        exit;
-
-                    } elseif (existe("insertar")) {
-                        header('Location: ./InsertarRegistro.php');
-                        exit;
-                    } 
-
-
-                    $consulta = consultarBD('videojuegos');
+                    $consulta = consultar('videojuegos');
 
                     // Comprobamos si hay resultados
                     if ($consulta -> num_rows > 0) {
@@ -155,7 +153,8 @@
 
                                 echo "<td>";
                                     ?>
-                                        <form action="./Modificar.php" method="post" name="formularioT13_Modificar" enctype="multipart/form-data">
+                                        <form action="./Modificar.php" method="get" name="formularioT13_Modificar" enctype="multipart/form-data">
+                                            <input type="hidden" name="id" value="<?php echo $fila['id']?>">
                                             <input type="submit" value="Modificar" name="modificar">
                                         </form>
                                     <?php
