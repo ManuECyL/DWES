@@ -6,17 +6,16 @@
 
         try {
 
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
+            $con = new PDO($DSN, USER, PASS);
 
             // Creamos la sentencia
             $sql = "select * from $tabla";
     
             // Ejecutamos la sentencia
-            $result = mysqli_query($con, $sql);
+            $result = $con -> query($sql);
     
             return $result;
     
-            mysqli_close($con);
 
         } catch (PDOException $e) {
 
@@ -55,11 +54,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+        
+        } finally {
+            unset($con);
         }
     }
 
@@ -68,27 +68,24 @@
     function consultarId($tabla) {
 
         try {
-            
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
 
+            $con = new PDO($DSN, USER, PASS, BD);
+            
             // Creamos la sentencia
             $sql = "select * from $tabla where id = ?";
             
-            $stmt = mysqli_prepare($con, $sql);
+            $stmt = $con -> prepare( $sql);
     
-            mysqli_stmt_bind_param($stmt, "s", $_REQUEST['id']);
+            $stmt -> execute(array($id));
+            $row = $stmt -> fetch();
 
-            mysqli_stmt_execute($stmt);
-    
-            $result = mysqli_stmt_get_result($stmt);
+            return $row;
 
-            return $result;
-
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
+            unset($con);
             
-        } catch (\Throwable $th) {
-            switch ($th -> getCode()) {
+        } catch (PDOException $e) {
+
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -123,11 +120,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+       
+        } finally {
+            unset($con);
         }
     }
 
@@ -136,24 +134,18 @@
     function actualizar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
 
         try {
-            
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
-        
+
+            $con = new PDO($DSN, USER, PASS);
+                    
             // Creamos la sentencia
             $sql = "update videojuegos set nombre = ?, compañia = ?, stock = ?, precio = ?, fecha_Lanzamiento = ? where id = ?";
     
-            $stmt = mysqli_prepare($con, $sql);
-    
-            mysqli_stmt_bind_param($stmt, "ssidss", $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id);
+            $stmt = $con -> prepare($sql);
+            $stmt -> execute(array($nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id));
             
-            mysqli_stmt_execute($stmt);
-    
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
-            
-        } catch (\Throwable $th) {
+        } catch (PDOException $e) {
 
-            switch ($th -> getCode()) {
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -188,11 +180,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+
+        } finally {
+            unset($con);
         }
     }
 
@@ -202,21 +195,17 @@
 
         try {
 
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
+            $con = new PDO($DSN, USER, PASS);
 
             // Consultas preparadas
             $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values (?,?,?,?,?,?)";
     
-            $stmt = mysqli_prepare($con, $sql);
-            mysqli_stmt_bind_param($stmt, "sssids", $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento);
-            mysqli_stmt_execute($stmt);
-    
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
+            $stmt = $con -> prepare($sql);
+            $stmt -> execute(array($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento));
             
-        } catch (\Throwable $th) {
+        } catch (PDOException $e) {
 
-            switch ($th -> getCode()) {
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -251,11 +240,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+        
+        } finally {
+            unset($con);
         }
     }
 
@@ -266,21 +256,18 @@
 
         try {
             
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
+            $con = new PDO($DSN, USER, PASS, BD);
 
             // Creamos la sentencia
             $sql = "delete from videojuegos where id = ?";
    
-           $stmt = $con -> stmt_init();
-           $stmt -> prepare($sql);
-           $stmt -> bind_param("s", $_REQUEST["id"]);
-           $stmt -> execute();
+           $stmt -> $con -> prepare($sql);
+           $stmt -> execute(array($_REQUEST['id']));
     
-           mysqli_close($con);
 
-        } catch (\Throwable $th) {
+        } catch (PDOException $e) {
 
-            switch ($th -> getCode()) {
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -315,11 +302,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
             
-            mysqli_close($con);
+        } finally {
+            unset($con);
         }
     }
 
@@ -327,32 +315,27 @@
 
     function comprobarBD() {
 
-        // Establecemos la conexion
-        $con = new mysqli();
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
 
         try {
-            // Iniciamos la conexion
-            $con = mysqli_connect(IP, USER, PASS);
+         
+            // Establecemos la conexion
+            $con = new PDO($DSN, USER, PASS);
 
             // Consulta para obtener la lista de bases de datos
-            $consultaBD = $con -> query('show databases');
+            $consultaBD = $con -> query('select datname from pg_database');
 
             // Comprobar si la base de datos existe
-            while ($array = $consultaBD -> fetch_assoc()) {
+            while ($array = $consultaBD -> fetch(PDO::FETCH_ASSOC)) {
 
-                if ($array['Database'] == 'tienda') {
+                if ($array['datname'] == 'tienda') {
                     return true;
                 }
             }
-
-            return false;
-
-            mysqli_close($con);
-
             
-        } catch (\Throwable $th) {
-
-            switch ($th -> getCode()) {
+        } catch (PDOException $e) {
+            
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -387,11 +370,14 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
+                    return $e -> getCode();
                     break;
+               
             }
-            
-            mysqli_close($con);
+
+        } finally {
+            unset($con);
         }
     }
 
@@ -400,45 +386,35 @@
 // Función para generar un script de creación para la Base de Datos
     function crearScript() {
 
-        $DSN = 'pgsql:host='.IP.';dbname=postgres';
-
-        // Establecemos la conexion
-        $con = new mysqli();
+        $DSN = 'pgsql:host='.IP.';dbname=tienda';
 
         try {   
-            // Iniciamos la conexion
-            $con = mysqli_connect(IP, USER, PASS);
+
+            // Establecemos la conexion
+            $con = new PDO($DSN, USER, PASS);
+
+            // Creamos la base de datos
+            $sql = "create database " .  BD;
+
+            $result = $con -> exec($sql);
+
+            $con = new PDO($DSN, USER, PASS);
 
             // Obtenemos el contenido del fichero sql
             $script = file_get_contents('./tienda.sql');
-    
-            // Lee el contenido del script
-            $con -> multi_query($script);
-                
-            // Comprobamos si hay un error de sintaxis y nos lo muestra
-            do {
-                $con -> store_result();
-    
-                if (!$con -> next_result()) {
-                    break;
-                }
-    
-            } while(true);
 
-            if (true) {
-                echo "<p style='text-align:center;color:green'>Base de datos creada con éxito";
+            if ($con -> exec($script)) {
+                echo "Datos insertados correctamente.";
+            
+            } else {
+                echo "Error en la inserción:";
             }
 
-            // Cerramos la conexion
-            mysqli_close($con);
+            unset($con);
             
-        } catch (\Throwable $th) {
+        } catch (PDOException $e) {
 
-            // Si hay un error, borra la BBDD
-            $sql = "drop database tienda";
-            $con -> query($sql);
-    
-            switch ($th -> getCode()) {
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -473,11 +449,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+
+        } finally {
+            unset($con);
         }
     }
 
@@ -487,19 +464,18 @@
 
         try {
             
-            $con = mysqli_connect(IP, USER, PASS, "tienda");
+            $con = new PDO($DSN, USER, PASS, BD);
 
             // Creamos la sentencia
             $sql = "select * from videojuegos where id like ? or nombre like ? or compañia like ? or stock like ? or precio like ? or fecha_Lanzamiento like ?";
 
-            $stmt = mysqli_prepare($con, $sql);
+            $stmt -> $con -> prepare($sql);
 
             $busqueda = "%" . $busqueda . "%";
             
-            mysqli_stmt_bind_param($stmt, "sssids", $busqueda, $busqueda, $busqueda, $busqueda, $busqueda, $busqueda);
-            mysqli_stmt_execute($stmt);
+            $stmt -> execute(array($_REQUEST['id'], $_REQUEST['nombre'], $_REQUEST['compañia'], $_REQUEST['stock'], $_REQUEST['precio'], $_REQUEST['fecha_Lanzamiento']));
 
-            $result = mysqli_stmt_get_result($stmt);
+            $result = $stmt -> fetchAll();
 
             if(mysqli_affected_rows($con) == 0){
                 echo "La búsqueda ha devuelto 0 resultados<br>";
@@ -560,10 +536,9 @@
                 echo "</table>";
             }
 
-            mysqli_close($con);
             
-        } catch (\Throwable $th) {
-            switch ($th -> getCode()) {
+        } catch (PDOException $e) {
+            switch ($e -> getCode()) {
     
                 case 1062:
                     echo "<p style='text-align:center;color:red'> Ha introducido el mismo id </p>";
@@ -598,11 +573,12 @@
                     break;
                 
                 default:
-                    echo $th -> getMessage();
+                    echo $e -> getMessage();
                     break;
             }
-            
-            mysqli_close($con);
+
+        } finally {
+            unset($con);
         }
     }
 

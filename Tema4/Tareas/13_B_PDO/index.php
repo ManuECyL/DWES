@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Tarea 13 - A - MySQLi</title>
+        <title>Tarea 13 - B - PDO</title>
 
     <!-- BOOTSTRAP -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
@@ -66,7 +66,7 @@
             <main>
                 <div style="border: 1px black solid; margin: 10px;">
 
-                    <h3 style="text-align: center">Tarea 13 - A - MySQLi</h3>
+                    <h3 style="text-align: center">Tarea 13 - B - PDO</h3>
 
                     <br>
 

@@ -84,15 +84,16 @@
                         } elseif (existe("insertar")) {
                             header('Location: ./InsertarRegistro.php');
                             exit;
-                        }
-     
-    
-                        if (!comprobarBD()) {
-                            echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
-                        }                          
+                        }                      
                     ?>
 
                     <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data">
+
+                        <?php
+                            if (!comprobarBD()) {
+                                echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
+                            }  
+                        ?>
 
                         <input type="submit" value="Leer Tabla" name="leer">
                         <input type="submit" value="Insertar Registro" name="insertar">

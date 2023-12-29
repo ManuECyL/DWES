@@ -105,7 +105,7 @@
 
                     <div class="col-md col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 13 A</a>
+                            <a class="nav-link navTema" href="./index.php" id="anterior">Tarea 13 B</a>
                         </li>
                     </div>
                 </ul> 
