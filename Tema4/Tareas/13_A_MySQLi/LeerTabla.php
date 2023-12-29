@@ -1,7 +1,18 @@
 <?php
     require('./funcionesBD.php');
 
-    if (existe("modificar")) {
+    $busqueda = "";
+    $resultadosBusqueda = "";
+
+    if (existe("buscar")) {
+        $busqueda = $_REQUEST['buscador'];
+
+        if ($busqueda != "") {
+            buscar($busqueda);
+            $resultadosBusqueda = ob_get_clean();
+        }
+        
+    } elseif (existe("modificar")) {
         header("Location: ./Modificar.php");
         exit;
     
@@ -107,74 +118,84 @@
 
                 <h3 style="text-align: center">Leer Tabla</h3>
 
-                <div id="divBuscar">
-                    <input type="text" name="buscar" id="buscar" placeholder="Buscar Dato">
-                    <input type="button" value="Buscar">                    
-                </div>
+                <form action="./LeerTabla.php" method="post" name="formularioT13" enctype="multipart/form-data">
+                    <div id="divBuscar">
+                        <input type="text" name="buscador" id="buscador" placeholder="Buscar Dato">
+                        <input type="submit" value="Buscar" name="buscar">                    
+                    </div>
+                </form>
 
                 <br>
 
                 <?php
 
-                    $consulta = consultar('videojuegos');
-
-                    // Comprobamos si hay resultados
-                    if ($consulta -> num_rows > 0) {
-                        
-                        // Obtenemos los nombres de los campos que contiene la tabla
-                        $camposTabla = array();
-
-                        while ($campo = $consulta -> fetch_field()) {
-                            $camposTabla[] = $campo -> name;
-                        }
-
-                        echo "<table>";
-
-                            echo "<tr>";
-
-                            // Mostrar los campos en el encabezado de la tabla
-                            foreach ($camposTabla as $columna) {
-                                echo "<th>" . $columna . "</th>";
-                            }
-                                echo "<th> Modificar </th>";
-                                echo "<th> Borrar </th>";
-
-                            echo "</tr>";
-
-                            // Mostrar los datos de la tabla
-                            while ($fila = $consulta -> fetch_assoc()) {
-                                
-                                echo "<tr>";
-
-                                foreach ($camposTabla as $columna) {
-                                    echo "<td>" . $fila[$columna] . "</td>";
-                                }
-
-                                echo "<td>";
-                                    ?>
-                                        <form action="./Modificar.php" method="get" name="formularioT13_Modificar" enctype="multipart/form-data">
-                                            <input type="hidden" name="id" value="<?php echo $fila['id']?>">
-                                            <input type="submit" value="Modificar" name="modificar">
-                                        </form>
-                                    <?php
-                                echo "</td>";
-
-                                echo "<td>";
-                                    ?>
-                                        <form action="./LeerTabla.php" method="post" name="formularioT13" enctype="multipart/form-data">
-                                            <input type="submit" value="Borrar" name="borrar">
-                                        </form>                                               
-                                    <?
-                                echo "</td>";
-
-                                echo "</tr>";
-                            }
-
-                        echo "</table>";
-
+                    if ($busqueda != "") {
+                        echo $resultadosBusqueda;
+                    
                     } else {
-                        echo "No se encontraron resultados en la base de datos";
-                    }                    
+
+                        $consulta = consultar('videojuegos');
+    
+                        // Comprobamos si hay resultados
+                        if ($consulta -> num_rows > 0) {
+                            
+                            // Obtenemos los nombres de los campos que contiene la tabla
+                            $camposTabla = array();
+    
+                            while ($campo = $consulta -> fetch_field()) {
+                                $camposTabla[] = $campo -> name;
+                            }
+    
+                            echo "<table>";
+    
+                                echo "<tr>";
+    
+                                // Mostrar los campos en el encabezado de la tabla
+                                foreach ($camposTabla as $columna) {
+                                    echo "<th>" . $columna . "</th>";
+                                }
+                                    echo "<th> Modificar </th>";
+                                    echo "<th> Borrar </th>";
+    
+                                echo "</tr>";
+    
+                                // Mostrar los datos de la tabla
+                                while ($fila = $consulta -> fetch_assoc()) {
+                                    
+                                    echo "<tr>";
+    
+                                        foreach ($camposTabla as $columna) {
+                                            echo "<td>" . $fila[$columna] . "</td>";
+                                        }
+    
+                                        echo "<td>";
+                                            ?>
+                                                <form action="./Modificar.php" method="get" name="formularioT13_Modificar" enctype="multipart/form-data">
+                                                    <input type="hidden" name="id" value="<?php echo $fila['id']?>">                                            
+                                                    <input type="submit" value="Modificar" name="modificar">
+                                                </form>
+                                            <?php
+                                        echo "</td>";
+    
+                                        echo "<td>";
+                                            ?>
+                                                <form action="./LeerTabla.php" method="post" name="formularioT13" enctype="multipart/form-data">
+                                                    <input type="hidden" name="id" value="<?php echo $fila['id']?>">
+                                                    <input type="submit" value="Borrar" name="borrar">
+                                                </form>                                               
+                                            <?
+                                        echo "</td>";
+    
+                                    echo "</tr>";
+                                }
+    
+                            echo "</table>";
+    
+                        } else {
+                            echo "No se encontraron resultados en la base de datos";
+                        }                    
+                    }
+
                 ?>
 
                 <br>

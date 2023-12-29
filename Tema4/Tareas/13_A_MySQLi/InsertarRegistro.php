@@ -6,7 +6,10 @@
         exit;
 
     } elseif (existe("insertar")) {
-        insertar($_REQUEST['id'], $_REQUEST['nombre'], $_REQUEST['compañia'], $_REQUEST['stock'], $_REQUEST['precio'], $_REQUEST['fecha_Lanzamiento']);    
+
+        insertar($_REQUEST["id"], $_REQUEST["nombre"], $_REQUEST["compañia"], $_REQUEST["stock"], $_REQUEST["precio"], $_REQUEST["fecha_Lanzamiento"]);
+
+        // insertar($_REQUEST['id'], $_REQUEST['nombre'], $_REQUEST['compañia'], $_REQUEST['stock'], $_REQUEST['precio'], $_REQUEST['fecha_Lanzamiento']);
         header('Location: ./LeerTabla.php');
         exit;
     }
@@ -45,16 +48,16 @@
         
         #registros {
             text-align:justify;
-            margin: 0px;
+            margin: 10px;
         }
 
         form {
             text-align: center;
-            margin: 30px;
+            margin: 20px;
         }
 
         input {
-            margin: 5px;
+            margin: 6px;
         }
 
         .botones {
@@ -104,31 +107,30 @@
 
                     // Obtenemos los nombres de los campos que contiene la tabla
                         $camposTabla = array();
-
-  
+                        
                         while ($campo = $consulta -> fetch_field()) {
                             $camposTabla[] = $campo -> name;
                         }
-
+                        
                         echo "<div id='divForm'>";
-
+                        
                             echo "<form action='./InsertarRegistro.php' method='post' id='registros' name='formularioT13_Insertar' enctype='multipart/form-data'>";
-
-                                // Mostrar los campos en el encabezado de la tabla
+                        
+                            // Mostrar los campos en el encabezado de la tabla
                                 foreach ($camposTabla as $columna) {                                            
                                     echo "<label><b>" . $columna . "</b></label>: ";
-                                    echo '<input type="text" name="' . $columna . ' size="25px">';
+                                    echo '<input type="text" name="' . $columna . '" size="25px">';
                                     echo "<br>";    
                                 }
 
-                            ?>
+                    ?>
                             
                                 <br>
 
                                 <input type="submit" value="Volver" name="volver" class="botones">
                                 <input type="submit" value="Insertar" name="insertar" class="botones">
 
-                            <?php
+                    <?php
 
                             echo "</form>";
                         
