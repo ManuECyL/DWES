@@ -1,6 +1,15 @@
 <?php
-    require('./conexionBD.php');
     require('./funcionesBD.php');
+
+    if (existe("volver")) {                                      
+        header('Location: ./LeerTabla.php');
+        exit;
+
+    } elseif (existe("insertar")) {
+        insertar($_REQUEST['id'], $_REQUEST['nombre'], $_REQUEST['compañia'], $_REQUEST['stock'], $_REQUEST['precio'], $_REQUEST['fecha_Lanzamiento']);    
+        header('Location: ./LeerTabla.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -28,16 +37,15 @@
         }
 
         #divForm {
-
-            text-align:justify;
-            margin: 0px;
-        }
-        
-        #registros {
             display: flex;
             text-align: center;
             align-items: center;
             justify-content: center;
+        }
+        
+        #registros {
+            text-align:justify;
+            margin: 0px;
         }
 
         form {
@@ -47,6 +55,11 @@
 
         input {
             margin: 5px;
+        }
+
+        .botones {
+            margin-left: 70px;
+            margin-bottom: 20px;
         }
 
     </style>
@@ -84,93 +97,48 @@
 
                 <?php
 
-                    if (existe("volver")) {                                      
-                        header('Location: ./LeerTabla.php');
-                        exit;
-
-                    } elseif (existe("insertar")) {
-                        header('Location: ./LeerTabla.php');
-                        exit;
-                    }
-
-                    try {
+                    $consulta = consultar('videojuegos');
                         
-                        // Iniciamos la conexion
-                        $con -> connect(IP, USER, PASS, 'tienda');
+                    // Comprobamos si hay resultados
+                    if ($consulta -> num_rows > 0) {
 
-                        $consulta = consultarBD($con, 'videojuegos');
+                    // Obtenemos los nombres de los campos que contiene la tabla
+                        $camposTabla = array();
 
-                        // Comprobamos si hay resultados
-                        if ($consulta -> num_rows > 0) {
+  
+                        while ($campo = $consulta -> fetch_field()) {
+                            $camposTabla[] = $campo -> name;
+                        }
 
-                            echo "<form action='./InsertarRegistro.php' method='post' id='registros' name='formularioT13' enctype='multipart/form-data'>";
+                        echo "<div id='divForm'>";
+
+                            echo "<form action='./InsertarRegistro.php' method='post' id='registros' name='formularioT13_Insertar' enctype='multipart/form-data'>";
+
+                                // Mostrar los campos en el encabezado de la tabla
+                                foreach ($camposTabla as $columna) {                                            
+                                    echo "<label><b>" . $columna . "</b></label>: ";
+                                    echo '<input type="text" name="' . $columna . ' size="25px">';
+                                    echo "<br>";    
+                                }
+
+                            ?>
                             
-                            // Obtenemos los nombres de los campos que contiene la tabla
-                            $camposTabla = array();
+                                <br>
 
-                            while ($campo = $consulta -> fetch_field()) {
-                                $camposTabla[] = $campo -> name;
-                            }
+                                <input type="submit" value="Volver" name="volver" class="botones">
+                                <input type="submit" value="Insertar" name="insertar" class="botones">
 
-                                echo "<div id='divForm'>";
+                            <?php
 
-
-                                    // Mostrar los campos en el encabezado de la tabla
-                                    foreach ($camposTabla as $columna) {
-                                        echo "<label><b>" . $columna . "</b></label>: ";
-                                        echo "<input type='text' name='". $columna ."'>";
-                                        echo "<br>";
-                                    }
-                                    
-                                echo "</div>";
-
-                                    // Verificar si se ha enviado el formulario
-                                    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['insertar'])) {
-
-                                        // Validar los datos del formulario aquí...
-
-                                        // Recupera los datos del formulario
-                                        $id = $_POST['id'];
-                                        $nombre = $_POST['nombre'];
-                                        $compañia = $_POST['compañia'];
-                                        $stock = $_POST['stock'];
-                                        $precio = $_POST['precio'];
-                                        $fecha_Lanzamiento = $_POST['fecha_Lanzamiento'];
-
-                                        // Insertamos los datos en la base de datos
-                                        if (insertarBD($con, $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento)) {
-                                            echo "Registro insertado correctamente.";
-
-                                        } else {
-                                            echo "Error al insertar el registro.";
-                                        }
-                                    }
-                                
                             echo "</form>";
-        
-
-                        } else {
-                            echo "No se encontraron resultados en la base de datos";
-                        }
                         
-                            
-                    } catch (\Throwable $th) {
+                        echo "</div>";
 
-                        switch ($th->getCode()) {
-                            // Manejo de errores según tu código
-                        }
-                    
-                        mysqli_close($con);
-                    }      
-                    
+                    } else {
+                        echo "No se encontraron resultados en la base de datos";
+                    } 
                 ?>
 
-                <form action="./InsertarRegistro.php" method="post" name="formularioT13" enctype="multipart/form-data">
-
-                    <input type="submit" value="Volver" name="volver">
-                    <input type="submit" value="Insertar" name="insertar">
-
-                </form>
             </div>
         </main>
 

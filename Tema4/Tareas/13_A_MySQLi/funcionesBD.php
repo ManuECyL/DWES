@@ -1,4 +1,6 @@
 <?php
+    require("./conexionBD.php");
+
 // Función para consultar los datos de la base de datos
     function consultar($tabla) {
 
@@ -35,12 +37,15 @@
         $con = mysqli_connect(IP, USER, PASS, "tienda");
         
         // Creamos la sentencia
-        $sql = "update videojuegos set nombre='" . $nombre . "', compañia='" . $compañia . "', stock=" . $stock . ", precio=" . $precio . ", fecha_Lanzamiento='" . $fecha_Lanzamiento . "' where id = '" . $id . "'";
+        $sql = "update videojuegos set nombre = ?, compañia = ?, stock = ?, precio = ?, fecha_Lanzamiento = ? where id = ?";
 
-        // Ejecutamos la sentencia
-        $result = $con -> query($sql);
-    
-        return $result;
+        $stmt = mysqli_prepare($con, $sql);
+
+        mysqli_stmt_bind_param($stmt, "ssidss", $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($con);
     }
 
 
@@ -48,19 +53,25 @@
 // Función para insertar datos en la base de datos
     function insertar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento){
 
-        // Consultas preparadas
-        $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values ('$id','$nombre','$compañia','$stock','$precio','$fecha_Lanzamiento')";
+        $con = mysqli_connect(IP, USER, PASS, "tienda");
 
-        // Ejecutamos la sentencia
-        $result = $con -> query($sql);
-    
-        return $result;
+        // Consultas preparadas
+        $sql = "insert into videojuegos (id,nombre,compañia,stock,precio,fecha_Lanzamiento) values (?,?,?,?,?,?)";
+
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "sssids", $id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento);
+        mysqli_stmt_execute($stmt);
+
+        mysqli_stmt_close($stmt);
+        mysqli_close($con);
     }
 
 
 
 // Función para borrar datos de la base de datos
     function borrar() {
+
+        $con = mysqli_connect(IP, USER, PASS, "tienda");
 
          // Creamos la sentencia
          $sql = "delete from videojuegos where id='$id'";
@@ -102,6 +113,8 @@
         }
 
         return false;
+
+        $con->close();
     }
 
 

@@ -1,5 +1,4 @@
 <?php
-    require('./conexionBD.php');
     require('./funcionesBD.php');
 
     
@@ -120,7 +119,7 @@
                                 // Mostrar los campos en el encabezado de la tabla
                                 foreach ($camposTabla as $columna) {                                            
                                     echo "<label><b>" . $columna . "</b></label>: ";
-                                    echo '<input type="text" name="' . $columna . '" value="' . $fila[$columna] . '" size="25px">';
+                                    echo '<input type="text" name="' . $columna . '" value="' . $_POST[$columna] . '" size="25px">';
                                     echo "<br>";
                                     
                                 }

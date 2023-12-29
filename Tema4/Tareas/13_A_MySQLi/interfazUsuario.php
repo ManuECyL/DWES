@@ -1,5 +1,4 @@
 <?php
-    require('./conexionBD.php');
     require('./funcionesBD.php');
 ?>
 
