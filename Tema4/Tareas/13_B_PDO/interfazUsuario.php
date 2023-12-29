@@ -1,6 +1,4 @@
 <?php
-    require('./conexionBD.php');
-    require('./validaciones.php');
     require('./funcionesBD.php');
 ?>
 
@@ -71,52 +69,30 @@
 
                     <?php
 
-                        // Verificar que la conexión se realiza correctamente
-                        if ($con -> connect_error) {
-                            echo "Error en la conexión con la Base de Datos: " . $con -> connect_error;
+
+                        if (existe("crear")) {
+                            
+                            if (crearScript()) {
+                                echo "<input id='crearBD' type='hidden'>";
+                            }
+                        }
+
+                        if (existe("leer")) {                        
+                            header('Location: ./LeerTabla.php');
                             exit;
 
-                        } else {
-
-                            if (existe("crear")) {
-                                
-                                if (crearScript($con, './tienda.sql')) {
-                                    echo "<input id='crearBD' type='hidden'>";
-                                }
-                            }
-    
-                            if (existe("leer")) {                        
-                                header('Location: ./LeerTabla.php');
-                                exit;
-    
-                            } elseif (existe("insertar")) {
-                                header('Location: ./InsertarRegistro.php');
-                                exit;
-                            }
-    
-                            try {
-    
-                                // Iniciamos la conexion
-                                $con -> connect(IP, USER, PASS);
-        
-                                echo '<form action="" method="post" name="formularioT13" enctype="multipart/form-data">';
-        
-                                if (!comprobarBD($con, 'tienda')) {
-                                    echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
-                                }
-                                
-                                    
-                            } catch (\Throwable $th) {
-                                switch ($th->getCode()) {
-                                    // Manejo de errores según tu código
-                                }
-                            
-                                mysqli_close($con);
-                            }      
+                        } elseif (existe("insertar")) {
+                            header('Location: ./InsertarRegistro.php');
+                            exit;
                         }
+     
+    
+                        if (!comprobarBD()) {
+                            echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
+                        }                          
                     ?>
 
-                    <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data" target="_blank">
+                    <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data">
 
                         <input type="submit" value="Leer Tabla" name="leer">
                         <input type="submit" value="Insertar Registro" name="insertar">
