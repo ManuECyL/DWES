@@ -69,7 +69,6 @@
 
                     <?php
 
-
                         if (existe("crear")) {
                             
                             if (crearScript()) {

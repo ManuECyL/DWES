@@ -69,7 +69,6 @@
 
                     <?php
 
-
                         if (existe("crear")) {
                             
                             if (crearScript()) {
@@ -90,7 +89,7 @@
                     <form action="./interfazUsuario.php" method="post" name="formularioT13" enctype="multipart/form-data">
 
                         <?php
-                            if (comprobarBD() != 7) {
+                            if (!comprobarBD()) {
                                 echo "<input type='submit' id='crearBD' value='Crear BBDD' name='crear'>";
                             }  
                         ?>

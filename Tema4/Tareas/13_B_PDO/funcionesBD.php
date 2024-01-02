@@ -4,6 +4,8 @@
 // Función para consultar los datos de la base de datos
     function consultar($tabla) {
 
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
+
         try {
 
             $con = new PDO($DSN, USER, PASS);
@@ -65,21 +67,23 @@
 
 
 // Función para consultar los datos de la base de datos por id
-    function consultarId($tabla) {
+    function consultarId($tabla, $id) {
+
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
 
         try {
 
-            $con = new PDO($DSN, USER, PASS, BD);
+            $con = new PDO($DSN, USER, PASS);
             
             // Creamos la sentencia
-            $sql = "select * from $tabla where id = ?";
+            $sql = "select * from $tabla where id = :id";
             
-            $stmt = $con -> prepare( $sql);
+            $stmt = $con -> prepare($sql);
     
-            $stmt -> execute(array($id));
-            $row = $stmt -> fetch();
+            $stmt -> execute([':id' => $id]);
+            // $row = $stmt -> fetch();
 
-            return $row;
+            return $stmt;
 
             unset($con);
             
@@ -133,6 +137,8 @@
 // Función para actualizar los datos de la base de datos    
     function actualizar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
 
+        $DSN = 'pgsql:host='.IP.';dbname=tienda';
+
         try {
 
             $con = new PDO($DSN, USER, PASS);
@@ -141,6 +147,7 @@
             $sql = "update videojuegos set nombre = ?, compañia = ?, stock = ?, precio = ?, fecha_Lanzamiento = ? where id = ?";
     
             $stmt = $con -> prepare($sql);
+            $fecha_Lanzamiento = date('Y-m-d', strtotime($fecha_Lanzamiento));
             $stmt -> execute(array($nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id));
             
         } catch (PDOException $e) {
@@ -192,6 +199,8 @@
 
 // Función para insertar datos en la base de datos
     function insertar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento){
+
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
 
         try {
 
@@ -253,6 +262,8 @@
 
 // Función para borrar datos de la base de datos
     function borrar() {
+
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
 
         try {
             
@@ -386,7 +397,7 @@
 // Función para generar un script de creación para la Base de Datos
     function crearScript() {
 
-        $DSN = 'pgsql:host='.IP.';dbname=tienda';
+        $DSN = 'pgsql:host='.IP.';dbname=postgres';
 
         try {   
 
@@ -394,7 +405,7 @@
             $con = new PDO($DSN, USER, PASS);
 
             // Creamos la base de datos
-            $sql = "create database " .  BD;
+            $sql = "create database " .  DB;
 
             $result = $con -> exec($sql);
 
@@ -404,10 +415,7 @@
             $script = file_get_contents('./tienda.sql');
 
             if ($con -> exec($script)) {
-                echo "Datos insertados correctamente.";
-            
-            } else {
-                echo "Error en la inserción:";
+                echo "<p style='text-align:center;color:green'>Base de datos creada con éxito";
             }
 
             unset($con);

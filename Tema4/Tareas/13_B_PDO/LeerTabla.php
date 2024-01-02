@@ -137,13 +137,18 @@
                         $consulta = consultar('videojuegos');
     
                         // Comprobamos si hay resultados
-                        if ($consulta -> num_rows > 0) {
+                        if ($consulta -> rowCount() > 0) {
                             
-                            // Obtenemos los nombres de los campos que contiene la tabla
-                            $camposTabla = array();
+                            // Obtenemos la primera fila para extraer los nombres de los campos
+                            $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+                            $camposTabla = array_keys($fila);
+
+                            // Asegúrate de incluir la primera fila en tus resultados
+                            $resultados = array($fila);
     
-                            while ($campo = $consulta -> fetch_field()) {
-                                $camposTabla[] = $campo -> name;
+                            // Obtenemos el resto de las filas
+                            while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                                $resultados[] = $fila;
                             }
     
                             echo "<table>";
@@ -160,15 +165,16 @@
                                 echo "</tr>";
     
                                 // Mostrar los datos de la tabla
-                                while ($fila = $consulta -> fetch_assoc()) {
+                                foreach ($resultados as $fila) {
                                     
                                     echo "<tr>";
     
-                                        foreach ($camposTabla as $columna) {
-                                            echo "<td>" . $fila[$columna] . "</td>";
+                                        foreach ($fila as $valor) {
+                                            echo "<td>" . $valor . "</td>";
                                         }
-    
+                                           
                                         echo "<td>";
+                                        
                                             ?>
                                                 <form action="./Modificar.php" method="get" name="formularioT13_Modificar" enctype="multipart/form-data">
                                                     <input type="hidden" name="id" value="<?php echo $fila['id']?>">                                            

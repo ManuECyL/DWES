@@ -97,19 +97,22 @@
                 <h3 style="text-align: center">Modificar Registro</h3>
 
                 <?php
-                    $consulta = consultarId('videojuegos');
+                    $id = $_REQUEST['id'];
+                    $consulta = consultarId('videojuegos', $id);
                         
                     // Comprobamos si hay resultados
-                    if ($consulta -> num_rows > 0) {
+                    if ($consulta -> rowCount() > 0) {
 
-                    // Obtenemos los nombres de los campos que contiene la tabla
-                        $camposTabla = array();
+                        // Obtenemos la primera fila para extraer los nombres de los campos
+                        $fila = $consulta->fetch(PDO::FETCH_ASSOC);
+                        $camposTabla = array_keys($fila);
 
-                    // Obtenemos los valores de los campos que contiene la tabla
-                        $fila = $consulta -> fetch_assoc();
+                        // Asegúrate de incluir la primera fila en tus resultados
+                        $resultados = array($fila);
 
-                        while ($campo = $consulta -> fetch_field()) {
-                            $camposTabla[] = $campo -> name;
+                        // Obtenemos el resto de las filas
+                        while ($fila = $consulta->fetch(PDO::FETCH_ASSOC)) {
+                            $resultados[] = $fila;
                         }
 
                         echo "<div id='divForm'>";
@@ -119,7 +122,7 @@
                                 // Mostrar los campos en el encabezado de la tabla
                                 foreach ($camposTabla as $columna) {                                            
                                     echo "<label><b>" . $columna . "</b></label>: ";
-                                    echo '<input type="text" name="' . $columna . '" value="' . $fila[$columna] . '" size="25px">';
+                                    echo '<input type="text" name="' . $columna . '" value="' . $resultados[0][$columna] . '" size="25px">';
                                     echo "<br>";
                                 }
 

@@ -1,19 +1,11 @@
-drop database if exists tienda;
-create database tienda;
-drop user if exists manu;
-create user manu identified by 'tiendaManu';
-use tienda;
-grant all on tienda.* to manu;
-
-
-CREATE TABLE videojuegos (
+CREATE TABLE IF NOT EXISTS videojuegos (
     id CHAR(6) primary key,  
     nombre VARCHAR(50) NOT NULL,
     compañia VARCHAR(50) NOT NULL,
     stock INT NOT NULL,
     precio FLOAT NOT NULL, 
     fecha_Lanzamiento DATE
-) engine =innodb;
+); 
 
 
 INSERT INTO videojuegos VALUES ('RDR2', 'Red Dead Redemption 2', 'Rockstar Games', 20, 69.99, '2018-10-26');
