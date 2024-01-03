@@ -1,0 +1,59 @@
+i {
+    color: rgb(0, 0, 0);
+}
+
+.logo:link {
+    text-decoration: none;
+}
+
+.icono:hover {
+    color: rgb(255, 255, 255);
+}
+
+.navNombre {
+    color: white;
+    text-shadow: 1px 1px black;
+}
+
+.navNombre:hover {
+    color: rgba(10, 10, 10, 0.658);
+}
+
+.formu {
+    font-size: 20px;
+}
+
+.btnFav {
+    border: none;
+}
+
+.footerTitulo {
+    color: white;
+    text-shadow: 1px 1px 8px black;
+}
+
+.footerTitulo:hover {
+    color: black;
+}
+
+.footerLink {
+    color: white;
+    width: fit-content;
+}
+
+.footerLink:link {
+    text-decoration: none;
+}
+
+.footerLink:hover {
+    color: black;
+    text-shadow: 1px 1px black;
+}
+
+.iconoRed {
+    color: white;
+}
+
+.iconoRed:hover {
+    color: black;
+}
