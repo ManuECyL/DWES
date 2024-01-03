@@ -16,10 +16,6 @@
           </p>
 
           <p>
-            <a href="#" class="footerLink">Guía de Tallas</a>
-          </p>
-
-          <p>
             <a href="#" class="footerLink">Preguntas Frecuentes</a>
           </p>
 
