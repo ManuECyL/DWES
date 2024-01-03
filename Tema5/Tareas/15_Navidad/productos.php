@@ -32,28 +32,25 @@
 
                 <div class="container">
 
-                    <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3">
+                    <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
                             
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/casco1.jpg" alt="casco1"/>
+                                <img class="card-img-top productos" src="imagenes/productos/producto1.jpg" alt="RDR2"/>
 
                                 <div class="card-body p-4">
 
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">X-SPIRIT 3 MARQUEZ 6 TC-1</h5>
+                                        <h5 class="fw-bolder">Red Dead Redemption 2</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">CASCO SHOEI X-SPIRIT 3 MARQUEZ 6 TC-1</div>
+                                          <div style="margin-top: 2px;">Rockstar Games</div>
                                         </div>
                                         
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
-
-                                        <b>719,20€</b> 
+                                        <b>69,99€</b> 
                                     </div>
                                 </div>
 
@@ -67,22 +64,20 @@
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/casco2.jpg" alt="casco2" />
+                                <img class="card-img-top productos" src="imagenes/productos/producto2.jpg" alt="TW3WH" />
 
                                 <div class="card-body p-4">
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">POL ESPARGARO MC-2SF</h5>
+                                        <h5 class="fw-bolder">The Witcher 3: Wild Hunt</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                            <div style="margin-top: 2px;">CASCO HJC RPHA 1 POL ESPARGARO MC-2SF</div>
+                                            <div style="margin-top: 2px;">CD Projekt</div>
                                         </div>
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
 
-                                        <b>629,92€</b>
+                                        <b>39,99€</b>
                                     </div>
                                 </div>
 
@@ -96,22 +91,20 @@
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/casco3.jpg" alt="casco3" />
+                                <img class="card-img-top productos" src="imagenes/productos/producto3.jpg" alt="GTA5" />
 
                                 <div class="card-body p-4">
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">VENOM 2 MARVEL MC-1</h5>
+                                        <h5 class="fw-bolder">Grand Theft Auto V</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">CASCO HJC RPHA 11 VENOM 2 MARVEL MC-1</div>
+                                          <div style="margin-top: 2px;">Rockstar Games</div>
                                         </div>
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
 
-                                        <b>497,96€</b>
+                                        <b>19,99€</b>
                                     </div>
                                 </div>
  
@@ -125,22 +118,20 @@
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/chaqueta.jpg" alt="chaqueta" />
+                                <img class="card-img-top productos" src="imagenes/productos/producto4.jpg" alt="CODBO2" />
 
                                 <div class="card-body p-4">
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">T-GP FORCE BLACK</h5>
+                                        <h5 class="fw-bolder">Call of Duty: Black Ops 2</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">CHAQUETA ALPINESTARS T-GP FORCE BLACK</div>
+                                          <div style="margin-top: 2px;">Treyarch</div>
                                         </div>
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
 
-                                        <b>182,83€</b> 
+                                        <b>19,99€</b> 
                                     </div>
                                 </div>
 
@@ -154,22 +145,20 @@
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/pantalones.jpg" alt="pantalones" />
+                                <img class="card-img-top productos" src="imagenes/productos/producto5.jpg" alt="ACB" />
 
                                 <div class="card-body p-4">
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">MISSILE V3 BLACK / BLACK</h5>
+                                        <h5 class="fw-bolder">Assassin´s Creed Brotherhood</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                            <div style="margin-top: 2px;">PANTALON ALPINESTARS MISSILE V3 BLACK / BLACK</div>
+                                            <div style="margin-top: 2px;">Ubisoft</div>
                                         </div>
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
 
-                                        <b>347,64€</b>
+                                        <b>14,99€</b>
                                     </div>
                                 </div>
 
@@ -183,22 +172,20 @@
 
                         <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                            <div class="card h-100 d-block mx-auto">
+                            <div class="card h-80 d-block mx-auto">
 
-                                <img class="card-img-top" src="imagenes/productos/botas.jpg" alt="botas" />
+                                <img class="card-img-top productos" src="imagenes/productos/producto6.jpg" alt="HL" />
 
                                 <div class="card-body p-4">
                                     <div class="text-center">
 
-                                        <h5 class="fw-bolder">SMX-S BLACK / WHITE</h5>
+                                        <h5 class="fw-bolder">Hogwarts Legacy</h5>
 
                                         <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">BOTAS ALPINESTARS SMX-S BLACK / WHITE</div>
+                                          <div style="margin-top: 2px;">Avalanche</div>
                                         </div>
-                                        <div class="bi bi-heart btn btn-outline-dark mt-auto btnFav"></div>
-                                        <br>
 
-                                        <b>183,96€</b>
+                                        <b>49,99€</b>
                                     </div>
                                 </div>
  

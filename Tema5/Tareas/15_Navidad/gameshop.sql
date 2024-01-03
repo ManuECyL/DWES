@@ -64,6 +64,7 @@ INSERT INTO Usuarios VALUES ('cliente1', 'cliente1', 'cliente1@gmail.com', '1998
 
 INSERT INTO Productos VALUES ('RDR2', 'Red Dead Redemption 2', 'Rockstar Games', 20, 69.99);
 INSERT INTO Productos VALUES ('TW3WH', 'The Witcher 3: Wild Hunt', 'CD Projekt', 15, 39.99);
-INSERT INTO Productos VALUES ('GTA5', 'Grand Theft Auto 5', 'Rockstar Games', 25, 19.99);
+INSERT INTO Productos VALUES ('GTAV', 'Grand Theft Auto V', 'Rockstar Games', 25, 19.99);
 INSERT INTO Productos VALUES ('CODBO2', 'Call of Duty: Black Ops 2', 'Treyarch', 10, 19.99);
 INSERT INTO Productos VALUES ('ACB', 'Assassin´s Creed Brotherhood', 'Ubisoft', 5, 14.99);
+INSERT INTO Productos VALUES ('HL', 'Hogwarts Legacy', 'Avalanche', 15, 49.99);

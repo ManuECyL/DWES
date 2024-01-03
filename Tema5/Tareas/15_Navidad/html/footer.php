@@ -1,8 +1,10 @@
 <footer class="bg-dark bg-gradient">
-    <div class="row py-5">
+
+    <div class="row g-0 py-5">
 
       <!-- LINKS -->
       <div class="col-12 col-md-4 text-center">
+        
         <h5 class="footerTitulo py-1" id="accordionInfo" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Información</h5>
         
         <div class="accordion-collapse collapse py-3 accordion-body" id="collapseOne" aria-labelledby="headingOne" data-bs-parent="#accordionInfo">
