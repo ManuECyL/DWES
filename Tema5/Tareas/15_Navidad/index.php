@@ -35,6 +35,7 @@
               <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="0" class="active"></li>
               <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="1"></li>
               <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="2"></li>
+              <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="3"></li>
             </ol>
   
             <div class="carousel-inner">
@@ -49,16 +50,20 @@
               <div class="carousel-item">
                 <img src="./imagenes/inicio/inicio3.jpg" class="d-block mx-auto w-100 imgC" alt="inicio3"> 
               </div>
+
+              <div class="carousel-item">
+                <img src="./imagenes/inicio/inicio4.jpg" class="d-block mx-auto w-100 imgC" alt="inicio4"> 
+              </div>
   
             </div>
   
             <button class="carousel-control-prev" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="prev">
-              <i class="bi bi-arrow-left-circle" style="margin-left: 80px; font-size: 250%; color: black;"></i>                  
+              <i class="bi bi-arrow-left-circle" style="margin-left: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>                  
               <span class="visually-hidden">Previous</span>
             </button>
   
             <button class="carousel-control-next" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="next">
-              <i class="bi bi-arrow-right-circle" style="margin-right: 80px; font-size: 250%; color: black;"></i>
+              <i class="bi bi-arrow-right-circle" style="margin-right: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>
               <span class="visually-hidden">Next</span>
             </button>
           </div>
