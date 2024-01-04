@@ -3,12 +3,6 @@
 
     require('./funciones/conexionBD.php');
     require('./funciones/validaciones.php');
-
-    if (existe("crearCuenta")) {
-        insertarUsuario();
-        header('Location: ./index.php');
-        exit;
-    }
 ?>
 
 <!DOCTYPE html>
@@ -28,6 +22,18 @@
     </head>
 
     <body>
+
+        <?php
+
+            $errores = array();
+
+            if (existe("crearCuenta") && validarRegistro($errores)) {
+                insertarUsuario();
+                header('Location: ./index.php');
+                exit;
+            
+            } else {
+        ?>
 
 <!-- HEADER -->
         <?php
@@ -55,39 +61,78 @@
 
                 <br>
 
-                <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data">
+                <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
 
                     <div class="mb-3">
-                        <label for="id_Usuario" class="form-label lblReg">Usuario</label>
-                        <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputReg">
+                        <label for="id_Usuario" class="form-label lblReg">Usuario
+                            <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputReg" placeholder="Usuario" value="<?php recuerda('id_Usuario')?>">
+                        </label>
+                        
+                        <span class="error">
+                            <?php            
+                                errores($errores,'id_Usuario');
+                            ?>
+                        </span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="contraseña" class="form-label lblReg">Contraseña</label>
-                        <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputReg">
+                        <label for="contraseña" class="form-label lblReg">Contraseña
+                            <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputReg" placeholder="8 caracteres, Mayúscula, Minúscula y Número" value="<?php recuerda('contraseña')?>">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'contraseña');
+                            ?>
+                        </span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="passRepetida" class="form-label lblReg">Repetir Contraseña</label>
-                        <input type="password" id="passRepetida" name="passRepetida" class="form-control mx-auto inputReg">
+                        <label for="passRepetida" class="form-label lblReg">Repetir Contraseña
+                            <input type="password" id="passRepetida" name="passRepetida" class="form-control mx-auto inputReg" placeholder="Repetir contraseña" value="<?php recuerda('passRepetida')?>">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'passRepetida');
+                            ?>
+                        </span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label lblReg">Email</label>
-                        <input type="text" id="email" name="email" class="form-control mx-auto inputReg">
+                        <label for="email" class="form-label lblReg">Email
+                            <input type="text" id="email" name="email" class="form-control mx-auto inputReg" placeholder="prueba@prueba.com" value="<?php recuerda('email')?>">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'email');
+                            ?>
+                        </span>
                     </div>
 
                     <div class="mb-3">
-                        <label for="fecha_Nacimiento" class="form-label lblReg">Fecha Nacimiento</label>
-                        <input type="date" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputReg">
+                        <label for="fecha_Nacimiento" class="form-label lblReg">Fecha Nacimiento
+                            <input type="text" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputReg" placeholder="01-01-2023" value="<?php recuerda('fecha_Nacimiento')?>">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'fecha_Nacimiento');
+                            ?>
+                        </span>
                     </div>
 
                     <br>
 
                     <button type="submit" id="crearCuenta" name="crearCuenta" class="btn btn-dark formu" style="width: 40%;">Crear Cuenta</button>
                 </form>
-
                 <br>
+
+            <?php
+                }
+            ?>
+            
             </div>
 
         </main>

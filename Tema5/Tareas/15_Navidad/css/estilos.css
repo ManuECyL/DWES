@@ -1,3 +1,9 @@
+/* ERRORES */
+.error {
+    color: red;
+    margin-left: 5px;
+}
+
 /* ICONOS HEADER */
 i {
     color: rgb(0, 0, 0);
@@ -40,8 +46,11 @@ i {
 }
 
 .inputReg {
-    width: 30%;
+    width: 400px;
+    text-align: center;
+    margin-top: 10px;
 }
+
 
 
 /* IMAGENES PRODUCTOS */
