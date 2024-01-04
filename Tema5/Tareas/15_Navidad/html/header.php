@@ -56,26 +56,26 @@
               
                       <div class="modal-body text-center">
 
-                        <form>
+                      <form action="./login.php" method="post" name="formularioT15" enctype="multipart/form-data">
 
                           <div class="mb-3 formu">
-                            <label for="usuario" class="form-label">Usuario</label>
-                            <input type="text" class="form-control" id="inputUsuario">
+                            <label for="user" class="form-label">Usuario</label>
+                            <input type="text" id="user" name="user" class="form-control">
                           </div>
 
                           <div class="mb-3 formu">
-                            <label for="contraseña" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="contraseña">
+                            <label for="pass" class="form-label">Contraseña</label>
+                            <input type="password" id="pass" name="pass" class="form-control">
                           </div>
 
-                          <button type="submit" class="btn bg-dark" style="color: white;">Iniciar Sesión</button>
+                          <button type="submit" id="iniciarSesion" name="iniciarSesion" class="btn bg-dark" style="color: white;">Iniciar Sesión</button>
 
                           <br>
                           <br>
 
-                          <button type="submit" class="btn bg-dark" style="color: white;">Registrarse</button>
+                          <button type="submit" id="registrarse" name="registrarse" class="btn bg-dark" style="color: white;">Registrarse</button>
 
-                        </form>
+                      </form>
 
                       </div>
 

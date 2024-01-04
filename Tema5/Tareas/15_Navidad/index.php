@@ -28,6 +28,15 @@
     
 <!-- MAIN -->
         <main>
+
+        <?php
+
+          // Si por lo que sea la sesion tiene datos (que es un error)
+          if (isset($_SESSION['error'])) {
+              echo $_SESSION['error'];
+          }
+        ?>
+
     <!-- CARRUSEL -->
           <div id="miCarousel" class="carousel carousel-dark slide mx-auto" data-bs-ride="true" style="width:100%;">
   
@@ -66,9 +75,10 @@
               <i class="bi bi-arrow-right-circle" style="margin-right: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>
               <span class="visually-hidden">Next</span>
             </button>
-          </div>
-        </main>
 
+          </div>
+
+        </main>
 
 <!-- FOOTER -->
         <?php
