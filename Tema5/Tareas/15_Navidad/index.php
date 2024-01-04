@@ -1,3 +1,38 @@
+<?php
+    session_start();
+
+    require('./funciones/conexionBD.php');
+    require('./funciones/validaciones.php');
+
+    if (!comprobarBD()) {
+        crearScript();
+    }
+
+  
+    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
+        
+        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
+
+        if ($usuario) {
+            
+            $_SESSION['usuario'] = $usuario;
+            header('Location: ./homeUser.php');
+        
+        } else {
+            echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
+        }
+    
+    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
+        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
+    } 
+
+
+    if (existe('registrarse')) {
+        header('Location: ./registro.php');
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 
@@ -18,12 +53,12 @@
 
 <!-- HEADER -->
         <?php
-            include_once("./html/header.php");
+            include_once("./html/headerInicio.php");
         ?>
           
 <!-- NAV -->
         <?php
-            include_once("./html/nav.php");
+            include_once("./html/navInicio.php");
         ?>
     
 <!-- MAIN -->

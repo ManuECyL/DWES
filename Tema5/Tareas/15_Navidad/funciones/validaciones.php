@@ -22,8 +22,10 @@
     // Botón Cerrar Sesión
     function cerrado() {
 
-        if (isset($_REQUEST['cerrar'])) 
+        if (isset($_REQUEST['cerrarSesion'])) {
             return true;
+            header('Location: ./index.php');
+        }
         
         return false;
     }

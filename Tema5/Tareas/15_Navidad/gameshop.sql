@@ -2,39 +2,31 @@ DROP DATABASE IF EXISTS gameshop;
 CREATE DATABASE gameshop;
 USE gameshop;
 
-DROP USER IF EXISTS admin1;
-CREATE USER admin1 IDENTIFIED BY 'admin1';
-GRANT ALL ON gameshop.* TO admin1;
-
-DROP USER IF EXISTS moderador1;
-CREATE USER moderador1 IDENTIFIED BY 'moderador1';
-GRANT SELECT, INSERT ON gameshop.Productos TO moderador1;
-GRANT SELECT ON gameshop.Compra, gameshop.Contiene, gameshop.Albaranes TO moderador1;
-
-DROP USER IF EXISTS cliente1;
-CREATE USER cliente1 IDENTIFIED BY 'cliente1';
-GRANT SELECT ON gameshop.Productos TO cliente1;
+CREATE TABLE Roles (
+    rol VARCHAR(20) NOT NULL PRIMARY KEY
+);
 
 CREATE TABLE Usuarios (
-    id_Usuario VARCHAR(20) PRIMARY KEY,
-    contraseña VARCHAR(25),
+    id_Usuario VARCHAR(20) PRIMARY KEY UNIQUE,
+    contraseña VARCHAR(50),
     email VARCHAR(50),
     fecha_Nacimiento DATE,
-    tipo ENUM('admin', 'moderador', 'cliente')
+    rol VARCHAR(20),
+    FOREIGN KEY (rol) REFERENCES Roles(rol)
 );
 
 CREATE TABLE Compra (
     id_Compra INT PRIMARY KEY AUTO_INCREMENT,
     id_Usuario VARCHAR(20),
     fecha_Compra DATE,
-    cod_Prod CHAR(6),
+    cod_Prod VARCHAR(10),
     cantidad INT,
     total FLOAT,
     FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
 );
 
 CREATE TABLE Productos (
-    cod_Prod CHAR(6) PRIMARY KEY,
+    cod_Prod VARCHAR(10) PRIMARY KEY,
     titulo VARCHAR(50) NOT NULL,
     compañia VARCHAR(50) NOT NULL,
     stock INT NOT NULL,
@@ -43,7 +35,7 @@ CREATE TABLE Productos (
 
 CREATE TABLE Contiene (
     id_Compra INT,
-    cod_Prod CHAR(6),
+    cod_Prod VARCHAR(10),
     cantidad INT,
     FOREIGN KEY (id_Compra) REFERENCES Compra(id_Compra),
     FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
@@ -52,15 +44,28 @@ CREATE TABLE Contiene (
 CREATE TABLE Albaranes (
     id_Albaran INT PRIMARY KEY AUTO_INCREMENT,
     fecha_Albaran DATE,
-    cod_Prod CHAR(6),
+    cod_Prod VARCHAR(10),
     cantidad INT,
     id_Usuario VARCHAR(20),
     FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
 );
 
-INSERT INTO Usuarios VALUES ('admin1', 'admin1', '', '', 'admin');
-INSERT INTO Usuarios VALUES ('moderador1', 'moderador1', '', '', 'moderador');
-INSERT INTO Usuarios VALUES ('cliente1', 'cliente1', 'cliente1@gmail.com', '1998-04-30', 'cliente');
+
+INSERT INTO Roles VALUES ('admin');
+INSERT INTO Roles VALUES ('moderador');
+INSERT INTO Roles VALUES ('cliente');
+
+INSERT INTO Usuarios VALUES ('admin1', '6c7ca345f63f835cb353ff15bd6c5e052ec08e7a', NULL, NULL, 'admin');
+INSERT INTO Usuarios VALUES ('moderador1', 'e351eacb8dfc5e6f849d82aaa2507127e7cfa35d', NULL, NULL, 'moderador');
+INSERT INTO Usuarios VALUES ('cliente1', '06b8abdc1bed263dcce2f8b6cde6c5189e61e582', 'cliente1@gmail.com', '1998-04-30', 'cliente');
+
+GRANT ALL ON gameshop.* TO 'admin1'@'%';
+GRANT UPDATE (stock) ON gameshop.Productos TO 'moderador1'@'%';
+GRANT SELECT ON gameshop.Productos TO 'moderador1'@'%';
+GRANT SELECT ON gameshop.Compra TO 'moderador1'@'%';
+GRANT SELECT ON gameshop.Contiene TO 'moderador1'@'%';
+GRANT SELECT ON gameshop.Albaranes TO 'moderador1'@'%';
+GRANT SELECT ON gameshop.Productos TO 'cliente1'@'%';
 
 INSERT INTO Productos VALUES ('RDR2', 'Red Dead Redemption 2', 'Rockstar Games', 20, 69.99);
 INSERT INTO Productos VALUES ('TW3WH', 'The Witcher 3: Wild Hunt', 'CD Projekt', 15, 39.99);
