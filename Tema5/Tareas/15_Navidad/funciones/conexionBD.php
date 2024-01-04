@@ -174,6 +174,178 @@
             unset($con);
         }
     }
+
+// Función para consultar los datos de la base de datos
+    function consultar($tabla) {
+
+        try {
+
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Creamos la sentencia
+            $sql = "select * from $tabla";
+    
+            // Ejecutamos la sentencia
+            $result = mysqli_query($con, $sql);
+    
+            return $result;
+    
+            mysqli_close($con);
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para consultar los datos de la base de datos por id
+    function consultarId($tabla) {
+
+        try {
+            
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Creamos la sentencia
+            $sql = "select * from $tabla where id = ?";
+            
+            $stmt = mysqli_prepare($con, $sql);
+    
+            mysqli_stmt_bind_param($stmt, "s", $_REQUEST['id']);
+
+            mysqli_stmt_execute($stmt);
+    
+            $result = mysqli_stmt_get_result($stmt);
+
+            return $result;
+
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para actualizar los datos de la base de datos    
+    function actualizar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
+
+        try {
+            
+            $con = mysqli_connect(IP, USER, PASS, BD);
+        
+            // Creamos la sentencia
+            $sql = "update videojuegos set nombre = ?, compañia = ?, stock = ?, precio = ?, fecha_Lanzamiento = ? where id = ?";
+    
+            $stmt = mysqli_prepare($con, $sql);
+    
+            mysqli_stmt_bind_param($stmt, "ssidss", $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id);
+            
+            mysqli_stmt_execute($stmt);
+    
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para insertar datos en la base de datos
+    function insertarUsuario(){
+
+        try {
+
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultas preparadas
+            $sql = "insert into Usuarios (id_Usuario, contraseña, email, fecha_Nacimiento, rol) values (?,?,?,?,'cliente')";
+
+            $fechaOriginal = $_REQUEST["fecha_Nacimiento"];
+            $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
+    
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], sha1($_REQUEST["contraseña"]), $_REQUEST["email"], $fechaFormateada);
+            mysqli_stmt_execute($stmt);
+    
+            mysqli_stmt_close($stmt);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+// Función para insertar datos en la base de datos
+    function insertarProducto(){
+
+        try {
+
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultas preparadas
+            $sql = "insert into Usuarios (id_Usuario, contraseña, email, fecha_Nacimiento) values (?,?,?,?)";
+
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $_REQUEST["fecha_Nacimiento"]);
+            mysqli_stmt_execute($stmt);
+
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+
+
+// Función para borrar datos de la base de datos
+    function borrar() {
+
+        try {
+            
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Creamos la sentencia
+            $sql = "delete from videojuegos where id = ?";
+   
+           $stmt = $con -> stmt_init();
+           $stmt -> prepare($sql);
+           $stmt -> bind_param("s", $_REQUEST["id"]);
+           $stmt -> execute();
+    
+           mysqli_close($con);
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
     
 // Función para mostrar los errores que pueden generarse en la base de datos
     function erroresBD($th) {

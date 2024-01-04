@@ -1,7 +1,3 @@
-<?php
-
-?> 
-
 <header class="bg-info bg-gradient">
 
     <div class="row container-fluid p-2">

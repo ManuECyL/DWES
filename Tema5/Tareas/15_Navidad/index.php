@@ -17,6 +17,7 @@
             
             $_SESSION['usuario'] = $usuario;
             header('Location: ./homeUser.php');
+            exit;
         
         } else {
             echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
@@ -29,6 +30,7 @@
 
     if (existe('registrarse')) {
         header('Location: ./registro.php');
+        exit;
     }
 
 ?>

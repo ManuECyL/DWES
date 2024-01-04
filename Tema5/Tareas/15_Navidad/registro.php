@@ -3,6 +3,12 @@
 
     require('./funciones/conexionBD.php');
     require('./funciones/validaciones.php');
+
+    if (existe("crearCuenta")) {
+        insertarUsuario();
+        header('Location: ./index.php');
+        exit;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -52,13 +58,13 @@
                 <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data">
 
                     <div class="mb-3">
-                        <label for="userRegistro" class="form-label lblReg">Usuario</label>
-                        <input type="text" id="userRegistro" name="userRegistro" class="form-control mx-auto inputReg">
+                        <label for="id_Usuario" class="form-label lblReg">Usuario</label>
+                        <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputReg">
                     </div>
 
                     <div class="mb-3">
-                        <label for="passRegistro" class="form-label lblReg">Contraseña</label>
-                        <input type="password" id="passRegistro" name="passRegistro" class="form-control mx-auto inputReg">
+                        <label for="contraseña" class="form-label lblReg">Contraseña</label>
+                        <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputReg">
                     </div>
 
                     <div class="mb-3">
@@ -72,8 +78,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="fechaN" class="form-label lblReg">Fecha Nacimiento</label>
-                        <input type="date" id="fechaN" name="fechaN" class="form-control mx-auto inputReg">
+                        <label for="fecha_Nacimiento" class="form-label lblReg">Fecha Nacimiento</label>
+                        <input type="date" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputReg">
                     </div>
 
                     <br>
