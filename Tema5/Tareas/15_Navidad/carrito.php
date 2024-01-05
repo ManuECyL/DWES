@@ -80,8 +80,12 @@
     
     <!-- MAIN -->
         <main>
+            <div class="container mt-5 text-center">
 
-            <h3>Carrito</h3>
+                <h3>Carrito</h3>
+
+            </div>
+            
             <?php
 
             ?>
