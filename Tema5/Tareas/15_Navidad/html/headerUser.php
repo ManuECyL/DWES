@@ -9,7 +9,7 @@
 
             <div class="col-8 col-sm-8 col-md-8">
                 <span style="font-size: 30px;">
-                  <a href="./index.php" class="logo"><i class="bi bi-controller px-4 icono"> Gameshop</i></a>
+                  <a href="./homeUser.php" class="logo"><i class="bi bi-controller px-4 icono"> Gameshop</i></a>
                 </span>
             </div>
 
@@ -20,8 +20,7 @@
             </div>
 
         </div>
-
-
+        
       </div>
 
       <div class="col-5 col-sm-5 col-md-5 py-2">

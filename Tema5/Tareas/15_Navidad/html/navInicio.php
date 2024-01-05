@@ -6,7 +6,16 @@
 
         <div class="col-md-6 col-lg">
           <li class="nav-item">
-            <a class="nav-link navNombre" href="./index.php">Inicio</a>
+
+            <?php
+              if (isset($_SESSION['usuario'])) {
+                echo "<a class='nav-link navNombre' href='./homeUser.php'>Inicio</a>";
+
+              } else {
+                echo "<a class='nav-link navNombre' href='./index.php'>Inicio</a>";
+              }
+            ?>
+            
           </li>
         </div>
 

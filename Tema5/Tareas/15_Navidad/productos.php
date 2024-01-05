@@ -1,36 +1,45 @@
 <?php
-        session_start();
+    session_start();
 
-        require('./funciones/conexionBD.php');
-        require('./funciones/validaciones.php');
+    require('./funciones/conexionBD.php');
+    require('./funciones/validaciones.php');
+
+    if (!comprobarBD()) {
+        crearScript();
+    }
     
-        if (!comprobarBD()) {
-            crearScript();
-        }
-     
-        if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-            
-            $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
-    
-            if ($usuario) {
-                
-                $_SESSION['usuario'] = $usuario;
-                header('Location: ./homeUser.php');
-                exit;
-            
-            } else {
-                echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-            }
+    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
         
-        } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
-            echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-        } 
-    
-    
-        if (existe('registrarse')) {
-            header('Location: ./registro.php');
+        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
+
+        if ($usuario) {
+            
+            $_SESSION['usuario'] = $usuario;
+            header('Location: ./homeUser.php');
             exit;
+        
+        } else {
+            echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
         }
+    
+    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
+        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
+    } 
+
+
+    if (existe('registrarse')) {
+        header('Location: ./registro.php');
+        exit;
+    }
+
+    if (existe('perfil')) {
+        header('Location: ./perfil.php');
+        exit;
+    }
+
+    if (cerrado()) {
+        cerrarSesion();
+    }
     
 ?>
 
@@ -53,8 +62,13 @@
     <body>
 
     <!-- HEADER -->
-        <?php
-            include_once("./html/headerInicio.php");
+        <?php              
+            if (isset($_SESSION['usuario'])) {
+                include_once("./html/headerUser.php");
+            } else {
+                include_once("./html/headerInicio.php");
+            }
+            
         ?>
           
     <!-- NAV -->

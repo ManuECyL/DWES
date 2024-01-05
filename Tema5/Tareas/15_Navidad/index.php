@@ -16,6 +16,7 @@
         if ($usuario) {
             
             $_SESSION['usuario'] = $usuario;
+            $contraseña = $_REQUEST['pass'];
             header('Location: ./homeUser.php');
             exit;
         
@@ -32,7 +33,6 @@
         header('Location: ./registro.php');
         exit;
     }
-
 ?>
 
 <!DOCTYPE html>

@@ -48,8 +48,6 @@
             // Obtenemos el contenido del fichero sql
             $script = file_get_contents('./gameshop.sql');
 
-            // echo $script;
-
             // Lee el contenido del script
             $con -> multi_query($script);
 
@@ -189,8 +187,6 @@
             $result = mysqli_query($con, $sql);
     
             return $result;
-    
-            mysqli_close($con);
 
         } catch (\Throwable $th) {
             erroresBD($th);
@@ -203,35 +199,33 @@
 
 
 // Función para consultar los datos de la base de datos por id
-    function consultarId($tabla) {
+    function consultarId($tabla, $idSQL, $id) {
 
         try {
             
             $con = mysqli_connect(IP, USER, PASS, BD);
 
             // Creamos la sentencia
-            $sql = "select * from $tabla where id = ?";
+            $sql = "select * from $tabla where $idSQL = ?";
             
             $stmt = mysqli_prepare($con, $sql);
-    
-            mysqli_stmt_bind_param($stmt, "s", $_REQUEST['id']);
+                
+            mysqli_stmt_bind_param($stmt, "s", $id);
 
             mysqli_stmt_execute($stmt);
     
             $result = mysqli_stmt_get_result($stmt);
-
-            return $result;
-
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
             
         } catch (\Throwable $th) {
             erroresBD($th);
             
         } finally {
-            // Cerramos la conexion
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
+
+        return $result;
     }
 
 
@@ -250,15 +244,13 @@
             mysqli_stmt_bind_param($stmt, "ssidss", $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id);
             
             mysqli_stmt_execute($stmt);
-    
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
             
         } catch (\Throwable $th) {
             erroresBD($th);
             
         } finally {
-            // Cerramos la conexion
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
     }
@@ -280,14 +272,13 @@
             $stmt = mysqli_prepare($con, $sql);
             mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], sha1($_REQUEST["contraseña"]), $_REQUEST["email"], $fechaFormateada);
             mysqli_stmt_execute($stmt);
-    
-            mysqli_stmt_close($stmt);
             
         } catch (\Throwable $th) {
             erroresBD($th);
             
         } finally {
-            // Cerramos la conexion
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
     }
@@ -305,15 +296,13 @@
             $stmt = mysqli_prepare($con, $sql);
             mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $_REQUEST["fecha_Nacimiento"]);
             mysqli_stmt_execute($stmt);
-
-            mysqli_stmt_close($stmt);
-            mysqli_close($con);
             
         } catch (\Throwable $th) {
             erroresBD($th);
             
         } finally {
-            // Cerramos la conexion
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
     }
@@ -334,14 +323,13 @@
            $stmt -> prepare($sql);
            $stmt -> bind_param("s", $_REQUEST["id"]);
            $stmt -> execute();
-    
-           mysqli_close($con);
 
         } catch (\Throwable $th) {
             erroresBD($th);
             
         } finally {
-            // Cerramos la conexion
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
     }

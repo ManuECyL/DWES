@@ -50,22 +50,21 @@ CREATE TABLE Albaranes (
     FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
 );
 
-
 INSERT INTO Roles VALUES ('admin');
 INSERT INTO Roles VALUES ('moderador');
 INSERT INTO Roles VALUES ('cliente');
 
-INSERT INTO Usuarios VALUES ('admin1', '6c7ca345f63f835cb353ff15bd6c5e052ec08e7a', NULL, NULL, 'admin');
-INSERT INTO Usuarios VALUES ('moderador1', 'e351eacb8dfc5e6f849d82aaa2507127e7cfa35d', NULL, NULL, 'moderador');
-INSERT INTO Usuarios VALUES ('cliente1', '06b8abdc1bed263dcce2f8b6cde6c5189e61e582', 'cliente1@gmail.com', '1998-04-30', 'cliente');
+INSERT INTO Usuarios VALUES ('Admin1', '2ec10e4f7cd2159e7ea65d2454f68287ecf81251', NULL, NULL, 'admin');
+INSERT INTO Usuarios VALUES ('Moderador1', 'e12b36fbc67711b418c189b8b9546f506912924a', NULL, NULL, 'moderador');
+INSERT INTO Usuarios VALUES ('Cliente1', '8890faaaf4bf2f913be5ccff9e5f23b88657bd15', 'cliente1@gmail.com', '1998-04-30', 'cliente');
 
-GRANT ALL ON gameshop.* TO 'admin1'@'%';
-GRANT UPDATE (stock) ON gameshop.Productos TO 'moderador1'@'%';
-GRANT SELECT ON gameshop.Productos TO 'moderador1'@'%';
-GRANT SELECT ON gameshop.Compra TO 'moderador1'@'%';
-GRANT SELECT ON gameshop.Contiene TO 'moderador1'@'%';
-GRANT SELECT ON gameshop.Albaranes TO 'moderador1'@'%';
-GRANT SELECT ON gameshop.Productos TO 'cliente1'@'%';
+GRANT ALL ON gameshop.* TO 'Admin1'@'%';
+GRANT UPDATE (stock) ON gameshop.Productos TO 'Moderador1'@'%';
+GRANT SELECT ON gameshop.Productos TO 'Moderador1'@'%';
+GRANT SELECT ON gameshop.Compra TO 'Moderador1'@'%';
+GRANT SELECT ON gameshop.Contiene TO 'Moderador1'@'%';
+GRANT SELECT ON gameshop.Albaranes TO 'Moderador1'@'%';
+GRANT SELECT ON gameshop.Productos TO 'Cliente1'@'%';
 
 INSERT INTO Productos VALUES ('RDR2', 'Red Dead Redemption 2', 'Rockstar Games', 20, 69.99);
 INSERT INTO Productos VALUES ('TW3WH', 'The Witcher 3: Wild Hunt', 'CD Projekt', 15, 39.99);

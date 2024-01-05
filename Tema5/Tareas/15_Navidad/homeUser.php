@@ -1,10 +1,10 @@
 <?php
+    // Siempre que se cambia de página, hay que iniciar sesión para que el navegador acceda a nuestro id mediante las cookies y sepa quienes somos, para así diferenciarnos de otros usuarios 
+    session_start(); 
+
     require('./funciones/validaciones.php');
     require('./funciones/conexionBD.php');
     require('./funciones/logout.php');
-
-    // Siempre que se cambia de página, hay que iniciar sesión para que el navegador acceda a nuestro id mediante las cookies y sepa quienes somos, para así diferenciarnos de otros usuarios 
-    session_start(); 
 
     if (!isset($_SESSION['usuario'])) {
 
@@ -16,6 +16,11 @@
     
     } elseif (cerrado()) {
         cerrarSesion();
+    }
+
+    if (existe('perfil')) {
+      header('Location: ./perfil.php');
+      exit;
     }
 ?>
 
