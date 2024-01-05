@@ -64,8 +64,8 @@
                 <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
 
                     <div class="mb-3">
-                        <label for="id_Usuario" class="form-label lblReg">Usuario
-                            <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputReg" placeholder="Usuario" value="<?php recuerda('id_Usuario')?>">
+                        <label for="id_Usuario" class="form-label lblForm">Usuario
+                            <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputForm" placeholder="Usuario" value="<?php recuerda('id_Usuario')?>">
                         </label>
                         
                         <span class="error">
@@ -76,8 +76,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="contraseña" class="form-label lblReg">Contraseña
-                            <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputReg" placeholder="8 caracteres, Mayúscula, Minúscula y Número" value="<?php recuerda('contraseña')?>">
+                        <label for="contraseña" class="form-label lblForm">Contraseña
+                            <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputForm" placeholder="8 caracteres, Mayúscula, Minúscula y Número" value="<?php recuerda('contraseña')?>">
                         </label>
 
                         <span class="error">
@@ -88,8 +88,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="passRepetida" class="form-label lblReg">Repetir Contraseña
-                            <input type="password" id="passRepetida" name="passRepetida" class="form-control mx-auto inputReg" placeholder="Repetir contraseña" value="<?php recuerda('passRepetida')?>">
+                        <label for="passRepetida" class="form-label lblForm">Repetir Contraseña
+                            <input type="password" id="passRepetida" name="passRepetida" class="form-control mx-auto inputForm" placeholder="Repetir contraseña" value="<?php recuerda('passRepetida')?>">
                         </label>
 
                         <span class="error">
@@ -100,8 +100,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email" class="form-label lblReg">Email
-                            <input type="text" id="email" name="email" class="form-control mx-auto inputReg" placeholder="prueba@prueba.com" value="<?php recuerda('email')?>">
+                        <label for="email" class="form-label lblForm">Email
+                            <input type="text" id="email" name="email" class="form-control mx-auto inputForm" placeholder="prueba@prueba.com" value="<?php recuerda('email')?>">
                         </label>
 
                         <span class="error">
@@ -112,8 +112,8 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="fecha_Nacimiento" class="form-label lblReg">Fecha Nacimiento
-                            <input type="text" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputReg" placeholder="01-01-2023" value="<?php recuerda('fecha_Nacimiento')?>">
+                        <label for="fecha_Nacimiento" class="form-label lblForm">Fecha Nacimiento
+                            <input type="text" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputForm" placeholder="01-01-2023" value="<?php recuerda('fecha_Nacimiento')?>">
                         </label>
 
                         <span class="error">

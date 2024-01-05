@@ -8,21 +8,22 @@
         crearScript();
     }
 
-  
+    
     if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
+          
+      $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
+      
+      if ($usuario) {
         
-        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
-
-        if ($usuario) {
-            
-            $_SESSION['usuario'] = $usuario;
-            $contraseña = $_REQUEST['pass'];
-            header('Location: ./homeUser.php');
-            exit;
+        $_SESSION['usuario'] = $usuario;
+        $contraseña = $_REQUEST['pass'];
         
-        } else {
-            echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-        }
+        header('Location: ./homeUser.php');
+        exit;
+      
+      } else {
+          echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
+      }
     
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";

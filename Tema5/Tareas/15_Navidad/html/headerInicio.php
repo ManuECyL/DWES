@@ -74,8 +74,9 @@
 
                         <div class="mb-3">
                           <label for="pass" class="form-label">Contraseña</label>
-                          <input type="password" id="pass" name="pass" class="form-control">
+                          <input type="password" id="pass" name="pass" class="form-control">                    
                         </div>
+
 
                         <button type="submit" id="iniciarSesion" name="iniciarSesion" class="btn bg-dark formu" style="width: 40%;">Iniciar Sesión</button>
 
@@ -84,6 +85,7 @@
 
                         <button type="submit" id="registrarse" name="registrarse" class="btn bg-dark formu" style="width: 40%;">Registrarse</button>
                     </form>
+
 
                   </div>
 

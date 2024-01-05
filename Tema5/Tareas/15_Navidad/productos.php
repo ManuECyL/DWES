@@ -3,6 +3,7 @@
 
     require('./funciones/conexionBD.php');
     require('./funciones/validaciones.php');
+    require('./funciones/logout.php');
 
     if (!comprobarBD()) {
         crearScript();
@@ -65,6 +66,7 @@
         <?php              
             if (isset($_SESSION['usuario'])) {
                 include_once("./html/headerUser.php");
+                
             } else {
                 include_once("./html/headerInicio.php");
             }
@@ -78,180 +80,68 @@
     
     <!-- MAIN -->
         <main>
-            <section>
+            <?php
+                $productos = consultar('Productos');
 
-                <div class="container">
+                echo '
+                    <div class="container">
 
-                    <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
+                        <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
+                ';
 
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-                            
-                            <div class="card h-80 d-block mx-auto">
+                    while (($producto = mysqli_fetch_assoc($productos))) {
 
-                                <img class="card-img-top productos" src="imagenes/productos/producto1.jpg" alt="RDR2"/>
+                        echo '
+                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                                <div class="card-body p-4">
+                                <div class="card h-80 d-block mx-auto">
 
-                                    <div class="text-center">
+                                    <img class="card-img-top productos" src="'.$producto['ruta_Imagen'].'" alt="'.$producto['ruta_Imagen'].'"/>
 
-                                        <h5 class="fw-bolder">Red Dead Redemption 2</h5>
+                                    <div class="card-body p-4">
 
-                                        <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">Rockstar Games</div>
+                                        <div class="text-center">
+
+                                            <h5 class="fw-bolder">' . $producto['titulo'] . '</h5>
+
+                                            <div class="d-flex justify-content-center small mb-2">
+                                                <div style="margin-top: 2px;">' . $producto['cod_Prod'] . '</div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center small mb-2">
+                                                <div style="margin-top: 5px;">' . $producto['compañia'] . '</div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center small mb-2">
+                                                <div style="margin-top: 10px; font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
+                                            </div>
+
+                                            <div class="d-flex justify-content-center small mb-2">
+                                                <div style="margin-top: 10px;">Stock: ' . $producto['stock'] . '</div>
+                                            </div>
                                         </div>
-                                        
-                                        <b>69,99€</b> 
+
                                     </div>
+
+                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
+                                        <div class="text-center">
+                                            <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
+                                        </div>
+
+                                    </div>
+
                                 </div>
 
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
                             </div>
+                        ';
+                    }
+
+                echo '
                         </div>
-
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                            <div class="card h-80 d-block mx-auto">
-
-                                <img class="card-img-top productos" src="imagenes/productos/producto2.jpg" alt="TW3WH" />
-
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-
-                                        <h5 class="fw-bolder">The Witcher 3: Wild Hunt</h5>
-
-                                        <div class="d-flex justify-content-center small mb-2">
-                                            <div style="margin-top: 2px;">CD Projekt</div>
-                                        </div>
-
-                                        <b>39,99€</b>
-                                    </div>
-                                </div>
-
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                            <div class="card h-80 d-block mx-auto">
-
-                                <img class="card-img-top productos" src="imagenes/productos/producto3.jpg" alt="GTA5" />
-
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-
-                                        <h5 class="fw-bolder">Grand Theft Auto V</h5>
-
-                                        <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">Rockstar Games</div>
-                                        </div>
-
-                                        <b>19,99€</b>
-                                    </div>
-                                </div>
- 
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>                                           
-
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                            <div class="card h-80 d-block mx-auto">
-
-                                <img class="card-img-top productos" src="imagenes/productos/producto4.jpg" alt="CODBO2" />
-
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-
-                                        <h5 class="fw-bolder">Call of Duty: Black Ops 2</h5>
-
-                                        <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">Treyarch</div>
-                                        </div>
-
-                                        <b>19,99€</b> 
-                                    </div>
-                                </div>
-
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                            <div class="card h-80 d-block mx-auto">
-
-                                <img class="card-img-top productos" src="imagenes/productos/producto5.jpg" alt="ACB" />
-
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-
-                                        <h5 class="fw-bolder">Assassin´s Creed Brotherhood</h5>
-
-                                        <div class="d-flex justify-content-center small mb-2">
-                                            <div style="margin-top: 2px;">Ubisoft</div>
-                                        </div>
-
-                                        <b>14,99€</b>
-                                    </div>
-                                </div>
-
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                            <div class="card h-80 d-block mx-auto">
-
-                                <img class="card-img-top productos" src="imagenes/productos/producto6.jpg" alt="HL" />
-
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-
-                                        <h5 class="fw-bolder">Hogwarts Legacy</h5>
-
-                                        <div class="d-flex justify-content-center small mb-2">
-                                          <div style="margin-top: 2px;">Avalanche</div>
-                                        </div>
-
-                                        <b>49,99€</b>
-                                    </div>
-                                </div>
- 
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <a class="btn btn-outline-dark mt-auto" href="#">Añadir al carro</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>  
-
                     </div>
-
-                </div>
-
-            </section>
+                ';
+            ?>
             
         </main>
 

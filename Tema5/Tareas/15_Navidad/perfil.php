@@ -5,6 +5,8 @@
     require('./funciones/validaciones.php');
     require('./funciones/logout.php');
 
+    $usuario = $_SESSION['usuario'];
+
     if (cerrado()) {
         cerrarSesion();
     }
@@ -24,6 +26,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
         <link rel="stylesheet" href="css/estilos.css">
+
     </head>
 
     <body>
@@ -32,151 +35,94 @@
 
             $errores = array();
 
-            if (existe("guardarCambios") && validarRegistro($errores)) {
-                
+            if (existe("guardarCambios") && validarPerfil($errores)) {
+                // Actualiza los datos del usuario en la BD
+                actualizarUsuario();
+
+                // Actualiza los datos del usuario en la sesión
+                $resultado = consultarId('Usuarios', 'id_Usuario', $_SESSION['usuario']['id_Usuario']);
+
+                // Guardamos el resultado en un array asociativo para trabajar con él
+                $_SESSION['usuario'] = mysqli_fetch_assoc($resultado);
+
                 header('Location: ./homeUser.php');
                 exit;
             
             } else {
         ?>
 
-<!-- HEADER -->
-        <?php
-            include_once("./html/headerUser.php");
-        ?>
-          
-<!-- NAV -->
-        <?php
-            include_once("./html/navInicio.php");
-        ?>
-    
-<!-- MAIN -->
-        <main>
-
-            <?php
-            // Si por lo que sea la sesion tiene datos (que es un error)
-                if (isset($_SESSION['error'])) {
-                    echo $_SESSION['error'];
-                }
-            ?>
-
-            <div class="container mt-5 text-center">
-
-                <h3>Información Usuario</h3>
-
-                <br>
-
+            <!-- HEADER -->
                 <?php
-                    $consulta = consultarId('Usuarios', 'id_Usuario',$_SESSION['usuario']['id_Usuario']);
-                        
-                    // Comprobamos si hay resultados
-                    if ($consulta -> num_rows > 0) {
+                    include_once("./html/headerUser.php");
+                ?>
+                
+            <!-- NAV -->
+                <?php
+                    include_once("./html/navInicio.php");
+                ?>
+            
+            <!-- MAIN -->
+                <main>
 
-                    // Obtenemos los nombres de los campos que contiene la tabla
-                        $camposTabla = array();
-
-                    // Obtenemos los valores de los campos que contiene la tabla
-                        $fila = $consulta -> fetch_assoc();
-
-                        while ($campo = $consulta -> fetch_field()) {
-                            $camposTabla[] = $campo -> name;
+                    <?php
+                    // Si por lo que sea la sesion tiene datos (que es un error)
+                        if (isset($_SESSION['error'])) {
+                            echo $_SESSION['error'];
                         }
+                    ?>
 
-                        echo "<div id='divForm'>";
+                    <div class="container mt-4 text-center">
 
-                            echo "<form action='./Perfil.php' method='post' name='formularioInfoUsuarios' enctype='multipart/form-data'>";
+                        <h3>Información Usuario</h3>
 
-                                // Mostrar los campos en el encabezado de la tabla
-                                foreach ($camposTabla as $columna) {             
+                        <br>
+
+                        <form action="./perfil.php" method="post" name="formularioPerfil" enctype="multipart/form-data" class="formularioPerfil mx-auto">
+
+                            <?php
+                                foreach ($usuario as $campo => $valor) {
+
+                                    echo "<label class='form-label lblForm'>" . $campo . ":";
+
+                                        if ($campo == 'id_Usuario' || $campo == 'rol') {
+                                            echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $valor . "' size=25px readonly>";
+
+                                        } elseif ($campo == 'fecha_Nacimiento') {
+                                            $fechaOriginal = date("d-m-Y", strtotime($valor));
+                                            echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $fechaOriginal . "' size=25px>";
+
+
+                                        } else {
+                                            echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $valor . "' size=25px>";
+                                        }
+
+                                    echo "</label>";
+
+                                    echo "<span class='error'>";
+                                        errores($errores,$campo);
+                                    echo "</span>";
                                     
-                                    echo "<label><b>" . $columna . "</b></label>: ";
-
-                                    if ($columna == 'contraseña') {
-                                        // $contraseñaEncriptada = $fila[$columna];
-                                        // $contraseñaDesencriptada = sha1($contraseñaEncriptada);
-
-                                        // echo '<input type="text" name="' . $columna . '" value="' . $contraseñaDesencriptada . '" size="25px">';
-                                        echo '<input type="text" name="' . $columna . '" value="' . $fila[$columna] . '" size="25px">';
-                                        echo "<br><br>";
-                                    
-                                    } else {
-                                        echo '<input type="text" name="' . $columna . '" value="' . $fila[$columna] . '" size="25px">';
-                                        echo "<br><br>";
-                                    }
+                                    echo "<br>";
                                 }
 
-                            echo "</form>";
-                        
-                        echo "</div>";
+                                echo "<br>";
 
-                    } else {
-                        echo "No se encontraron resultados en la base de datos";
-                    } 
-                ?>
-
-                <!-- <form action="./perfil.php" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
-
-                    <div class="mb-3">
-                        <label for="id_Usuario" class="form-label lblReg">Usuario
-                            <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputReg" placeholder="Usuario" value="<?php recuerda('id_Usuario')?>">
-                        </label>
-                        
-                        <span class="error">
-                            <?php            
-                                // errores($errores,'id_Usuario');
+                                echo '<button type="submit" id="guardarCambios" name="guardarCambios" class="btn btn-dark formu" style="width: 40%;">Guardar Cambios</button>';
                             ?>
-                        </span>
+
+                        </form>
+
+
+                        <br><br>
+
                     </div>
 
-                    <div class="mb-3">
-                        <label for="contraseña" class="form-label lblReg">Contraseña
-                            <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputReg" placeholder="8 caracteres, Mayúscula, Minúscula y Número" value="<?php recuerda('contraseña')?>">
-                        </label>
-
-                        <span class="error">
-                            <?php            
-                                // errores($errores,'contraseña');
-                            ?>
-                        </span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="email" class="form-label lblReg">Email
-                            <input type="text" id="email" name="email" class="form-control mx-auto inputReg" placeholder="prueba@prueba.com" value="<?php recuerda('email')?>">
-                        </label>
-
-                        <span class="error">
-                            <?php            
-                                // errores($errores,'email');
-                            ?>
-                        </span>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fecha_Nacimiento" class="form-label lblReg">Fecha Nacimiento
-                            <input type="text" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputReg" placeholder="01-01-2023" value="<?php recuerda('fecha_Nacimiento')?>">
-                        </label>
-
-                        <span class="error">
-                            <?php            
-                                // errores($errores,'fecha_Nacimiento');
-                            ?>
-                        </span>
-                    </div> -->
-
-                    <br>
-
-                    <button type="submit" id="guardarCambios" name="guardarCambios" class="btn btn-dark formu" style="width: 40%;">Guardar Cambios</button>
-                </form>
-                <br>
+                </main>
 
             <?php
                 }
             ?>
             
-            </div>
-
-        </main>
 
 <!-- FOOTER -->
         <?php

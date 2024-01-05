@@ -1,7 +1,7 @@
 /* ERRORES */
 .error {
     color: red;
-    margin-left: 5px;
+    position: absolute;
 }
 
 /* ICONOS HEADER */
@@ -40,13 +40,17 @@ i {
 }
 
 
-/* FORMULARIO REGISTRO */
-.lblReg {
+/* FORMULARIOS */
+/* .formularioRegistro, .formularioPerfil {
+    width: 400px; 
+} */
+
+.lblForm {
     font-size: 15px;
     font-weight: bold;
 }
 
-.inputReg {
+.inputForm {
     width: 400px;
     text-align: center;
     margin-top: 10px;

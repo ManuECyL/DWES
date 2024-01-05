@@ -93,8 +93,8 @@
 
             $stmt = mysqli_prepare($con, $sql);
 
-            // Desencriptamos la contraseña
-            $pass = sha1($pass); 
+            // Encriptamos la contraseña
+            // $pass = sha1($pass); 
 
             // Vincular parámetros
             mysqli_stmt_bind_param($stmt, 'ss', $user, $pass);
@@ -177,7 +177,7 @@
     function consultar($tabla) {
 
         try {
-
+            
             $con = mysqli_connect(IP, USER, PASS, BD);
 
             // Creamos la sentencia
@@ -186,8 +186,7 @@
             // Ejecutamos la sentencia
             $result = mysqli_query($con, $sql);
     
-            return $result;
-
+        
         } catch (\Throwable $th) {
             erroresBD($th);
         
@@ -195,6 +194,8 @@
             // Cerramos la conexion
             mysqli_close($con);
         }
+
+        return $result;
     }
 
 
@@ -215,6 +216,15 @@
             mysqli_stmt_execute($stmt);
     
             $result = mysqli_stmt_get_result($stmt);
+
+            // Lo guardamos en un array asociativo para trabajar posteriormente con él
+            $usuario = mysqli_fetch_assoc($resultado);
+
+            if ($usuario) {
+                return $usuario;
+            }
+            
+            return false;
             
         } catch (\Throwable $th) {
             erroresBD($th);
@@ -228,20 +238,51 @@
         return $result;
     }
 
+    function obtenerDatosUsuario($id) {
+        try {
+            // Contiene la información necesaria para conectarse a la base de datos
+            $con = mysqli_connect(IP, USER, PASS, BD);
+        
+            // Consulta a la BBDD
+            $sql = 'select * from Usuarios where id_Usuario = ?';
+    
+            $stmt = mysqli_prepare($con, $sql);
+    
+            // Vincular parámetros
+            mysqli_stmt_bind_param($stmt, 's', $id);
+    
+            // Ejecutamos la consulta preparada
+            mysqli_stmt_execute($stmt);
+    
+            // Obtenemos el resultado de la consulta
+            $resultado = mysqli_stmt_get_result($stmt);
+        
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            // Cerramos la conexion
+            unset($con);
+        }
+    }
+
 
 // Función para actualizar los datos de la base de datos    
-    function actualizar($id, $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento) {
+    function actualizarUsuario() {
 
         try {
             
             $con = mysqli_connect(IP, USER, PASS, BD);
         
             // Creamos la sentencia
-            $sql = "update videojuegos set nombre = ?, compañia = ?, stock = ?, precio = ?, fecha_Lanzamiento = ? where id = ?";
+            $sql = "update Usuarios set contraseña = ?, email = ?, fecha_Nacimiento = ?, rol = ? where id_Usuario = ?";
     
             $stmt = mysqli_prepare($con, $sql);
+
+            $fechaOriginal = $_REQUEST["fecha_Nacimiento"];
+            $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
     
-            mysqli_stmt_bind_param($stmt, "ssidss", $nombre, $compañia, $stock, $precio, $fecha_Lanzamiento, $id);
+            mysqli_stmt_bind_param($stmt, "sssss", $_REQUEST["contraseña"], $_REQUEST["email"], $fechaFormateada, $_REQUEST["rol"], $_REQUEST["id_Usuario"]);
             
             mysqli_stmt_execute($stmt);
             
@@ -270,7 +311,8 @@
             $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
     
             $stmt = mysqli_prepare($con, $sql);
-            mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], sha1($_REQUEST["contraseña"]), $_REQUEST["email"], $fechaFormateada);
+            // mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], sha1($_REQUEST["contraseña"]), $_REQUEST["email"], $fechaFormateada);
+            mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $fechaFormateada);
             mysqli_stmt_execute($stmt);
             
         } catch (\Throwable $th) {

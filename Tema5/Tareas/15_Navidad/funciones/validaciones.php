@@ -105,6 +105,52 @@
     }
 
 
+    function validarPerfil(&$errores){
+
+        // USUARIO
+        if (textVacio('id_Usuario')) {
+            $errores['id_Usuario'] = "Usuario Vacío";
+        
+        } elseif (!comprobarExpresionRegular('/^[A-Za-z]\w{4,}$/', 'id_Usuario')) {
+            $errores['id_Usuario'] = "Mínimo 4 caracteres";
+        }
+
+        // CONTRASEÑA
+        if (textVacio('contraseña')) {
+            $errores['contraseña'] = "Contraseña Vacía";
+
+        } elseif (strlen($_REQUEST['contraseña']) < 8) {
+            $errores['contraseña'] = "La contraseña debe tener mínimo 8 caracteres";
+
+        } elseif (!comprobarExpresionRegular($exp_contraseña = '/(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)/', 'contraseña')) {
+            $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
+        }
+
+        // EMAIL
+        if (textVacio('email')) {
+            $errores['email'] = "Correo Electrónico Vacío";
+
+        } elseif (!comprobarExpresionRegular($exp_email = '/^\w+\@\w+\.\w{2,}$/', 'email')) {
+            $errores['email'] = "Formato de email incorrecto";
+        
+        }
+
+        // FECHA
+        if (textVacio('fecha_Nacimiento')) {
+            $errores['fecha_Nacimiento'] = "Debe seleccionar una fecha";
+        
+        } elseif (!comprobarExpresionRegular($exp_fecha = '/^\d{2}\-\d{2}\-\d{4}$/', 'fecha_Nacimiento')) {
+            $errores['fecha_Nacimiento'] = "Formato de fecha incorrecto: dd-mm-yyyy";
+        } 
+
+        if (count($errores) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
     // Botón Cerrar Sesión
     function cerrado() {
 
