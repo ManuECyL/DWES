@@ -180,8 +180,8 @@
             
             $con = mysqli_connect(IP, USER, PASS, BD);
 
-            // Creamos la sentencia
-            $sql = "select * from $tabla";
+            // Creamos la sentencia -> Ordena de forma descendente por el segundo campo
+            $sql = "select * from $tabla order by 2 desc";
     
             // Ejecutamos la sentencia
             $result = mysqli_query($con, $sql);

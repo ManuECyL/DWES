@@ -43,7 +43,7 @@
           <!-- CARRITO -->
           <div class="col-2 col-sm-2 col-md-1">
             <span>
-              <a href="./carrito.html"><i class="bi bi-cart4 icono" style="font-size: 150%;"></i></a>
+              <a href="./carrito.php"><i class="bi bi-cart4 icono" style="font-size: 150%;"></i></a>
             </span>              
           </div>
 
