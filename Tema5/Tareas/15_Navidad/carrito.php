@@ -84,11 +84,66 @@
 
                 <h3>Carrito</h3>
 
+                <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data" class="formularioCarrito mx-auto">
+
+                    <?php
+                        $consulta = consultar('videojuegos');
+    
+                        // Comprobamos si hay resultados
+                        if ($consulta -> num_rows > 0) {
+                            
+                            // Obtenemos los nombres de los campos que contiene la tabla
+                            $camposTabla = array();
+    
+                            while ($campo = $consulta -> fetch_field()) {
+                                $camposTabla[] = $campo -> name;
+                            }
+    
+                            echo "<table>";
+    
+                                echo "<tr>";
+    
+                                // Mostrar los campos en el encabezado de la tabla
+                                foreach ($camposTabla as $columna) {
+                                    echo "<th>" . $columna . "</th>";
+                                }
+
+                                    echo "<th> Eliminar </th>";
+    
+                                echo "</tr>";
+    
+                                // Mostrar los datos de la tabla
+                                while ($fila = $consulta -> fetch_assoc()) {
+                                    
+                                    echo "<tr>";
+    
+                                        foreach ($camposTabla as $columna) {
+                                            echo "<td>" . $fila[$columna] . "</td>";
+                                        }
+        
+                                        echo "<td>";
+                                            ?>
+                                                <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                                                    <input type="submit" value="Eliminar" name="eliminar">
+                                                </form>                                               
+                                            <?
+                                        echo "</td>";
+    
+                                    echo "</tr>";
+                                }
+    
+                            echo "</table>";
+    
+                        } else {
+                            echo "No se encontraron resultados en la base de datos";
+                        }                    
+                    ?>
+                
+                </form>
+                
+
             </div>
             
-            <?php
-
-            ?>
             
         </main>
 

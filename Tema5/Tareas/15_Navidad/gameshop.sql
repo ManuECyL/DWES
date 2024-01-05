@@ -19,9 +19,6 @@ CREATE TABLE Compra (
     id_Compra INT PRIMARY KEY AUTO_INCREMENT,
     id_Usuario VARCHAR(20),
     fecha_Compra DATE,
-    cod_Prod VARCHAR(10),
-    cantidad INT,
-    total FLOAT,
     FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
 );
 
@@ -38,6 +35,7 @@ CREATE TABLE Contiene (
     id_Compra INT,
     cod_Prod VARCHAR(10),
     cantidad INT,
+    total FLOAT,
     FOREIGN KEY (id_Compra) REFERENCES Compra(id_Compra),
     FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
 );
