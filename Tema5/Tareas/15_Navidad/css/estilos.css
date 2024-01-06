@@ -52,8 +52,6 @@ i {
     margin-top: 10px;
 }
 
-
-
 /* IMAGENES PRODUCTOS */
 .productos {
     height: 450px;
@@ -61,6 +59,12 @@ i {
     margin-top: 10px;
     box-shadow: 0px 0px 10px black;
     border: 1px solid black;
+}
+
+/* INPUT CANTIDAD CARRITO */
+#inputCantidad {
+    width: 3%;
+    text-align: center;
 }
 
 /* FOOTER */

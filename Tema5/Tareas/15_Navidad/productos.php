@@ -16,8 +16,10 @@
         if ($usuario) {
             
             $_SESSION['usuario'] = $usuario;
-            header('Location: ./homeUser.php');
-            exit;
+            $contraseña = $_REQUEST['pass'];
+        
+            // header('Location: ./index.php');
+            // exit;
         
         } else {
             echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
@@ -25,23 +27,38 @@
     
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    } 
+    
 
+    } elseif (isset($_SESSION['usuario'])) {
 
-    if (existe('registrarse')) {
-        header('Location: ./registro.php');
-        exit;
+        $pagina = $_REQUEST['pagina'];
+
+        switch(existe($pagina)) {
+
+            case 'perfil':
+                header('Location: ./perfil.php');
+                exit;
+                break;
+
+            case 'comprar':
+                añadirCarrito($_REQUEST['id_Usuario'] , $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+                echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['titulo'] ."' añadido correctamente al carrito</b></div>";
+                break;
+
+            case 'cerrarSesion':
+                cerrarSesion();
+                break;
+
+            default:
+                header('Location: ./index.php');
+                exit;
+                break;
+        } 
     }
 
-    if (existe('perfil')) {
-        header('Location: ./perfil.php');
-        exit;
-    }
-
-    if (cerrado()) {
+    if (existe('cerrarSesion')) {
         cerrarSesion();
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -58,6 +75,14 @@
 
         <link rel="stylesheet" href="css/estilos.css">
 
+        <style>
+            #cantidadProd {
+                width: 25%;
+                margin: 0 auto;
+                margin-bottom: 10px;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -68,9 +93,19 @@
                 include_once("./html/headerUser.php");
                 
             } else {
+                if (existe('registrarse')) {
+                    header('Location: ./registro.php');
+                    exit;
+            
+                } elseif (existe('comprar')) {
+                    echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
+                
+                } elseif (existe('carrito')) {
+                    echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
+                }
+
                 include_once("./html/headerInicio.php");
             }
-            
         ?>
           
     <!-- NAV -->
@@ -81,6 +116,7 @@
     <!-- MAIN -->
         <main>
             <?php
+
                 $productos = consultar('Productos');
 
                 echo '
@@ -125,8 +161,18 @@
 
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 
-                                        <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                                            <input type="submit" value="Añadir al carro" name="añadir">
+                                        <form action="" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                        ';
+                                            if (isset($_SESSION['usuario']) ) {
+                        echo '
+                                                <input type="hidden" name="id_Usuario" value="'.$_SESSION['usuario']['id_Usuario'].'">
+                                                <input type="hidden" name="cod_Prod" value="'.$producto['cod_Prod'].'">
+                                                <input type="hidden" name="cantidad" value="1">
+                        ';
+                                            }
+
+                        echo '
+                                            <input type="submit" value="Comprar" name="comprar">
                                         </form>    
 
                                     </div>

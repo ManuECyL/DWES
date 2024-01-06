@@ -45,7 +45,7 @@
                 // Guardamos el resultado en un array asociativo para trabajar con él
                 $_SESSION['usuario'] = mysqli_fetch_assoc($resultado);
 
-                header('Location: ./homeUser.php');
+                header('Location: ./index.php');
                 exit;
             
             } else {

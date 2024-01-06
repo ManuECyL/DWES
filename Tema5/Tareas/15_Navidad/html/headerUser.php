@@ -49,7 +49,7 @@
           </div>
 
           <!-- USUARIO -->
-          <div class="col-2 col-sm-2 col-md-2" style="display:flex; font-size: 150%;">
+          <div class="col-2 col-sm-2 col-md-1" style="display:flex; font-size: 150%;">
 
             <a href="#" data-bs-toggle="modal" data-bs-target="#btnModalUsuario"><i class="bi bi-person-circle icono"></i></a>
             <p style="font-size: 15px; margin-left: 10px; margin-top: 5px"><?php echo $_SESSION['usuario']['id_Usuario']; ?></p>            

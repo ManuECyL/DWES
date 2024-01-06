@@ -15,16 +15,6 @@ CREATE TABLE Usuarios (
     FOREIGN KEY (rol) REFERENCES Roles(rol)
 );
 
-CREATE TABLE Carrito (
-    id_Usuario VARCHAR(20),
-    cod_Prod VARCHAR(10),
-    cantidad INT,
-    FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario),
-    FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
-);
-
-
-
 CREATE TABLE Compra (
     id_Compra INT PRIMARY KEY AUTO_INCREMENT,
     id_Usuario VARCHAR(20),
@@ -39,6 +29,14 @@ CREATE TABLE Productos (
     stock INT NOT NULL,
     precio FLOAT NOT NULL,
     ruta_Imagen VARCHAR(255)
+);
+
+CREATE TABLE Carrito (
+    id_Usuario VARCHAR(20),
+    cod_Prod VARCHAR(10),
+    cantidad INT,
+    FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario),
+    FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
 );
 
 CREATE TABLE Contiene (
@@ -90,3 +88,5 @@ GRANT SELECT ON gameshop.Albaranes TO 'Moderador1'@'%';
 DROP USER IF EXISTS 'Cliente1'@'%';
 CREATE USER 'Cliente1'@'%' IDENTIFIED BY 'Cliente1';
 GRANT SELECT ON gameshop.Productos TO 'Cliente1'@'%';
+
+GRANT ALL ON gameshop.Carrito TO 'Cliente1'@'%';

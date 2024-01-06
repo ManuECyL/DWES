@@ -16,8 +16,27 @@
         if ($usuario) {
             
             $_SESSION['usuario'] = $usuario;
-            header('Location: ./homeUser.php');
+            header('Location: ./index.php');
             exit;
+
+            switch(existe($pagina)) {
+                case 'registrarse':
+                    echo "<div class='alert alert-danger text-center'><b>Ya está registrado</b></div>";
+                    break;
+
+                case 'perfil':
+                    header('Location: ./perfil.php');
+                    exit;
+                    break;
+
+                case 'comprar':
+                    añadirCarrito($_REQUEST['id_Usuario'] ,$_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+                    break;
+
+                case 'cerrarSesion':
+                    cerrarSesion();
+                    break;
+            } 
         
         } else {
             echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
@@ -31,17 +50,10 @@
     if (existe('registrarse')) {
         header('Location: ./registro.php');
         exit;
-    }
 
-    if (existe('perfil')) {
-        header('Location: ./perfil.php');
-        exit;
+    }elseif (existe('comprar') && !isset($_SESSION['usuario'])) {
+        echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
     }
-
-    if (cerrado()) {
-        cerrarSesion();
-    }
-    
 ?>
 
 <!DOCTYPE html>
@@ -107,12 +119,21 @@
 
                 <h3>Carrito</h3>
 
+                <div class="divCantidad">
+                    <button aria-label="quitar" class="quitarCantidad" onclick="cambiarCantidad(-1)">-</button>
+
+                    <input type="text" aria-label="inputCantidad" id="inputCantidad" value="1" readonly>
+
+                    <button aria-label="añadir" class="añadirCantidad" onclick="cambiarCantidad(1)">+</button>
+                </div>
+
+
                 <br>
 
                 <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data" class="formularioCarrito text-center mx-auto">
 
                     <?php
-                        $consulta = consultar('Productos');
+                        $consulta = consultarCarrito($_SESSION['usuario']['id_Usuario']);
     
                         // Comprobamos si hay resultados
                         if ($consulta -> num_rows > 0) {
@@ -160,9 +181,11 @@
     
                             echo "</table>";
 
+                            echo "<br>";
+
                         ?>
                             <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                                <input type="submit" value="Comprar" name="comprar">
+                                <input type="submit" value="Realizar Pedido" name="realizarPedido">
                             </form>    
                         <?php
 
@@ -186,6 +209,23 @@
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+
+        <script>
+
+            // Función para cambiar la cantidad de productos que se van a comprar en el carrito
+            function cambiarCantidad(cantidad) {
+
+                let inputCantidad = document.getElementById('inputCantidad');
+                let cantidadActual = parseInt(inputCantidad.value);
+
+                // Comprobamos que la cantidad no sea menor que 1
+                if (cantidadActual + cantidad > 0) {
+                    // En esta línea, 'cantidadActual' es el valor actual del input y 'cantidad' es el valor que se va a sumar o restar. Si 'cantidad' es -1, entonces estás sumando -1 a 'cantidadActual', lo que es equivalente a restar 1 de 'cantidadActual'.
+                    inputCantidad.value = cantidadActual + cantidad;
+                }
+            }
+
+        </script>
 
     </body>
 </html>

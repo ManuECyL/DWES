@@ -150,7 +150,7 @@
         return false;
     }
 
-
+    
     // Botón Cerrar Sesión
     function cerrado() {
 

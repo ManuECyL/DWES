@@ -3,6 +3,7 @@
 
     require('./funciones/conexionBD.php');
     require('./funciones/validaciones.php');
+    require('./funciones/logout.php');
 
     if (!comprobarBD()) {
         crearScript();
@@ -18,8 +19,27 @@
         $_SESSION['usuario'] = $usuario;
         $contraseña = $_REQUEST['pass'];
         
-        header('Location: ./homeUser.php');
+        header('Location: ./index.php');
         exit;
+
+        switch(existe($pagina)) {
+          case 'registrarse':
+              echo "<div class='alert alert-danger text-center'><b>Ya está registrado</b></div>";
+              break;
+
+          case 'perfil':
+              header('Location: ./perfil.php');
+              exit;
+              break;
+
+          case 'comprar':
+              añadirCarrito($_REQUEST['id_Usuario'] ,$_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+              break;
+
+          case 'cerrarSesion':
+              cerrarSesion();
+              break;
+      } 
       
       } else {
           echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
@@ -29,11 +49,9 @@
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
     } 
 
-
-    if (existe('registrarse')) {
-        header('Location: ./registro.php');
-        exit;
-    }
+    if (existe('cerrarSesion')) {
+      cerrarSesion();
+  }
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +74,21 @@
 
 <!-- HEADER -->
         <?php
-            include_once("./html/headerInicio.php");
+          if (!isset($_SESSION['usuario'])) {
+
+            if (existe('registrarse')) {
+                header('Location: ./registro.php');
+                exit;
+        
+            } elseif (existe('comprar')) {
+                echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
+            
+            } elseif (existe('carrito')) {
+                echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
+            } 
+          } 
+
+          include_once("./html/headerInicio.php");
         ?>
           
 <!-- NAV -->
@@ -71,7 +103,7 @@
 
           // Si por lo que sea la sesion tiene datos (que es un error)
           if (isset($_SESSION['error'])) {
-              echo $_SESSION['error'];
+            echo "<span style='color:red'>". $_SESSION['error'] ."</span>";
           }
         ?>
 
