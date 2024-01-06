@@ -15,6 +15,16 @@ CREATE TABLE Usuarios (
     FOREIGN KEY (rol) REFERENCES Roles(rol)
 );
 
+CREATE TABLE Carrito (
+    id_Usuario VARCHAR(20),
+    cod_Prod VARCHAR(10),
+    cantidad INT,
+    FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario),
+    FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
+);
+
+
+
 CREATE TABLE Compra (
     id_Compra INT PRIMARY KEY AUTO_INCREMENT,
     id_Usuario VARCHAR(20),

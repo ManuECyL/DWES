@@ -102,22 +102,22 @@
 
                                         <div class="text-center">
 
-                                            <h5 class="fw-bolder">' . $producto['titulo'] . '</h5>
+                                            <h5 class="fw-bolder mb-3">' . $producto['titulo'] . '</h5>
 
-                                            <div class="d-flex justify-content-center small mb-2">
-                                                <div style="margin-top: 2px;">' . $producto['cod_Prod'] . '</div>
+                                            <div class="d-flex justify-content-center small mb-3">
+                                                <div>' . $producto['cod_Prod'] . '</div>
                                             </div>
 
-                                            <div class="d-flex justify-content-center small mb-2">
-                                                <div style="margin-top: 5px;">' . $producto['compañia'] . '</div>
+                                            <div class="d-flex justify-content-center small mb-3">
+                                                <div>' . $producto['compañia'] . '</div>
                                             </div>
 
-                                            <div class="d-flex justify-content-center small mb-2">
-                                                <div style="margin-top: 10px; font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
+                                            <div class="d-flex justify-content-center small mb-3">
+                                                <div style="font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
                                             </div>
 
-                                            <div class="d-flex justify-content-center small mb-2">
-                                                <div style="margin-top: 10px;">Stock: ' . $producto['stock'] . '</div>
+                                            <div class="d-flex justify-content-center small mb-0">
+                                                <div>Stock: ' . $producto['stock'] . '</div>
                                             </div>
                                         </div>
 
@@ -125,9 +125,9 @@
 
                                     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
 
-                                        <div class="text-center">
-                                            <a class="btn btn-outline-dark mx-auto" href="./carrito.php">Añadir al carro</a>
-                                        </div>
+                                        <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                                            <input type="submit" value="Añadir al carro" name="añadir">
+                                        </form>    
 
                                     </div>
 

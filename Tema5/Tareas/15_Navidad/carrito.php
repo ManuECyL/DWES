@@ -58,6 +58,28 @@
 
         <link rel="stylesheet" href="css/estilos.css">
 
+        <style>
+            table {
+                margin: auto;
+            }
+
+            td {
+                padding: 16px;
+                text-align: center;
+                border: gray 1px solid;
+            }
+
+            th {
+                padding: 10px;
+                text-align: center;
+                border: gray 1px solid;
+            }
+
+            thead td {
+                font-weight: bold;
+            }
+        </style>
+
     </head>
 
     <body>
@@ -80,14 +102,17 @@
     
     <!-- MAIN -->
         <main>
-            <div class="container mt-5 text-center">
+
+            <div class="container mt-4 text-center">
 
                 <h3>Carrito</h3>
 
-                <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data" class="formularioCarrito mx-auto">
+                <br>
+
+                <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data" class="formularioCarrito text-center mx-auto">
 
                     <?php
-                        $consulta = consultar('videojuegos');
+                        $consulta = consultar('Productos');
     
                         // Comprobamos si hay resultados
                         if ($consulta -> num_rows > 0) {
@@ -110,7 +135,7 @@
 
                                     echo "<th> Eliminar </th>";
     
-                                echo "</tr>";
+                                echo "</tr>";                               
     
                                 // Mostrar los datos de la tabla
                                 while ($fila = $consulta -> fetch_assoc()) {
@@ -131,9 +156,16 @@
     
                                     echo "</tr>";
                                 }
+                                
     
                             echo "</table>";
-    
+
+                        ?>
+                            <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                                <input type="submit" value="Comprar" name="comprar">
+                            </form>    
+                        <?php
+
                         } else {
                             echo "No se encontraron resultados en la base de datos";
                         }                    
@@ -141,9 +173,9 @@
                 
                 </form>
                 
-
             </div>
             
+            <br>
             
         </main>
 

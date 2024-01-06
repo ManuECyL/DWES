@@ -349,6 +349,96 @@
         }
     }
 
+    // Función para insertar datos en la tabla Carrito
+    function añadirAlCarrito($idUsuario, $codProd, $cantidad){
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+    
+            // Consultas preparadas
+            $sql = "INSERT INTO Carrito (id_Usuario, cod_Prod, cantidad) VALUES (?, ?, ?)";
+        
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ssi", $idUsuario, $codProd, $cantidad);
+            mysqli_stmt_execute($stmt);
+                
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+    }
+
+    // Función para consultar los datos necesarios de la tabla Carrito
+    function consultarCarrito(){
+
+        try {
+
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultas preparadas
+            $sql = "SELECT Carrito.cod_Prod, Productos.titulo, Productos.precio, Carrito.cantidad FROM Carrito JOIN Productos ON Carrito.cod_Prod = Productos.cod_Prod WHERE Carrito.id_Usuario = ?";
+    
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ssdis", $_REQUEST["cod_Prod"], $_REQUEST["titulo"], $_REQUEST["precio"], $_REQUEST["cantidad"], $_REQUEST["id_Usuario"]);
+            mysqli_stmt_execute($stmt);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+    }
+
+
+    // Función para insertar datos en la base de datos
+    function comprar($idUsuario){
+
+        try {
+
+            // Insertas un nuevo registro en la tabla Compra
+            $sql = "INSERT INTO Compra (id_Usuario, fecha_Compra) VALUES (?, CURDATE())";
+            $stmt = mysqli_prepare($con, $sql);
+
+            mysqli_stmt_bind_param($stmt, "s", $idUsuario);
+            mysqli_stmt_execute($stmt);
+
+            // Obtienes el ID de la compra que acabas de insertar
+            $idCompra = mysqli_insert_id($con);
+
+            // Insertas los productos del carrito en la tabla Contiene
+            $sql = "INSERT INTO Contiene (id_Compra, cod_Prod, cantidad, total)
+                    SELECT ?, cod_Prod, cantidad, cantidad * precio
+                    FROM Carrito
+                    JOIN Productos ON Carrito.cod_Prod = Productos.cod_Prod
+                    WHERE Carrito.id_Usuario = ?";
+
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "is", $idCompra, $idUsuario);
+            mysqli_stmt_execute($stmt);
+
+            // Eliminas los productos del carrito
+            $sql = "DELETE FROM Carrito WHERE id_Usuario = ?";
+            
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "s", $idUsuario);
+            mysqli_stmt_execute($stmt);
+            
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos el statement y la conexion
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+    }
+
 
 
 // Función para borrar datos de la base de datos
