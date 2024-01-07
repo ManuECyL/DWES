@@ -42,8 +42,8 @@
                 // Actualiza los datos del usuario en la sesión
                 $resultado = consultarId('Usuarios', 'id_Usuario', $_SESSION['usuario']['id_Usuario']);
 
-                // Guardamos el resultado en un array asociativo para trabajar con él
-                $_SESSION['usuario'] = mysqli_fetch_assoc($resultado);
+                // Actualiza la sesión
+                $_SESSION['usuario'] = $resultado;
 
                 header('Location: ./index.php');
                 exit;

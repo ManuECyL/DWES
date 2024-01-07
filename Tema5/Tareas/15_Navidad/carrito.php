@@ -12,12 +12,22 @@
             exit;
     
         } elseif (existe('eliminar')) {
-            eliminarProductoCarrito($_SESSION['usuario']['id_Usuario'], $_REQUEST['cod_Prod']);
-            echo "<div class='alert alert-success text-center'><b>Se ha eliminado el producto del carrito correctamente</b></div>";
+
+            // Eliminar el producto del carrito
+            if (eliminarProductoCarrito()){
+                echo "<div class='alert alert-success text-center'><b>Se ha eliminado el producto del carrito correctamente</b></div>";
+            }
 
 
         } elseif (existe('actualizarCantidad')) {
-            actualizarCantidadCarrito($_SESSION['usuario']['id_Usuario'], $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+            $cod_Prods = $_POST['cod_Prod'];
+            $cantidades = $_POST['cantidad'];
+    
+            // Actualizar la cantidad de cada producto
+            for ($i = 0; $i < count($cod_Prods); $i++) {
+                actualizarCantidadCarrito($_SESSION['usuario']['id_Usuario'], $cod_Prods[$i], $cantidades[$i]);
+            }
+
             
         } elseif (existe('vaciar')) {
             vaciarCarrito($_SESSION['usuario']['id_Usuario']);
@@ -144,19 +154,22 @@
 
                                             if ($columna == 'cantidad') {
                                                 echo "<td>";
-                ?>                                                        
 
-                                                    <input type="number" class="inputCantidad" name="inputCantidad" id="inputCantidad" value="<?php echo $fila[$columna]; ?>" min="1" max="100">
+
+                                                    echo "<input type='hidden' name='cod_Prod[]' value='" . $fila['cod_Prod'] . "'>";
+                                                    echo "<input type='number' name='cantidad[]' value='" . $fila['cantidad'] . "'>";
+                ?>                                                     
+                                                    <!-- <input type="number" class="inputCantidad" name="inputCantidad" id="inputCantidad" value="<?php echo $fila[$columna]; ?>" min="1" max="100"> -->
 
                                                     <!-- Div que contiene las opciones para cambiar la cantidad de productos usando la función cambiarCantidad() en Javascript -->
-                                                    <!-- <div class="divCantidad"> -->
-                                                        <!-- <button class="inputCantidad cambiarCantidad restarCantidad" id="restarCantidad" onclick="cambiarCantidad(event, -1, <?php echo $i; ?>)">-</button> -->
+                                                    <!-- <div class="divCantidad">
+                                                        <button class="inputCantidad cambiarCantidad restarCantidad" id="restarCantidad" onclick="cambiarCantidad(event, -1, <?php echo $i; ?>)">-</button>
                                     
-                                                        <!-- <input type="text" aria-label="inputCantidad" class="inputCantidad" id="inputCantidad<?php echo $i; ?>" readonly value="<?php echo $fila[$columna]; ?>"> -->
+                                                        <input type="text" class="inputCantidad" id="inputCantidad<?php echo $i; ?>" readonly value="<?php echo $fila[$columna]; ?>">
                                     
-                                                        <!-- <button class="inputCantidad cambiarCantidad sumarCantidad" id="sumarCantidad" onclick="cambiarCantidad(event, 1, <?php echo $i; ?>)">+</button>
+                                                        <button class="inputCantidad cambiarCantidad sumarCantidad" id="sumarCantidad" onclick="cambiarCantidad(event, 1, <?php echo $i; ?>)">+</button>
                                                     </div> -->
-                    <?php
+                <?php
                                                 echo "</td>";
                                             
                                             } elseif ($columna == 'total') {
@@ -171,15 +184,20 @@
                                     
                     <?php
 
-                                            // $i++;
+                                        // $i++;
                                         }
         
                                         echo "<td>";
                     ?>
-    
-                                            <input type="hidden" name="cod_Prod" value="<?php echo $fila['cod_Prod']?>">
-                                            <!-- <input type="hidden" name="cantidad" value="<?php echo $fila['cantidad']?>"> -->
-                                            <input type="submit" value="Eliminar" name="eliminar">
+                                            <form method="post" action="./carrito.php">
+                                                <input type="hidden" name="cod_Prod" value="<?php echo $fila['cod_Prod']?>">
+                                                <input type="hidden" name="cantidad" value="<?php echo $fila['cantidad']?>">
+                                                <!-- <input type="submit" value="Eliminar" name="eliminar"> -->
+                                                <button type="submit" name="eliminar" value="<?php echo $fila['cod_Prod'] ?>" class="btn btn-danger">
+                                                        <i class="bi bi-trash"></i>
+                                                </button>
+                                                
+                                            </form>
                                                  
                     <?php
                                         echo "</td>";

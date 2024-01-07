@@ -335,7 +335,7 @@
         try {
             $con = mysqli_connect(IP, USER, PASS, BD);
     
-            // Comprobar si el producto ya está en el carrito, de ser así, actualizamos la cantidad en lugar de añadirlo de nuevo
+            // Consulta para visualizar los datos de la tabla Carrito
             $sql = "SELECT * FROM Carrito WHERE id_Usuario = ? AND cod_Prod = ?";
 
             $stmt = mysqli_prepare($con, $sql);
@@ -396,7 +396,8 @@
         }
     }
 
-    // Función para borrar datos de la base de datos
+
+// Función para borrar datos de la base de datos
     function eliminarProductoCarrito() {
 
         try {
@@ -406,7 +407,33 @@
             $sql = "DELETE FROM Carrito WHERE id_Usuario = ? AND cod_Prod = ?";
 
             $stmt = mysqli_prepare($con, $sql);
-                mysqli_stmt_bind_param($stmt, "ss", $_SESSION['usuario']['id_Usuario'], $_REQUEST["cod_Prod"]);
+                mysqli_stmt_bind_param($stmt, "ss", $_SESSION['usuario']['id_Usuario'], $_REQUEST['cod_Prod']);
+                mysqli_stmt_execute($stmt);
+                        
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            echo "<div class='alert alert-danger text-center'><b>Error al elimar el producto del carrito</b></div>";
+            return false;
+            
+        } finally {
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+
+        return true;
+    }
+
+// Función para borrar datos de la base de datos
+    function vaciarCarrito($idUsuario) {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Insertamos un nuevo producto en la tabla Productos
+            $sql = "DELETE FROM Carrito WHERE id_Usuario = ?";
+
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "s", $idUsuario);
                 mysqli_stmt_execute($stmt);
             
         } catch (\Throwable $th) {
@@ -418,30 +445,8 @@
         }
     }
 
-        // Función para borrar datos de la base de datos
-        function vaciarCarrito($idUsuario) {
 
-            try {
-                $con = mysqli_connect(IP, USER, PASS, BD);
-    
-                // Insertamos un nuevo producto en la tabla Productos
-                $sql = "DELETE FROM Carrito WHERE id_Usuario = ?";
-    
-                $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "s", $idUsuario);
-                    mysqli_stmt_execute($stmt);
-                
-            } catch (\Throwable $th) {
-                erroresBD($th);
-                
-            } finally {
-                mysqli_stmt_close($stmt);
-                mysqli_close($con);
-            }
-        }
-
-
-    // Función para insertar datos en la base de datos
+// Función para insertar datos en la base de datos
     function comprar($idUsuario){
 
         try {
