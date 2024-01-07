@@ -18,40 +18,24 @@
         
         $_SESSION['usuario'] = $usuario;
         $contraseña = $_REQUEST['pass'];
-        
-        header('Location: ./index.php');
-        exit;
-
-        switch(existe($pagina)) {
-          case 'registrarse':
-              echo "<div class='alert alert-danger text-center'><b>Ya está registrado</b></div>";
-              break;
-
-          case 'perfil':
-              header('Location: ./perfil.php');
-              exit;
-              break;
-
-          case 'comprar':
-              añadirCarrito($_REQUEST['id_Usuario'] ,$_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
-              break;
-
-          case 'cerrarSesion':
-              cerrarSesion();
-              break;
-      } 
-      
+            
       } else {
           echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
       }
     
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    } 
+    
+    } elseif (isset($_SESSION['usuario'])) {
 
-    if (existe('cerrarSesion')) {
-      cerrarSesion();
-  }
+      if (existe('perfil')) {
+        header('Location: ./perfil.php');
+        exit;
+
+      } elseif (existe('cerrarSesion')) {
+        cerrarSesion();
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -88,12 +72,12 @@
             } 
           } 
 
-          include_once("./html/headerInicio.php");
+          include_once("./html/header.php");
         ?>
           
 <!-- NAV -->
         <?php
-            include_once("./html/navInicio.php");
+            include_once("./html/nav.php");
         ?>
     
 <!-- MAIN -->

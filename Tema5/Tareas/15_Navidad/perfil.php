@@ -53,12 +53,12 @@
 
             <!-- HEADER -->
                 <?php
-                    include_once("./html/headerUser.php");
+                    include_once("./html/header.php");
                 ?>
                 
             <!-- NAV -->
                 <?php
-                    include_once("./html/navInicio.php");
+                    include_once("./html/nav.php");
                 ?>
             
             <!-- MAIN -->

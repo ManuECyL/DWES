@@ -5,55 +5,33 @@
     require('./funciones/validaciones.php');
     require('./funciones/logout.php');
 
-    if (!comprobarBD()) {
-        crearScript();
-    }
-    
-    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-        
-        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
+    if (isset($_SESSION['usuario'])) {
 
-        if ($usuario) {
-            
-            $_SESSION['usuario'] = $usuario;
-            header('Location: ./index.php');
+        if (existe('perfil')) {
+            header('Location: ./perfil.php');
             exit;
-
-            switch(existe($pagina)) {
-                case 'registrarse':
-                    echo "<div class='alert alert-danger text-center'><b>Ya está registrado</b></div>";
-                    break;
-
-                case 'perfil':
-                    header('Location: ./perfil.php');
-                    exit;
-                    break;
-
-                case 'comprar':
-                    añadirCarrito($_REQUEST['id_Usuario'] ,$_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
-                    break;
-
-                case 'cerrarSesion':
-                    cerrarSesion();
-                    break;
-            } 
-        
-        } else {
-            echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-        }
     
-    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
-        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    } 
+        } elseif (existe('eliminar')) {
+            eliminarProductoCarrito($_SESSION['usuario']['id_Usuario'], $_REQUEST['cod_Prod']);
+            echo "<div class='alert alert-success text-center'><b>Se ha eliminado el producto del carrito correctamente</b></div>";
 
 
-    if (existe('registrarse')) {
-        header('Location: ./registro.php');
-        exit;
+        } elseif (existe('actualizarCantidad')) {
+            actualizarCantidadCarrito($_SESSION['usuario']['id_Usuario'], $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+            
+        } elseif (existe('vaciar')) {
+            vaciarCarrito($_SESSION['usuario']['id_Usuario']);
+            echo "<div class='alert alert-success text-center'><b>Se ha vaciado el carrito correctamente</b></div>";
 
-    }elseif (existe('comprar') && !isset($_SESSION['usuario'])) {
-        echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
+
+        } elseif (existe('realizarPedido')){
+            
+        
+        } elseif (existe('cerrarSesion')) {
+            cerrarSesion();
+        }
     }
+
 ?>
 
 <!DOCTYPE html>
@@ -99,17 +77,17 @@
     <!-- HEADER -->
         <?php              
             if (isset($_SESSION['usuario'])) {
-                include_once("./html/headerUser.php");
+                include_once("./html/header.php");
                 
             } else {
-                include_once("./html/headerInicio.php");
+                include_once("./html/header.php");
             }
             
         ?>
           
     <!-- NAV -->
         <?php
-            include_once("./html/navInicio.php");
+            include_once("./html/nav.php");
         ?>
     
     <!-- MAIN -->
@@ -119,20 +97,12 @@
 
                 <h3>Carrito</h3>
 
-                <div class="divCantidad">
-                    <button aria-label="quitar" class="quitarCantidad" onclick="cambiarCantidad(-1)">-</button>
-
-                    <input type="text" aria-label="inputCantidad" id="inputCantidad" value="1" readonly>
-
-                    <button aria-label="añadir" class="añadirCantidad" onclick="cambiarCantidad(1)">+</button>
-                </div>
-
-
                 <br>
 
                 <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data" class="formularioCarrito text-center mx-auto">
 
                     <?php
+
                         $consulta = consultarCarrito($_SESSION['usuario']['id_Usuario']);
     
                         // Comprobamos si hay resultados
@@ -158,36 +128,83 @@
     
                                 echo "</tr>";                               
     
+                                // $i = 0;
+
+                                $total = 0;
+
                                 // Mostrar los datos de la tabla
                                 while ($fila = $consulta -> fetch_assoc()) {
                                     
+                                    $total = $fila['total'];
+                                    
                                     echo "<tr>";
     
+                                    
                                         foreach ($camposTabla as $columna) {
-                                            echo "<td>" . $fila[$columna] . "</td>";
+
+                                            if ($columna == 'cantidad') {
+                                                echo "<td>";
+                ?>                                                        
+
+                                                    <input type="number" class="inputCantidad" name="inputCantidad" id="inputCantidad" value="<?php echo $fila[$columna]; ?>" min="1" max="100">
+
+                                                    <!-- Div que contiene las opciones para cambiar la cantidad de productos usando la función cambiarCantidad() en Javascript -->
+                                                    <!-- <div class="divCantidad"> -->
+                                                        <!-- <button class="inputCantidad cambiarCantidad restarCantidad" id="restarCantidad" onclick="cambiarCantidad(event, -1, <?php echo $i; ?>)">-</button> -->
+                                    
+                                                        <!-- <input type="text" aria-label="inputCantidad" class="inputCantidad" id="inputCantidad<?php echo $i; ?>" readonly value="<?php echo $fila[$columna]; ?>"> -->
+                                    
+                                                        <!-- <button class="inputCantidad cambiarCantidad sumarCantidad" id="sumarCantidad" onclick="cambiarCantidad(event, 1, <?php echo $i; ?>)">+</button>
+                                                    </div> -->
+                    <?php
+                                                echo "</td>";
+                                            
+                                            } elseif ($columna == 'total') {
+                                                $total += $fila[$columna];
+                                                echo "<td>" . $fila[$columna] . "</td>";
+                                            
+                                            } else {    
+                                                echo "<td>" . $fila[$columna] . "</td>";
+                                            }
+
+                    ?>
+                                    
+                    <?php
+
+                                            // $i++;
                                         }
         
                                         echo "<td>";
-                                            ?>
-                                                <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                                                    <input type="submit" value="Eliminar" name="eliminar">
-                                                </form>                                               
-                                            <?
+                    ?>
+    
+                                            <input type="hidden" name="cod_Prod" value="<?php echo $fila['cod_Prod']?>">
+                                            <!-- <input type="hidden" name="cantidad" value="<?php echo $fila['cantidad']?>"> -->
+                                            <input type="submit" value="Eliminar" name="eliminar">
+                                                 
+                    <?php
                                         echo "</td>";
     
                                     echo "</tr>";
                                 }
                                 
-    
                             echo "</table>";
 
-                            echo "<br>";
+                        echo "<br>";
 
-                        ?>
-                            <form action="./carrito.php" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                                <input type="submit" value="Realizar Pedido" name="realizarPedido">
-                            </form>    
-                        <?php
+                    ?>
+                       
+                        <h5>Total: <?php echo $total; ?> €</h5>
+
+                        <br>
+                        
+                        <input type="submit" value="Actualizar Cantidad" name="actualizarCantidad" class="inputCarrito">
+                        <input type="submit" value="Vaciar Carrito" name="vaciar" class="inputCarrito">
+
+                        <br><br>
+
+                        <button type="submit" id="realizarPedido" name="realizarPedido" class="btn bg-primary bg-gradient formu">Realizar Pedido</button>
+
+                    <?php
 
                         } else {
                             echo "No se encontraron resultados en la base de datos";
@@ -212,17 +229,22 @@
 
         <script>
 
-            // Función para cambiar la cantidad de productos que se van a comprar en el carrito
-            function cambiarCantidad(cantidad) {
+        // Función para cambiar la cantidad de productos que se van a comprar en el carrito
+            function cambiarCantidad(event, cantidad, i) {
+                
+                // Evitamos que al pulsar los botones de añadir o quitar cantidad, se envíe el formulario y recargue la página
+                event.preventDefault();
 
-                let inputCantidad = document.getElementById('inputCantidad');
-                let cantidadActual = parseInt(inputCantidad.value);
+                let inputCantidad = document.getElementById('inputCantidad' + i);
 
-                // Comprobamos que la cantidad no sea menor que 1
-                if (cantidadActual + cantidad > 0) {
-                    // En esta línea, 'cantidadActual' es el valor actual del input y 'cantidad' es el valor que se va a sumar o restar. Si 'cantidad' es -1, entonces estás sumando -1 a 'cantidadActual', lo que es equivalente a restar 1 de 'cantidadActual'.
-                    inputCantidad.value = cantidadActual + cantidad;
-                }
+        
+                    let cantidadActual = parseInt(inputCantidad.value);
+                    
+                    // Comprobamos que la cantidad no sea menor que 1
+                    if (cantidadActual + cantidad > 0) {
+                        // En esta línea, 'cantidadActual' es el valor actual del input y 'cantidad' es el valor que se va a sumar o restar. Si 'cantidad' es -1, entonces estás sumando -1 a 'cantidadActual', lo que es equivalente a restar 1 de 'cantidadActual'.
+                        inputCantidad.value = cantidadActual + cantidad;
+                    }
             }
 
         </script>

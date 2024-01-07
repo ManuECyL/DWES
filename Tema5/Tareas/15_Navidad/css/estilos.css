@@ -62,9 +62,47 @@ i {
 }
 
 /* INPUT CANTIDAD CARRITO */
-#inputCantidad {
-    width: 3%;
+.divCantidad {
+    width: 110px; 
+}
+
+.inputCantidad {
+    width: 75%; 
     text-align: center;
+}
+
+.cambiarCantidad {
+    font-weight: bold;
+    width: 30%;
+}
+
+.restarCantidad:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(151, 13, 13) !important;
+}
+
+.sumarCantidad:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* BOTONES CARRITO */
+.inputCarrito {
+    width: 12%;
+    margin-left: 10px;
+}
+
+#realizarPedido {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#realizarPedido:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
 }
 
 /* FOOTER */

@@ -37,12 +37,12 @@
 
 <!-- HEADER -->
         <?php
-            include_once("./html/headerInicio.php");
+            include_once("./html/header.php");
         ?>
           
 <!-- NAV -->
         <?php
-            include_once("./html/navInicio.php");
+            include_once("./html/nav.php");
         ?>
     
 <!-- MAIN -->

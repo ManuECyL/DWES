@@ -28,36 +28,19 @@
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
     
-
     } elseif (isset($_SESSION['usuario'])) {
 
-        $pagina = $_REQUEST['pagina'];
-
-        switch(existe($pagina)) {
-
-            case 'perfil':
-                header('Location: ./perfil.php');
-                exit;
-                break;
-
-            case 'comprar':
-                añadirCarrito($_REQUEST['id_Usuario'] , $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
-                echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['titulo'] ."' añadido correctamente al carrito</b></div>";
-                break;
-
-            case 'cerrarSesion':
-                cerrarSesion();
-                break;
-
-            default:
-                header('Location: ./index.php');
-                exit;
-                break;
-        } 
-    }
-
-    if (existe('cerrarSesion')) {
-        cerrarSesion();
+        if (existe('perfil')) {
+            header('Location: ./perfil.php');
+            exit;
+  
+        } elseif (existe('comprar')) {
+            añadirCarrito($_REQUEST['id_Usuario'] , $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+            echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['cod_Prod'] ."' añadido correctamente al carrito</b></div>";
+        
+        } elseif (existe('cerrarSesion')) {
+            cerrarSesion();
+        }
     }
 ?>
 
@@ -90,7 +73,7 @@
     <!-- HEADER -->
         <?php              
             if (isset($_SESSION['usuario'])) {
-                include_once("./html/headerUser.php");
+                include_once("./html/header.php");
                 
             } else {
                 if (existe('registrarse')) {
@@ -104,13 +87,13 @@
                     echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
                 }
 
-                include_once("./html/headerInicio.php");
+                include_once("./html/header.php");
             }
         ?>
           
     <!-- NAV -->
         <?php
-            include_once("./html/navInicio.php");
+            include_once("./html/nav.php");
         ?>
     
     <!-- MAIN -->
