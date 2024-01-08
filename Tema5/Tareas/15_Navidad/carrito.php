@@ -5,6 +5,7 @@
     require('./funciones/validaciones.php');
     require('./funciones/logout.php');
 
+
     if (isset($_SESSION['usuario'])) {
 
         if (existe('perfil')) {
@@ -14,33 +15,21 @@
         } elseif (existe('eliminar')) {
             $cod_Prod = $_POST['cod_Prod'];
 
-
             // Eliminar el producto del carrito
-            if (eliminarProductoCarrito($cod_Prod)){
-                echo "<div class='alert alert-success text-center'><b>Se ha eliminado el producto " .$cod_Prod . " del carrito correctamente</b></div>";
-            }
-
+            eliminarProductoCarrito($cod_Prod);
 
         } elseif (existe('actualizarCantidad')) {
-
             $cod_Prod = $_POST['cod_Prod'];
             $cantidad = $_POST['cantidad'];
 
             // Actualizar la cantidad del producto del carrito
-            if (actualizarCantidadCarrito($cod_Prod, $cantidad)){
-                echo "<div class='alert alert-success text-center'><b>Se ha actualizado la cantidad del producto " .$cod_Prod . " en el carrito correctamente</b></div>";
-            }
+            actualizarCantidadCarrito($cod_Prod, $cantidad);
 
         } elseif (existe('vaciar')) {
-            vaciarCarrito();
-            echo "<div class='alert alert-success text-center'><b>Se ha vaciado el carrito correctamente</b></div>";
-
+            vaciarCarrito();            
 
         } elseif (existe('realizarPedido')){
-            if (realizarPedido()) {
-                echo "<div class='alert alert-success text-center'><b>Se ha realizado el pedido con éxito</b></div>";
-            }
-            
+            realizarPedido();           
         
         } elseif (existe('cerrarSesion')) {
             cerrarSesion();
@@ -97,7 +86,6 @@
             } else {
                 include_once("./html/header.php");
             }
-            
         ?>
           
     <!-- NAV -->

@@ -33,7 +33,6 @@
   
         } elseif (existe('comprar')) {
             añadirCarrito();
-            echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['cod_Prod'] ."' añadido correctamente al carrito</b></div>";
         
         } elseif (existe('cerrarSesion')) {
             cerrarSesion();

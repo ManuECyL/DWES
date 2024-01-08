@@ -296,7 +296,8 @@
         }
     }
 
-    // Función para consultar los datos necesarios de la tabla Carrito
+
+// Función para consultar los datos necesarios de la tabla Carrito
     function consultarCarrito(){
 
         try {
@@ -322,6 +323,7 @@
 
         return $resultado;
     }
+
 
 // Función para insertar datos en la tabla Carrito
     function añadirCarrito(){
@@ -365,9 +367,11 @@
                     mysqli_stmt_execute($stmt);
             }
         
+            echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['cod_Prod'] ."' añadido correctamente al carrito</b></div>";
                 
         } catch (\Throwable $th) {
-            erroresBD($th);
+            echo "<div class='alert alert-danger text-center'><b>Error al añadir el producto ". $_REQUEST['cod_Prod'] ." al carrito</b></div>";
+            // erroresBD($th);
             
         } finally {
             mysqli_stmt_close($stmt);
@@ -388,18 +392,17 @@
             $stmt = mysqli_prepare($con, $sql);
                 mysqli_stmt_bind_param($stmt, "iss", $cantidad, $_SESSION['usuario']['id_Usuario'], $cod_Prod);
                 mysqli_stmt_execute($stmt);
+
+            echo "<div class='alert alert-success text-center'><b>Se ha actualizado la cantidad del producto ". $cod_Prod ." en el carrito correctamente</b></div>";
                 
         } catch (\Throwable $th) {
-            erroresBD($th);
-            echo "<div class='alert alert-danger text-center'><b>Error al elimar el producto del carrito</b></div>";
-            return false;
+            echo "<div class='alert alert-danger text-center'><b>Error al actualizar la cantidad del producto ". $cod_Prod ." en el carrito</b></div>";
+            // erroresBD($th);
             
         } finally {
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
-
-        return true;
     }
 
 
@@ -415,18 +418,18 @@
             $stmt = mysqli_prepare($con, $sql);
                 mysqli_stmt_bind_param($stmt, "ss", $_SESSION['usuario']['id_Usuario'], $cod_Prod);
                 mysqli_stmt_execute($stmt);
+
+             echo "<div class='alert alert-success text-center'><b>Se ha eliminado el producto ". $cod_Prod ." del carrito correctamente</b></div>";
                         
         } catch (\Throwable $th) {
-            erroresBD($th);
-            echo "<div class='alert alert-danger text-center'><b>Error al elimar el producto del carrito</b></div>";
-            return false;
+            echo "<div class='alert alert-danger text-center'><b>Error al eliminar el producto ". $cod_Prod ." del carrito</b></div>";
+            // erroresBD($th);
+            
             
         } finally {
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
-
-        return true;
     }
 
 // Función para borrar datos de la base de datos
@@ -441,9 +444,12 @@
             $stmt = mysqli_prepare($con, $sql);
                 mysqli_stmt_bind_param($stmt, "s", $_SESSION['usuario']['id_Usuario']);
                 mysqli_stmt_execute($stmt);
+
+            echo "<div class='alert alert-success text-center'><b>Se ha vaciado el carrito correctamente</b></div>";
             
         } catch (\Throwable $th) {
-            erroresBD($th);
+            echo "<div class='alert alert-danger text-center'><b>Error al vaciar el carrito</b></div>";
+            // erroresBD($th);
             
         } finally {
             mysqli_stmt_close($stmt);
@@ -455,13 +461,33 @@
 // Función para insertar datos en la base de datos
     function realizarPedido(){
 
-        $productos = consultarCarrito();
-
-        $con = mysqli_connect(IP, USER, PASS, BD);
-
-        $con -> begin_transaction();
-
         try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Guaradamos los productos del carrito en un array
+            $productos = consultarCarrito();
+
+            // Comprobamos que el stock de los productos sea suficiente
+            foreach ($productos as $producto) {
+
+                $sql = "SELECT stock FROM Productos WHERE cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $producto['cod_Prod']);
+                    mysqli_stmt_execute($stmt);
+
+                $resultado = mysqli_stmt_get_result($stmt);
+                $dato = mysqli_fetch_assoc($resultado);
+
+                // Si el stock es menor que la cantidad, devuelve una excepción
+                if ($dato['stock'] < $producto['cantidad']) {
+                    echo "<div class='alert alert-danger text-center'><b>Stock insuficiente del producto " . $producto['cod_Prod'] . " para realizar el pedido. Stock actual: " . $dato['stock'] . "</b></div>";
+                    throw new Exception();
+                }
+            }
+    
+            // Inicia una transacción
+            $con -> begin_transaction();
 
             // Insertas un nuevo registro en la tabla Compra
             $sql = "INSERT INTO Compra (id_Usuario, fecha_Compra) VALUES (?, NOW())";
@@ -473,6 +499,7 @@
             // Obtienes el ID de la compra que acabas de insertar
             $idCompra = mysqli_insert_id($con);
 
+            // Recorres los productos del carrito
             foreach ($productos as $producto) {
                 
                 // Insertas los productos del carrito en la tabla Contiene
@@ -481,7 +508,16 @@
                 $stmt = mysqli_prepare($con, $sql);
                     mysqli_stmt_bind_param($stmt, "isid", $idCompra, $producto['cod_Prod'], $producto['cantidad'], $producto['total']);
                     mysqli_stmt_execute($stmt);
+
+
+                // Reduce el stock de los productos comprados en la tabla Productos
+                $sql = "UPDATE Productos SET stock = stock - ? WHERE cod_Prod = ?";
+    
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "is", $producto['cantidad'], $producto['cod_Prod']);
+                    mysqli_stmt_execute($stmt);
             }
+
 
             // Borras los productos del carrito
             $sql = "DELETE FROM Carrito WHERE id_Usuario = ?";
@@ -492,19 +528,18 @@
 
             // Si todas las consultas se ejecutaron correctamente, confirma la transacción
             $con -> commit();
+
+            echo "<div class='alert alert-success text-center'><b>Se ha realizado el pedido con éxito</b></div>";
             
         } catch (\Throwable $th) {
             // Si hay algún error, deshace la transacción
             $con -> rollback();
-            return false;
-            erroresBD($th);
+            // erroresBD($th);
             
         } finally {
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
-
-        return true;
     }
 
 
