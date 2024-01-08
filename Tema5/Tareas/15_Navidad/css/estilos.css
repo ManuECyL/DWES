@@ -4,6 +4,15 @@
     position: absolute;
 }
 
+/* ALERTAS */
+.alert {
+    margin-bottom: 0;
+}
+
+header {
+    margin-top: 0;
+}
+
 /* ICONOS HEADER */
 i {
     color: rgb(0, 0, 0);
@@ -61,23 +70,23 @@ i {
     border: 1px solid black;
 }
 
-/* INPUT CANTIDAD CARRITO */
+/* CARRITO */
 .divCantidad {
     width: 110px; 
 }
 
 .inputCantidad {
-    width: 35%; 
+    width: 60px; 
     text-align: center;
-}
-
-.cambiarCantidad {
-    font-weight: bold;
-    width: 25%;
+    margin-right: 10px;
 }
 
 .bi-trash {
-    font-size: 16px;
+    font-size: 15px;
+}
+
+.bi-check2-square{
+    font-size: 15px;
 }
 
 .restarCantidad:hover {

@@ -18,9 +18,6 @@
             $_SESSION['usuario'] = $usuario;
             $contraseña = $_REQUEST['pass'];
         
-            // header('Location: ./index.php');
-            // exit;
-        
         } else {
             echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
         }
@@ -35,7 +32,7 @@
             exit;
   
         } elseif (existe('comprar')) {
-            añadirCarrito($_REQUEST['id_Usuario'] , $_REQUEST['cod_Prod'], $_REQUEST['cantidad']);
+            añadirCarrito();
             echo "<div class='alert alert-success text-center'><b>Producto '". $_REQUEST['cod_Prod'] ."' añadido correctamente al carrito</b></div>";
         
         } elseif (existe('cerrarSesion')) {
