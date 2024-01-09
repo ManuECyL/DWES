@@ -1,0 +1,17 @@
+h1 {
+    text-align: center;
+}
+
+.izq {
+    display: block;
+    float: left;
+}
+
+.der {
+    display: block;
+    float: right;
+}
+
+.der img {
+    display: block;
+}
