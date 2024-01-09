@@ -12,18 +12,15 @@
 
     } elseif (existe('eliminar')) {
         $cod_Prod = $_POST['cod_Prod'];
-
-        // Eliminar el producto del carrito
-        eliminarProductoCarrito($cod_Prod);
+        eliminarProducto($cod_Prod);
 
     } elseif (existe('actualizarTodo')) {
-        $cod_Prods = $_POST['cod_Prods'];
-        
+          
         if ($_SESSION['usuario']['rol'] == 'moderador') {
-            actualizarStock($cod_Prods);
+            actualizarStock();
         
         } else {
-            actualizarProductos($cod_Prods);
+            actualizarProductos();
         } 
     
     } elseif (existe('vaciar')) {
@@ -136,6 +133,8 @@
     
                                     // Mostrar los datos de la tabla
                                     while ($fila = $consulta -> fetch_assoc()) {
+
+                                            $cod_Prod = $fila['cod_Prod'];
                                                                     
                                             echo "<tr>";
             
@@ -143,19 +142,17 @@
                 
                                                     switch ($indice) {
 
-                                                        case 'cod_Prod':
+                                                        case 'cod_Prod':                            
                                                             echo "<td>";
                                                                 echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
                                                             echo "</td>";
-                                                            // echo "<td>" . $campo . "</td>";
                                                             break;
 
                                                         case 'compañia':
                                                         
                                                             if ($_SESSION['usuario']['rol'] == 'admin') {
-                                                                echo "<td>"; 
-                                                                    echo "<input type='hidden' name='compañia' value='". $campo."'>";
-                                                                    echo "<input type='text' class='inputCompañia' name='compañia' value='". $campo."'>";
+                                                                echo "<td>";
+                                                                    echo "<input type='text' id='compañiaGest' name='compañias[]' value='". $campo."'>";
                                                                 echo "</td>";
                                                             
                                                             } else {
@@ -167,6 +164,7 @@
                                                         case 'stock':
                                                             echo "<td>";
                                                                 echo "<input type='number' class='inputStock' name='stocks[]' value='". $campo."' min='1' max='100'>";
+                                                                echo "€";
                                                             echo "</td>";
 
                                                             break;
@@ -175,8 +173,8 @@
                                                             
                                                             if ($_SESSION['usuario']['rol'] == 'admin') {
                                                                 echo "<td>"; 
-                                                                    echo "<input type='hidden' name='precio' value='". $campo."'>";
-                                                                    echo "<input type='text' class='inputPrecio' name='precio' value='". $campo."'>";
+                                                                    echo "<input type='text' id='precioGest' name='precios[]' value='". $campo."'>";
+                                                                    echo "€";
                                                                 echo "</td>";
                                                             
                                                             } else {
@@ -194,11 +192,12 @@
                                                 if ($_SESSION['usuario']['rol'] == 'admin') {
 
                                                     echo "<td>";
-    
-                                                        echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
-                                                            <i class='bi bi-trash'></i>
-                                                        </button>";
-    
+                                                        echo "<form method='post'>";
+                                                            echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";
+                                                            echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
+                                                                <i class='bi bi-trash'></i>
+                                                            </button>";
+                                                        echo "</form>";
                                                     echo "</td>";                                                    
                                                 }
 

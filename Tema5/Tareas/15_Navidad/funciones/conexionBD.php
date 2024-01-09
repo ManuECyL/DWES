@@ -258,26 +258,14 @@
 
 
 // Función para actualizar el stock de los Productos
-    function actualizarStock($cod_Prods) {
+    function actualizarStock() {
         
         try {
             $con = mysqli_connect(IP, USER, PASS, BD);
 
-            // Recuperar los nuevos valores de stock del array $_POST
+            // Recogemos los datos del formulario
             $stocks = $_POST['stocks'];
-            // echo "<pre>";
-            //     var_dump($stocks);
-            // echo "</pre>";
-
-            // foreach ($stocks as $stock) {
-
-            //     // Actualizamos la tabla Productos (stock)
-            //     $sql = "UPDATE Productos SET stock = ? WHERE cod_Prod = ?";
-        
-            //     $stmt = mysqli_prepare($con, $sql);
-            //         mysqli_stmt_bind_param($stmt, "is", $stock, $cod_Prod);
-            //         mysqli_stmt_execute($stmt);
-            // }
+            $cod_Prods = $_POST['cod_Prods'];
 
             for ($i = 0; $i < count($stocks); $i++) {
 
@@ -299,6 +287,78 @@
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
+    }
+
+
+// Función para actualizar el stock de los Productos
+    function actualizarProductos() {
+        
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Recogemos los datos del formulario
+            $compañias = $_POST['compañias'];
+            $stocks = $_POST['stocks'];
+            $precios = $_POST['precios'];
+            $cod_Prods = $_POST['cod_Prods'];
+
+            for ($i = 0; $i < count($stocks); $i++) {
+
+                $compañia = $compañias[$i];
+                $stock = $stocks[$i];
+                $precio = $precios[$i];
+                $cod_Prod = $cod_Prods[$i];
+
+                if (!is_numeric($precio)) {
+                    throw new Exception();
+                }
+
+                // Actualizamos la tabla Productos (stock)
+                $sql = "UPDATE Productos SET compañia = ?, stock = ?, precio = ? WHERE cod_Prod = ?";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "sids", $compañia, $stock, $precio, $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+            }
+        
+        } catch (\Throwable $th) {
+            echo "<div class='alert alert-danger text-center'><b>El precio del producto ". $cod_Prod ." no es un número</b></div>";
+            // erroresBD($th);
+            
+        } finally {
+
+            if (isset($stmt)) {
+                mysqli_stmt_close($stmt);    
+            }
+
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para borrar un producto
+    function eliminarProducto($cod_Prod) {
+            
+            try {
+                $con = mysqli_connect(IP, USER, PASS, BD);
+    
+                // Insertamos un nuevo producto en la tabla Productos
+                $sql = "DELETE FROM Productos WHERE cod_Prod = ?";
+    
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+
+                echo "<div class='alert alert-success text-center'><b>Producto '". $cod_Prod ."' eliminado correctamente</b></div>";
+                
+            } catch (\Throwable $th) {
+                echo "<div class='alert alert-danger text-center'><b>Error al eliminar el producto ". $_REQUEST["cod_Prod"] ."</b></div>";
+                // erroresBD($th);
+                
+            } finally {
+                mysqli_stmt_close($stmt);
+                mysqli_close($con);
+            }
     }
 
 
