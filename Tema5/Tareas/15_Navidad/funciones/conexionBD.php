@@ -700,6 +700,7 @@
                 $id_Usuario = $id_Usuarios[$i];
                 $id_Compra = $id_Compras[$i];
                 $fecha_Compra = $fecha_Compras[$i];
+                $cantidad = $cantidades[$i];
                 $cod_Prod = $cod_Prods[$i];
 
                 $f = "<div class='alert alert-danger text-center'><b>El formato de la fecha del id_Usuario: ". $id_Usuario.", id_Compra: ". $id_Compra ." del cod_Prod: ". $cod_Prod .", es incorrecto (d-m-Y)</b></div>";
@@ -714,27 +715,6 @@
                     $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
                 }
 
-                // Actualizamos la tabla Contiene (cantidad, total)
-                $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
-        
-                $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "sss", $fechaFormateada, $id_Usuario, $id_Compra);
-                    mysqli_stmt_execute($stmt);
-            }
-
-            for ($i = 0; $i < count($cod_Prods); $i++) { 
-                $id_Usuario = $id_Usuarios[$i];
-                $id_Compra = $id_Compras[$i];
-                $cod_Prod = $cod_Prods[$i];
-                $cantidad = $cantidades[$i];
-
-                // Comprobamos que el cod_Prod modificado existe en la tabla Productos
-                $sql = "SELECT * FROM Productos WHERE cod_Prod = ?";
-
-                $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
-                    mysqli_stmt_execute($stmt);
-
                 $c = "<div class='alert alert-danger text-center'><b>El cod_Prod: ". $cod_Prod ." introducido no existe en la base de datos</b></div>";
 
                 // Si no existe, devuelve una excepción
@@ -742,9 +722,17 @@
                     throw new Exception($c);
                 }
 
-                // Actualizamos la tabla Contiene (cantidad, total)
-                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Usuario = ? AND id_Compra = ? AND cod_Prod = ?";
+                // Actualizamos la tabla Compra
+                $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
         
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "sss", $fechaFormateada, $id_Usuario, $id_Compra);
+                    mysqli_stmt_execute($stmt);
+
+
+                // Actualizamos la tabla Contiene
+                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Usuario = ? AND id_Compra = ? AND cod_Prod = ?";
+
                 $stmt = mysqli_prepare($con, $sql);
                     mysqli_stmt_bind_param($stmt, "isss", $cantidad, $id_Usuario, $id_Compra, $cod_Prod);
                     mysqli_stmt_execute($stmt);
