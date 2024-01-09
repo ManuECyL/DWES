@@ -13,7 +13,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Registro</title>
+        <title>Alta de Producto</title>
 
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
@@ -27,7 +27,8 @@
 
             $errores = array();
 
-            if (existe("crearProducto") && validarRegistro($errores)) {
+            if (existe("crearProducto") && validarAltaProducto($errores)) {
+                subirImagen('imagen');
                 insertarProducto();
                 header('Location: ./productos.php');
                 exit;
@@ -57,68 +58,93 @@
 
             <div class="container mt-5 text-center">
 
-                <h3>Formulario de Registro</h3>
+                <h3>Alta de Producto</h3>
 
                 <br>
 
-                <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
+                <form action="./altaProducto.php" method="post" name="formularioAltaProducto" enctype="multipart/form-data" class="formularioRegistro mx-auto">
 
-                    <div class="mb-3">
-                        <label for="id_Usuario" class="form-label lblForm">Usuario
-                            <input type="text" id="id_Usuario" name="id_Usuario" class="form-control mx-auto inputForm" placeholder="Usuario" value="<?php recuerda('id_Usuario')?>">
+                    <div class="mb-2">
+                        <label for="cod_Prod" class="form-label lblForm">Cod_Prod
+                            <input type="text" id="cod_Prod" name="cod_Prod" class="form-control mx-auto inputForm" placeholder="cod_Prod" value="<?php recuerda('cod_Prod')?>">
                         </label>
                         
                         <span class="error">
                             <?php            
-                                errores($errores,'id_Usuario');
+                                errores($errores,'cod_Prod');
                             ?>
                         </span>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="contraseña" class="form-label lblForm">Contraseña
-                            <input type="password" id="contraseña" name="contraseña" class="form-control mx-auto inputForm" placeholder="8 caracteres, Mayúscula, Minúscula y Número" value="<?php recuerda('contraseña')?>">
+                    <div class="mb-2">
+                        <label for="titulo" class="form-label lblForm">Título
+                            <input type="text" id="titulo" name="titulo" class="form-control mx-auto inputForm" placeholder="Título" value="<?php recuerda('titulo')?>">
                         </label>
 
                         <span class="error">
                             <?php            
-                                errores($errores,'contraseña');
+                                errores($errores,'titulo');
                             ?>
                         </span>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="passRepetida" class="form-label lblForm">Repetir Contraseña
-                            <input type="password" id="passRepetida" name="passRepetida" class="form-control mx-auto inputForm" placeholder="Repetir contraseña" value="<?php recuerda('passRepetida')?>">
+                    <div class="mb-2">
+                        <label for="compañia" class="form-label lblForm">Compañía
+                            <input type="text" id="compañia" name="compañia" class="form-control mx-auto inputForm" placeholder="Compañia" value="<?php recuerda('compañia')?>">
                         </label>
+
 
                         <span class="error">
                             <?php            
-                                errores($errores,'passRepetida');
+                                errores($errores,'compañia');
                             ?>
                         </span>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="email" class="form-label lblForm">Email
-                            <input type="text" id="email" name="email" class="form-control mx-auto inputForm" placeholder="prueba@prueba.com" value="<?php recuerda('email')?>">
+                    <div class="mb-2">
+                        <label for="stock" class="form-label lblForm">Stock
+                            <input type="text" id="stock" name="stock" class="form-control mx-auto inputForm" placeholder="Stock" value="<?php recuerda('stock')?>">
                         </label>
 
                         <span class="error">
                             <?php            
-                                errores($errores,'email');
+                                errores($errores,'stock');
                             ?>
                         </span>
                     </div>
 
-                    <div class="mb-3">
-                        <label for="fecha_Nacimiento" class="form-label lblForm">Fecha Nacimiento
-                            <input type="text" id="fecha_Nacimiento" name="fecha_Nacimiento" class="form-control mx-auto inputForm" placeholder="01-01-2023" value="<?php recuerda('fecha_Nacimiento')?>">
+                    <div class="mb-2">
+                        <label for="precio" class="form-label lblForm">Precio
+                            <input type="text" id="precio" name="precio" class="form-control mx-auto inputForm" placeholder="00.00" value="<?php recuerda('precio')?>">
                         </label>
 
                         <span class="error">
                             <?php            
-                                errores($errores,'fecha_Nacimiento');
+                                errores($errores,'precio');
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="ruta_Imagen" class="form-label lblForm">Ruta Imagen
+                            <input type="text" id="ruta_Imagen" name="ruta_Imagen" class="form-control mx-auto inputForm" placeholder="imagenes/productos/imagen.jpg" value="<?php recuerda('ruta_Imagen')?>">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'ruta_Imagen');
+                            ?>
+                        </span>
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="imagen" class="form-label lblForm">Imagen
+                            <input type="file" id="imagen" name="imagen" class="form-control mx-auto inputForm">
+                        </label>
+
+                        <span class="error">
+                            <?php            
+                                errores($errores,'imagen');
                             ?>
                         </span>
                     </div>
@@ -127,6 +153,7 @@
 
                     <button type="submit" id="crearProducto" name="crearProducto" class="btn btn-dark formu" style="width: 40%;">Crear Producto</button>
                 </form>
+                
                 <br>
 
             <?php

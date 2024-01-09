@@ -14,7 +14,11 @@
         $cod_Prod = $_POST['cod_Prod'];
         eliminarProducto($cod_Prod);
 
-    } elseif (existe('actualizarProductos')) {
+    } elseif (existe('insertarProducto')) {
+        header('Location: ./altaProducto.php');
+        exit;
+
+    }elseif (existe('actualizarProductos')) {
           
         if ($_SESSION['usuario']['rol'] == 'moderador') {
             generarAlbaran();
@@ -109,7 +113,7 @@
                     <?php  
                         $consulta = consultarProductos();
 
-                        echo "<form method='post' action='./gestionarProductos.php' enctype='multipart/form-data'>";
+                        echo "<form method='post' action='./modificarProductos.php' enctype='multipart/form-data'>";
     
                             // Comprobamos si hay resultados
                             if ($consulta -> num_rows > 0) {
@@ -218,7 +222,9 @@
 
                                 echo "<br>";
 
-                                echo "<button type='submit' id='actualizarProductos' name='actualizarProductos' class='btn bg-primary bg-gradient formu'>Actualizar Productos</button>";
+                                echo "<button type='submit' name='insertarProducto' class='btn bg-primary bg-gradient formu botonesGest'>Insertar Producto</button>";
+
+                                echo "<button type='submit' name='actualizarProductos' class='btn bg-primary bg-gradient formu botonesGest'>Actualizar Productos</button>";
 
                             } else {
                                 echo "No se encontraron resultados en la base de datos";

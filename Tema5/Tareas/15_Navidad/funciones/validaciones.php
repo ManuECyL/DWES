@@ -66,6 +66,33 @@
         } 
     }
 
+    function imagen($name) {
+
+        if (isset($_FILES[$name])) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function subirImagen($archivo) {
+            
+        $imagen = $_FILES[$archivo]['name'];
+
+        $ruta = '/var/www/html/DWES/Tema5/Tareas/15_Navidad/imagenes/productos/';
+        $ruta .= basename($_FILES[$archivo]['name']);
+
+    // Comprueba si el archivo se ha movido al directorio indicado
+        if (move_uploaded_file($_FILES[$archivo]['tmp_name'], $ruta)) {
+            
+            chmod($ruta, 0777);
+            // echo "Archivo Subido";
+        
+        } else {
+            echo "Error al subir el archivo";
+        }
+    }
+
 
     function validarRegistro(&$errores){
 
@@ -166,6 +193,66 @@
         return false;
     }
 
+
+    function validarAltaProducto(&$errores){
+
+        // COD_PROD
+        if (textVacio('cod_Prod')) {
+            $errores['cod_Prod'] = "Cod_Prod Vacío";
+        
+        } elseif (!comprobarExpresionRegular('/^[A-Z][A-Z0-9]{2,}$/', 'cod_Prod')) {
+            $errores['cod_Prod'] = "Empieza por mayúscula y después mínimo 2 mayúsculas más o números";
+        }
+
+        // TITULO
+        if (textVacio('titulo')) {
+            $errores['titulo'] = "Título Vacío";
+
+        } elseif (!comprobarExpresionRegular('/^[A-Z][a-z]{3,}[\sA-Za-z0-9]{2,}$/', 'titulo')) {
+            $errores['titulo'] = "Debe comenzar por mayúscula, contener mínimo 3 minúsculas y 2 minúsculas más o mayúsculas o números";
+        }
+
+        // COMPAÑIA
+        if (textVacio('compañia')) {
+            $errores['compañia'] = "Compañía Vacía";
+        
+        } elseif (!comprobarExpresionRegular('/^[A-Z][a-z]{3,}[\sA-Za-z0-9]{2,}$/', 'titulo')) {
+            $errores['compañia'] = "Debe comenzar por mayúscula, contener mínimo 3 minúsculas y 2 minúsculas más o mayúsculas o números";
+        }
+
+        // STOCK
+        if (textVacio('stock')) {
+            $errores['stock'] = "Stock Vacío";
+
+        } elseif (!comprobarExpresionRegular('/^\d{1,}$/', 'stock')) {
+            $errores['stock'] = "Formato de stock incorrecto";
+        
+        }
+
+        // PRECIO
+        if (textVacio('precio')) {
+            $errores['precio'] = "Precio Vacio";
+        
+        } elseif (!comprobarExpresionRegular('/^\d{1,}\,\d{2}$/', 'precio')) {
+            $errores['precio'] = "Formato de precio incorrecto: 00,00";
+        } 
+
+
+        // RUTA IMAGEN
+        if (textVacio('ruta_Imagen')) {
+            $errores['ruta_Imagen'] = "Ruta Imagen Vacía";
+        
+        } elseif (!comprobarExpresionRegular($exp_fecha = '/^imagenes\/productos\/[a-zA-Z0-9]+\.jpg$/', 'ruta_Imagen')) {
+            $errores['ruta_Imagen'] = "Formato de ruta_Imagen incorrecto: imagenes/productos/imagen.jpg";
+        } 
+
+        if (count($errores) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     
     // Botón Cerrar Sesión
     function cerrado() {
@@ -186,19 +273,6 @@
             $_SESSION['error'] = "No tiene sesión iniciada.";
     
             header('Location: ./index.php');
-            exit;
-        }
-    }
-
-
-    // Comprobar si tiene permiso para ver la página($url)
-    function permisosPagina($url) {
-
-        if (!in_array($url, $_SESSION['usuario']['paginas'])) {
-            
-            $_SESSION['error'] = "No tiene permiso para ir a la página: " . $url;
-    
-            header('Location: ./homeUser.php');
             exit;
         }
     }

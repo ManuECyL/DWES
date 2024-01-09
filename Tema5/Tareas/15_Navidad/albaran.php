@@ -14,6 +14,10 @@
         $id_Albaran = $_POST['id_Albaran'];
         eliminarAlbaran($id_Albaran);
 
+    } elseif (existe('modificarProductos')) {
+        header('Location: ./modificarProductos.php');
+        exit;
+    
     } elseif (existe('actualizarAlbaranes')) {
         actualizarAlbaranes();
      

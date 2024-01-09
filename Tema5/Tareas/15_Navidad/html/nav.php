@@ -41,11 +41,6 @@
 
           if ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin') {
             echo '
-              <div class="col-md-3 col-lg">
-                <li class="nav-item">
-                  <a class="nav-link navNombre" href="./gestionarProductos.php">Gestionar Productos</a>
-                </li>
-              </div>
 
               <div class="col-md-3 col-lg">
                 <li class="nav-item">

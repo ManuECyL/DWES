@@ -23,6 +23,10 @@
     } elseif (existe('vaciar')) {
         vaciarCarrito();            
 
+    } elseif (existe('modificarProductos')) {
+        header('Location: ./modificarProductos.php');
+        exit;
+    
     } elseif (existe('realizarPedido')){
         realizarPedido();           
     

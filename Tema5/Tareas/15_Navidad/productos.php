@@ -38,11 +38,11 @@
         } elseif (existe('comprar')) {
             añadirCarrito();
         
-        } elseif (existe('modificarProducto')) {
-            header('Location: ./gestionarProductos.php');
+        } elseif (existe('modificarProductos')) {
+            header('Location: ./modificarProductos.php');
             exit;
         
-        } elseif (existe('cerrarSesion')) {
+        }  elseif (existe('cerrarSesion')) {
             cerrarSesion();
         }
 
@@ -117,84 +117,97 @@
 
                 $productos = consultarProductos();
 
+                if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin')) {
+                    echo '
+  
+                        <form action="" method="post" name="formularioGest" enctype="multipart/form-data">
+
+                            <div class="container mt-5 text-center">
+        
+                                <button type="submit" class="btn btn-primary" name="modificarProductos" id="modificarProductos">Modificar Producto</button>
+                                
+                            </div>
+
+                        </form>
+                    ';
+    
+                    echo '<br>';
+                }
+                
                 echo '
                     <div class="container">
 
                         <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
                 ';
 
-                    while (($producto = mysqli_fetch_assoc($productos))) {
+                            while (($producto = mysqli_fetch_assoc($productos))) {
 
-                        echo '
-                            <div class="col-12 col-sm-6 col-xl-4 mb-4">
+                                echo '
+                                    <div class="col-12 col-sm-6 col-xl-4 mb-4">
 
-                                <div class="card h-80 d-block mx-auto">
+                                        <div class="card h-80 d-block mx-auto">
 
-                                    <img class="card-img-top productos" src="'.$producto['ruta_Imagen'].'" alt="'.$producto['ruta_Imagen'].'"/>
+                                            <img class="card-img-top productos" src="'.$producto['ruta_Imagen'].'" alt="'.$producto['ruta_Imagen'].'"/>
 
-                                    <div class="card-body p-4">
+                                            <div class="card-body p-4">
 
-                                        <div class="text-center">
+                                                <div class="text-center">
 
-                                            <h5 class="fw-bolder mb-3">' . $producto['titulo'] . '</h5>
+                                                    <h5 class="fw-bolder mb-3">' . $producto['titulo'] . '</h5>
 
-                                            <div class="d-flex justify-content-center small mb-3">
-                                                <div>' . $producto['cod_Prod'] . '</div>
+                                                    <div class="d-flex justify-content-center small mb-3">
+                                                        <div>' . $producto['cod_Prod'] . '</div>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center small mb-3">
+                                                        <div>' . $producto['compañia'] . '</div>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center small mb-3">
+                                                        <div style="font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center small mb-3">
+                                                        <div style="font-size: 18px"><b>' . $producto['stock'] . '€</b></div>
+                                                    </div>
+                                                
+        
+                                                    <div class="d-flex justify-content-center small mb-0">
+                                                        <div>Stock: ' . $producto['stock'] . '</div>
+                                                    </div>
+                                                </div>
+
                                             </div>
 
-                                            <div class="d-flex justify-content-center small mb-3">
-                                                <div>' . $producto['compañia'] . '</div>
+                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
+                                                <form action="" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                                ';
+                                                    if (isset($_SESSION['usuario']) ) {
+                                echo '
+                                                        <input type="hidden" name="id_Usuario" value="'. $_SESSION['usuario']['id_Usuario'] .'">
+                                                        <input type="hidden" name="cod_Prod" value="'. $producto['cod_Prod'] .'">
+                                                        <input type="hidden" name="cantidad" value="1">
+                                ';
+                                                        echo '<input type="submit" value="Comprar" name="comprar">';
+
+                                                    } else {
+                                                        echo '<input type="submit" value="Comprar" name="comprar">';
+                                                    }
+                                echo '
+                                                </form>    
+
                                             </div>
 
-                                            <div class="d-flex justify-content-center small mb-3">
-                                                <div style="font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
-                                            </div>
-
-                                            <div class="d-flex justify-content-center small mb-3">
-                                                <div style="font-size: 18px"><b>' . $producto['stock'] . '€</b></div>
-                                            </div>
-                                           
-  
-                                            <div class="d-flex justify-content-center small mb-0">
-                                                <div>Stock: ' . $producto['stock'] . '</div>
-                                            </div>
                                         </div>
 
                                     </div>
-
-                                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-
-                                        <form action="" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                        ';
-                                            if (isset($_SESSION['usuario']) ) {
-                        echo '
-                                                <input type="hidden" name="id_Usuario" value="'. $_SESSION['usuario']['id_Usuario'] .'">
-                                                <input type="hidden" name="cod_Prod" value="'. $producto['cod_Prod'] .'">
-                                                <input type="hidden" name="cantidad" value="1">
-                        ';
-                                                if ($_SESSION['usuario']['rol'] == 'cliente') {
-                                                    echo '<input type="submit" value="Comprar" name="comprar">';
-
-                                                } elseif ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin') {
-                                                    echo '<input type="submit" value="Modificar Producto" name="modificarProducto">';       
-                                                } 
-                                            
-                                            } else {
-                                                echo '<input type="submit" value="Comprar" name="comprar">';
-                                            }
-                        echo '
-                                        </form>    
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        ';
-                    }
+                                ';
+                            }
 
                 echo '
                         </div>
+                        
                     </div>
                 ';
             ?>

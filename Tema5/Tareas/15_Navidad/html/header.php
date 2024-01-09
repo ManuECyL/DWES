@@ -131,6 +131,23 @@
                               </div>
                     <?php    
                             }
+
+                            if ($_SESSION['usuario']['rol'] == 'admin' || $_SESSION['usuario']['rol'] == 'moderador') {
+                    ?>
+                              <div class="mb-3">
+                                <button type="submit" name="modificarProductos" class="btn bg-dark formu">Modificar Productos</button>
+                              </div>
+
+                    <?php
+                            }
+
+                            if ($_SESSION['usuario']['rol'] == 'admin') {
+                    ?>
+                              <div class="mb-3">
+                                <button type="submit" name="gestUsuarios" class="btn bg-dark formu">Gestionar Usuarios</button>
+                              </div>
+                    <?php    
+                            }
                     ?>    
                               <div class="mb-3">
                                   <button type="submit" id="cerrarSesion" name="cerrarSesion" class="btn bg-dark formu">Cerrar Sesión</button>
@@ -161,8 +178,6 @@
                             </form>
                           ';
                         }
-
-                    
                     ?>
 
                   </div>

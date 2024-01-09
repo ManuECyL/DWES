@@ -35,7 +35,11 @@
         header('Location: ./pedidos.php');
         exit;
 
-      }elseif (existe('cerrarSesion')) {
+      } elseif (existe('modificarProductos')) {
+        header('Location: ./modificarProductos.php');
+        exit;
+    
+    } elseif (existe('cerrarSesion')) {
         cerrarSesion();
       }
 
