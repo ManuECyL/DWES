@@ -18,16 +18,10 @@
             
         }elseif (existe('eliminar')) {
             $cod_Prod = $_POST['cod_Prod'];
-
-            // Eliminar el producto del carrito
             eliminarProductoCarrito($cod_Prod);
 
         } elseif (existe('actualizarCantidad')) {
-            $cod_Prod = $_POST['cod_Prod'];
-            $cantidad = $_POST['cantidad'];
-
-            // Actualizar la cantidad del producto del carrito
-            actualizarCantidadCarrito($cod_Prod, $cantidad);
+            actualizarCantidadCarrito();
 
         } elseif (existe('vaciar')) {
             vaciarCarrito();            
@@ -109,117 +103,111 @@
                     <?php
 
                         $consulta = consultarCarrito($_SESSION['usuario']['id_Usuario']);
-    
-                        // Comprobamos si hay resultados
-                        if ($consulta -> num_rows > 0) {
-                            
-                            // Obtenemos los nombres de los campos que contiene la tabla
-                            $camposTabla = array();
-    
-                            while ($campo = $consulta -> fetch_field()) {
-                                $camposTabla[] = $campo -> name;
-                            }
-    
-                            echo "<table>";
-    
-                                echo "<tr>";
-    
-                                // Mostrar los campos en el encabezado de la tabla
-                                foreach ($camposTabla as $columna) {
-                                    echo "<th>" . $columna . "</th>";
-                                }
 
-                                    echo "<th> Eliminar </th>";
+                        echo "<form method='post' action='./carrito.php' enctype='multipart/form-data'>";
     
-                                echo "</tr>";                               
-   
-                                $total = 0;
-
-                                // Mostrar los datos de la tabla
-                                while ($fila = $consulta -> fetch_assoc()) {
-                                    
-                                    $total += $fila['precio'] * $fila['cantidad'];
-                                    
-                                    echo "<tr>";
-    
-                                        foreach ($fila as $indice => $campo) {
-         
-                                            switch ($indice) {
-                                                
-                                                case 'cod_Prod':
-                                                    echo "<td>" . $campo . "</td>";
-                                                    break;
-                                                
-                                                case 'cantidad':
-                                                    echo "<td>";
-
-                                                        echo "<form method='post' action='./carrito.php' enctype='multipart/form-data'>";
-
-                                                            echo "<input type='hidden' name='cod_Prod' value='". $fila['cod_Prod']."'>";
-                                                            echo "<input type='number' class='inputCantidad' name='cantidad' value='". $fila['cantidad']."' min='1' max='100'>";
-
-                                                            echo "<button type='submit' name='actualizarCantidad' value='actualizarCantidad' class='btn btn-success'>";
-                                                                    echo "<i class='bi bi-check2-square'></i>";
-                                                            echo "</button>";
-                                                        echo "</form>";
-                                                        
-                                                    echo "</td>";
-                                                    break;
-
-                                                case 'total':
-                                                    echo "<td>" . $campo . "</td>";
-                                                    break;
-
-                                                default:
-                                                    echo "<td>" . $campo . "</td>";
-                                                    break;
-                                             }
-                                        }
-        
-                                        echo "<td>";
-                    ?>
-                                            <form method="post" action="./carrito.php" enctype="multipart/form-data">
-
-                                                <input type="hidden" name="cod_Prod" value="<?php echo $fila['cod_Prod']?>">
-                                                
-                                                <button type="submit" name="eliminar" value="Eliminar" class="btn btn-danger">
-                                                        <i class="bi bi-trash"></i>
-                                                </button>
-                                                
-                                            </form>
-                                                 
-                    <?php
-                                        echo "</td>";
-    
-                                    echo "</tr>";
-                                }
+                            // Comprobamos si hay resultados
+                            if ($consulta -> num_rows > 0) {
                                 
-                            echo "</table>";
+                                // Obtenemos los nombres de los campos que contiene la tabla
+                                $camposTabla = array();
+        
+                                while ($campo = $consulta -> fetch_field()) {
+                                    $camposTabla[] = $campo -> name;
+                                }
+        
+                                echo "<table>";
+        
+                                    echo "<tr>";
+        
+                                    // Mostrar los campos en el encabezado de la tabla
+                                    foreach ($camposTabla as $columna) {
+                                        echo "<th>" . $columna . "</th>";
+                                    }
 
-                        echo "<br>";
+                                        echo "<th> Eliminar </th>";
+        
+                                    echo "</tr>";                               
+    
+                                    $total = 0;
 
+                                    // Mostrar los datos de la tabla
+                                    while ($fila = $consulta -> fetch_assoc()) {
+
+                                        $cod_Prod = $fila['cod_Prod'];
+                                        $total += $fila['precio'] * $fila['cantidad'];
+                                        
+                                        echo "<tr>";
+        
+                                            foreach ($fila as $indice => $campo) {
+            
+                                                switch ($indice) {
+                                                    
+                                                    case 'cod_Prod':                            
+                                                        echo "<td>";
+                                                            echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
+                                                        echo "</td>";
+                                                        break;
+                                                    
+                                                    case 'cantidad':
+                                                        echo "<td>";
+                                                            echo "<input type='number' class='inputCantidad' name='cantidades[]' value='". $campo."' min='1' max='100'>";
+                                                        echo "</td>";
+                                                        break;
+
+                                                    case 'total':
+                                                        echo "<td>" . $campo . "€</td>";
+                                                        break;
+   
+                                                    case 'precio':
+                                                        echo "<td>" . $campo . "€</td>";
+                                                        break;
+
+                                                    default:
+                                                        echo "<td>" . $campo . "</td>";
+                                                        break;
+                                                }
+                                            }
+        
+                                            echo "<td>";
+
+                                                echo "<form method='post'>";
+
+                                                    echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";                                                    
+
+                                                    echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
+                                                        <i class='bi bi-trash'></i>
+                                                    </button>";
+
+                                                echo "</form>";
+
+                                            echo "</td>";
+    
+                                        echo "</tr>";
+                                    }
+
+                                echo "</table>";
+
+                                echo "<br>";
+
+                                echo "<h5>Total: " . $total . "€</h5>";
+
+                                echo "<input type='submit' value='Actualizar Cantidad' name='actualizarCantidad' class='inputCarrito'>";
+
+                                echo "<input type='submit' value='Vaciar Carrito' name='vaciar' class='inputCarrito'>";
+
+                            } else {
+                                echo "No se encontraron resultados en la base de datos";
+                            }  
+                                
+                        echo "</form>";
                     ?>
                        
-                        <h5>Total: <?php echo $total; ?> €</h5>
-
-                        <br>
-
-                        <form action="./carrito.php" method="post" enctype="multipart/form-data">
-                            <input type="submit" value="Vaciar Carrito" name="vaciar" class="inputCarrito">
-                        </form>
-
-                        <br>
+                        <br><br>
 
                         <form action="./carrito.php" method="post" enctype="multipart/form-data" >
                             <button type="submit" id="realizarPedido" name="realizarPedido" class="btn bg-primary bg-gradient formu">Realizar Pedido</button>
-                        </form>
-
-                    <?php
-
-                        } else {
-                            echo "No se encontraron resultados en la base de datos";
-                        }                    
-                    ?>           
+                        </form>         
             </div>
             
             <br>

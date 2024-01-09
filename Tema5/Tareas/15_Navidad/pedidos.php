@@ -155,21 +155,13 @@
 
                         echo "<br>";
 
-                    ?>
-                       
-                        <h5>Total: <?php echo $total; ?> €</h5>
+                        echo "<h5>Total: " . $total . "€</h5>";
 
-                        <br><br>
+                    } else {
+                        echo "No se encontraron resultados en la base de datos";
+                    }
 
-                        <!-- <form action="./carrito.php" method="post" enctype="multipart/form-data" >
-                            <button type="submit" id="realizarPedido" name="realizarPedido" class="btn bg-primary bg-gradient formu">Realizar Pedido</button>
-                        </form> -->
-
-                    <?php
-
-                        } else {
-                            echo "No se encontraron resultados en la base de datos";
-                        }                    
+                     
                     ?>           
             </div>
             

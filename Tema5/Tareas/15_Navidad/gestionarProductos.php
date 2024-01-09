@@ -14,13 +14,15 @@
         $cod_Prod = $_POST['cod_Prod'];
         eliminarProducto($cod_Prod);
 
-    } elseif (existe('actualizarTodo')) {
+    } elseif (existe('actualizarProductos')) {
           
         if ($_SESSION['usuario']['rol'] == 'moderador') {
             actualizarStock();
+            generarAlbaran();
         
         } else {
             actualizarProductos();
+            generarAlbaran();
         } 
     
     } elseif (existe('vaciar')) {
@@ -134,88 +136,93 @@
                                     // Mostrar los datos de la tabla
                                     while ($fila = $consulta -> fetch_assoc()) {
 
-                                            $cod_Prod = $fila['cod_Prod'];
-                                                                    
-                                            echo "<tr>";
-            
-                                                foreach ($fila as $indice => $campo) {
-                
-                                                    switch ($indice) {
-
-                                                        case 'cod_Prod':                            
-                                                            echo "<td>";
-                                                                echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
-                                                            echo "</td>";
-                                                            break;
-
-                                                        case 'compañia':
-                                                        
-                                                            if ($_SESSION['usuario']['rol'] == 'admin') {
-                                                                echo "<td>";
-                                                                    echo "<input type='text' id='compañiaGest' name='compañias[]' value='". $campo."'>";
-                                                                echo "</td>";
-                                                            
-                                                            } else {
-                                                                echo "<td>" . $campo . "</td>";
-                                                            }
+                                        $cod_Prod = $fila['cod_Prod'];
+                                                                
+                                        echo "<tr>";
         
-                                                            break;
-                                                        
-                                                        case 'stock':
+                                            foreach ($fila as $indice => $campo) {
+            
+                                                switch ($indice) {
+
+                                                    case 'cod_Prod':                            
+                                                        echo "<td>";
+                                                            echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
+                                                        echo "</td>";
+                                                        break;
+
+                                                    case 'compañia':
+                                                    
+                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
                                                             echo "<td>";
-                                                                echo "<input type='number' class='inputStock' name='stocks[]' value='". $campo."' min='1' max='100'>";
+                                                                echo "<input type='text' id='compañiaGest' name='compañias[]' value='". $campo."'>";
+                                                            echo "</td>";
+                                                        
+                                                        } else {
+                                                            echo "<td>" . $campo . "</td>";
+                                                        }
+    
+                                                        break;
+                                                    
+                                                    case 'stock':
+                                                        echo "<td>";
+                                                            echo "<input type='number' class='inputStock' name='stocks[]' value='". $campo."' min='1' max='100'>";
+                                                            echo "€";
+                                                        echo "</td>";
+
+                                                        break;
+
+                                                    case 'precio':
+                                                        
+                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
+                                                            echo "<td>"; 
+                                                                echo "<input type='text' id='precioGest' name='precios[]' value='". $campo."'>";
                                                                 echo "€";
                                                             echo "</td>";
-
-                                                            break;
-
-                                                        case 'precio':
-                                                            
-                                                            if ($_SESSION['usuario']['rol'] == 'admin') {
-                                                                echo "<td>"; 
-                                                                    echo "<input type='text' id='precioGest' name='precios[]' value='". $campo."'>";
-                                                                    echo "€";
-                                                                echo "</td>";
-                                                            
-                                                            } else {
-                                                                echo "<td>" . $campo . "</td>";
-                                                            }
-
-                                                            break;
-
-                                                        default:
+                                                        
+                                                        } else {
                                                             echo "<td>" . $campo . "</td>";
-                                                            break; 
-                                                    }
-                                                }
-        
-                                                if ($_SESSION['usuario']['rol'] == 'admin') {
+                                                        }
 
-                                                    echo "<td>";
-                                                        echo "<form method='post'>";
-                                                            echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";
-                                                            echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
-                                                                <i class='bi bi-trash'></i>
-                                                            </button>";
-                                                        echo "</form>";
-                                                    echo "</td>";                                                    
-                                                }
+                                                        break;
 
-                                                
-                                            echo "</tr>";
+                                                    default:
+                                                        echo "<td>" . $campo . "</td>";
+                                                        break; 
+                                                }
+                                            }
+    
+                                            if ($_SESSION['usuario']['rol'] == 'admin') {
+
+                                                echo "<td>";
+
+                                                    echo "<form method='post'>";
+
+                                                        echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";
+
+                                                        echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
+                                                            <i class='bi bi-trash'></i>
+                                                        </button>";
+
+                                                    echo "</form>";
+
+                                                echo "</td>";                                                    
+                                            }
+    
+                                        echo "</tr>";
                                     }
                                     
                                 echo "</table>";
 
-                            echo "<br>";
+                                echo "<br>";
 
-                            echo "<button type='submit' id='actualizarTodo' name='actualizarTodo' class='btn bg-primary bg-gradient formu'>Actualizar Todo</button>";
+                                echo "<button type='submit' id='actualizarProductos' name='actualizarProductos' class='btn bg-primary bg-gradient formu'>Actualizar Productos</button>";
+
+                            } else {
+                                echo "No se encontraron resultados en la base de datos";
+                            }                 
 
                         echo "</form>";
 
-                        } else {
-                            echo "No se encontraron resultados en la base de datos";
-                        }                    
                     ?>           
             </div>
             

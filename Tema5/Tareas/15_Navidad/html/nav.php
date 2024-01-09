@@ -55,7 +55,7 @@
 
               <div class="col-md-3 col-lg">
                 <li class="nav-item">
-                  <a class="nav-link navNombre" href="./albaran.php">Albaran</a>
+                  <a class="nav-link navNombre" href="./albaran.php">Albaranes</a>
                 </li>
               </div>
             ';

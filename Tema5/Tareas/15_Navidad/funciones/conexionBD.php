@@ -241,7 +241,7 @@
             $con = mysqli_connect(IP, USER, PASS, BD);
 
             // Insertamos un nuevo producto en la tabla Productos
-            $sql = "INSERT INTO Usuarios (id_Usuario, contraseña, email, fecha_Nacimiento) VALUES (?,?,?,?)";
+            $sql = "INSERT INTO Productos (id_Usuario, contraseña, email, fecha_Nacimiento) VALUES (?,?,?,?)";
 
             $stmt = mysqli_prepare($con, $sql);
                 mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $_REQUEST["fecha_Nacimiento"]);
@@ -280,6 +280,9 @@
                     mysqli_stmt_execute($stmt);
             }
         
+            // Generamos una línea en la tabla Albaranes
+            generarAlbaran();
+
         } catch (\Throwable $th) {
             erroresBD($th);
             
@@ -287,6 +290,7 @@
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
+
     }
 
 
@@ -303,7 +307,6 @@
             $cod_Prods = $_POST['cod_Prods'];
 
             for ($i = 0; $i < count($stocks); $i++) {
-
                 $compañia = $compañias[$i];
                 $stock = $stocks[$i];
                 $precio = $precios[$i];
@@ -320,6 +323,8 @@
                     mysqli_stmt_bind_param($stmt, "sids", $compañia, $stock, $precio, $cod_Prod);
                     mysqli_stmt_execute($stmt);
             }
+
+            // Generamos una línea en la tabla Albaranes
         
         } catch (\Throwable $th) {
             echo "<div class='alert alert-danger text-center'><b>El precio del producto ". $cod_Prod ." no es un número</b></div>";
@@ -446,17 +451,26 @@
 
 
 // Función para actualizar la cantidad de productos en el carrito
-    function actualizarCantidadCarrito($cod_Prod, $cantidad) {
+    function actualizarCantidadCarrito() {
 
         try {
             $con = mysqli_connect(IP, USER, PASS, BD);
-    
-            // Actualizamos la tabla Carrito (cantidad, precio * cantidad = (total))
-            $sql = "UPDATE Carrito SET cantidad = ? WHERE id_Usuario = ? AND cod_Prod = ?";
-        
-            $stmt = mysqli_prepare($con, $sql);
-                mysqli_stmt_bind_param($stmt, "iss", $cantidad, $_SESSION['usuario']['id_Usuario'], $cod_Prod);
-                mysqli_stmt_execute($stmt);
+
+             // Recogemos los datos del formulario
+             $cantidades = $_POST['cantidades'];
+             $cod_Prods = $_POST['cod_Prods'];
+ 
+            for ($i = 0; $i < count($cantidades); $i++) {
+                 $cantidad = $cantidades[$i];
+                 $cod_Prod = $cod_Prods[$i];
+ 
+                // Actualizamos la tabla Carrito (cantidad, precio * cantidad = (total))
+                $sql = "UPDATE Carrito SET cantidad = ? WHERE id_Usuario = ? AND cod_Prod = ?";
+            
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "iss", $cantidad, $_SESSION['usuario']['id_Usuario'], $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+            }
 
             echo "<div class='alert alert-success text-center'><b>Se ha actualizado la cantidad del producto ". $cod_Prod ." en el carrito correctamente</b></div>";
                 
@@ -608,7 +622,7 @@
     }
 
 
-// Función para consultar los productos de la base de datos
+// Función para consultar los pedidos realizados por el usuario
     function consultarPedidosUsuario() {
 
         try {
@@ -636,6 +650,219 @@
         }
 
         return $resultado;
+    }
+
+
+// Función para consultar los pedidos realizados por todos los usuarios
+    function consultarVentas() {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
+            $sql = "SELECT Compra.id_Usuario, Contiene.id_Compra, Contiene.cod_Prod, Productos.precio AS precio_Un, Contiene.cantidad, Contiene.total, DATE_FORMAT(Compra.fecha_Compra, '%d-%m-%Y') AS fecha_Compra
+                    FROM Contiene 
+                    JOIN Compra ON Contiene.id_Compra = Compra.id_Compra 
+                    JOIN Productos ON Contiene.cod_Prod = Productos.cod_Prod
+                    ORDER BY Compra.fecha_Compra DESC";
+
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_execute($stmt);
+
+            // Obtenemos el resultado de la consulta
+            $resultado = mysqli_stmt_get_result($stmt);
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            mysqli_close($con);
+        }
+
+        return $resultado;
+    }
+
+
+// Función para actualizar los datos de las tablas Compra y Contiene
+    function actualizarVentas() {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Recogemos los datos del formulario
+            $id_Usuarios = $_POST['id_Usuarios'];
+            $id_Compras = $_POST['id_Compras'];
+            $cod_Prods = $_POST['cod_Prods'];
+            $cantidades = $_POST['cantidades'];
+            $fecha_Compras = $_POST['fecha_Compras'];
+
+            for ($i = 0; $i < count($cod_Prods); $i++) {
+                $id_Usuario = $id_Usuarios[$i];
+                $id_Compra = $id_Compras[$i];
+                $fecha_Compra = $fecha_Compras[$i];
+                $cod_Prod = $cod_Prods[$i];
+
+                $f = "<div class='alert alert-danger text-center'><b>El formato de la fecha del id_Usuario: ". $id_Usuario.", id_Compra: ". $id_Compra ." del cod_Prod: ". $cod_Prod .", es incorrecto (d-m-Y)</b></div>";
+
+                // Comprobar que el formato de la fecha_Compra sea d-m-Y
+                $fecha = DateTime::createFromFormat('d-m-Y', $fecha_Compra);
+                if ($fecha === false || $fecha -> format('d-m-Y') !== $fecha_Compra) {
+                    throw new Exception($f);
+                
+                } else {
+                    $fechaOriginal = $fecha_Compra;
+                    $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
+                }
+
+                // Actualizamos la tabla Contiene (cantidad, total)
+                $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "sss", $fechaFormateada, $id_Usuario, $id_Compra);
+                    mysqli_stmt_execute($stmt);
+            }
+
+            for ($i = 0; $i < count($cod_Prods); $i++) { 
+                $id_Usuario = $id_Usuarios[$i];
+                $id_Compra = $id_Compras[$i];
+                $cod_Prod = $cod_Prods[$i];
+                $cantidad = $cantidades[$i];
+
+                // Comprobamos que el cod_Prod modificado existe en la tabla Productos
+                $sql = "SELECT * FROM Productos WHERE cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+
+                $c = "<div class='alert alert-danger text-center'><b>El cod_Prod: ". $cod_Prod ." introducido no existe en la base de datos</b></div>";
+
+                // Si no existe, devuelve una excepción
+                if (mysqli_stmt_get_result($stmt) -> num_rows == 0) {
+                    throw new Exception($c);
+                }
+
+                // Actualizamos la tabla Contiene (cantidad, total)
+                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Usuario = ? AND id_Compra = ? AND cod_Prod = ?";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "isss", $cantidad, $id_Usuario, $id_Compra, $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+            }
+
+        } catch (\Throwable $th) {
+            
+            if (isset($f)) {
+                echo $f;
+            
+            } elseif (isset($c)) {
+                echo $c;
+            
+            } else {
+                erroresBD($th);
+            }
+
+            
+        } finally {
+
+            if (isset($stmt)) {
+                mysqli_stmt_close($stmt);
+            }
+
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para generar una línea en la tabla Albaranes
+    function generarAlbaran() {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Recogemos los datos del formulario
+            $cantidades = $_POST['cantidades'];
+            $cod_Prods = $_POST['cod_Prods'];
+
+            for ($i = 0; $i < count($cantidades); $i++) {
+                    $cantidad = $cantidades[$i];
+                    $cod_Prod = $cod_Prods[$i];
+
+                // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
+                $sql = "INSERT INTO Albaranes (fecha_Albaran, cod_Prod, cantidad, id_Usuario) VALUES (NOW(), ?, ?, ?)";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "sis", $cod_Prod, $cantidad, $_SESSION['usuario']['id_Usuario']);
+                    mysqli_stmt_execute($stmt);
+            }
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para consultar los datos de la tabla Albaranes
+    function consultarAlbaranes() {
+            
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
+            $sql = "SELECT * FROM Albaranes ORDER BY fecha_Albaran DESC";
+    
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_execute($stmt);
+
+            // Obtenemos el resultado de la consulta
+            $resultado = mysqli_stmt_get_result($stmt);
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            mysqli_close($con);
+        }
+
+        return $resultado;
+    }
+
+
+// Función para actualizar los datos de la tabla Albaranes
+    function actualizarAlbaranes() {
+            
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Recogemos los datos del formulario
+            $cantidades = $_POST['cantidades'];
+            $cod_Prods = $_POST['cod_Prods'];
+            $id_Albaranes = $_POST['id_Albaranes'];
+
+            for ($i = 0; $i < count($cantidades); $i++) {
+                $cantidad = $cantidades[$i];
+                $cod_Prod = $cod_Prods[$i];
+                $id_Albaran = $id_Albaranes[$i];
+
+                // Actualizamos la tabla Albaranes (cantidad)
+                $sql = "UPDATE Albaranes SET cantidad = ? WHERE id_Albaran = ?";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "is", $cantidad, $id_Albaran);
+                    mysqli_stmt_execute($stmt);
+            }
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+        
     }
 
 

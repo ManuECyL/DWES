@@ -19,3 +19,13 @@
     }
 
 </script>
+
+<!-- .restarCantidad:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(151, 13, 13) !important;
+}
+
+.sumarCantidad:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+} -->

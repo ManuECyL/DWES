@@ -93,16 +93,17 @@ i {
     background: none; 
     text-align: center; 
     outline: none;
+    width: 80px;
 }
 
-#actualizarTodo {
+#actualizarProductos {
     width: 20%;
     margin-top: 5px;
     color: white;
     box-shadow: 0px 0px 10px black;
 }
 
-#actualizarTodo:hover {
+#actualizarProductos:hover {
     color: rgb(255, 255, 255) !important;
     background-color: rgb(13, 151, 31) !important;
 }
@@ -127,21 +128,13 @@ i {
     font-size: 15px;
 }
 
-.restarCantidad:hover {
-    color: rgb(255, 255, 255) !important;
-    background-color: rgb(151, 13, 13) !important;
-}
-
-.sumarCantidad:hover {
-    color: rgb(255, 255, 255) !important;
-    background-color: rgb(13, 151, 31) !important;
-}
-
 
 /* BOTONES CARRITO */
 .inputCarrito {
     width: 12%;
-    margin-left: 10px;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 15px;
 }
 
 #realizarPedido {
@@ -152,6 +145,68 @@ i {
 }
 
 #realizarPedido:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* VENTAS */
+#id_UsuarioVentas {    
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#id_CompraVentas{
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#cod_ProdVentas {
+    width: 80px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#cantidad {
+    width: 60px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#fecha_Compra {
+    width: 110px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#actualizarVentas {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#actualizarVentas:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* ALBARANES */
+#actualizarAlbaranes {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#actualizarAlbaranes:hover {
     color: rgb(255, 255, 255) !important;
     background-color: rgb(13, 151, 31) !important;
 }

@@ -65,7 +65,7 @@
                 insertarUsuario();
                 header('Location: ./index.php');
                 exit;
-            
+                            
             } else {
         ?>
 
