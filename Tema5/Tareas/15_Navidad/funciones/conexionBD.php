@@ -241,10 +241,10 @@
             $con = mysqli_connect(IP, USER, PASS, BD);
 
             // Insertamos un nuevo producto en la tabla Productos
-            $sql = "INSERT INTO Productos (id_Usuario, contraseña, email, fecha_Nacimiento) VALUES (?,?,?,?)";
+            $sql = "INSERT INTO Productos (cod_Prod, titulo, compañia, stock, precio, ruta_Imagen) VALUES (?,?,?,?,?,?)";
 
             $stmt = mysqli_prepare($con, $sql);
-                mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $_REQUEST["fecha_Nacimiento"]);
+                mysqli_stmt_bind_param($stmt, "sssids", $_REQUEST["cod_Prod"], $_REQUEST["titulo"], $_REQUEST["compañia"], $_REQUEST["stock"], $_REQUEST["precio"], $_REQUEST["ruta_Imagen"]);
                 mysqli_stmt_execute($stmt);
             
         } catch (\Throwable $th) {
@@ -694,26 +694,13 @@
             $id_Compras = $_POST['id_Compras'];
             $cod_Prods = $_POST['cod_Prods'];
             $cantidades = $_POST['cantidades'];
-            $fecha_Compras = $_POST['fecha_Compras'];
 
             for ($i = 0; $i < count($cod_Prods); $i++) {
                 $id_Usuario = $id_Usuarios[$i];
                 $id_Compra = $id_Compras[$i];
-                $fecha_Compra = $fecha_Compras[$i];
-                $cantidad = $cantidades[$i];
                 $cod_Prod = $cod_Prods[$i];
-
-                $f = "<div class='alert alert-danger text-center'><b>El formato de la fecha del id_Usuario: ". $id_Usuario.", id_Compra: ". $id_Compra ." del cod_Prod: ". $cod_Prod .", es incorrecto (d-m-Y)</b></div>";
-
-                // Comprobar que el formato de la fecha_Compra sea d-m-Y
-                $fecha = DateTime::createFromFormat('d-m-Y', $fecha_Compra);
-                if ($fecha === false || $fecha -> format('d-m-Y') !== $fecha_Compra) {
-                    throw new Exception('fecha_Compra_incorrecta');
+                $cantidad = $cantidades[$i];
                 
-                } else {
-                    $fechaFormateada = $fecha -> format('Y-m-d');
-                }
-
                 // Comprobamos si el nuevo cod_Prod existe en la tabla Productos
                 $sql = "SELECT * FROM Productos WHERE cod_Prod = ?";
 
@@ -728,29 +715,42 @@
                     throw new Exception('cod_Prod_incorrecto');
                 }
 
+
                 // Actualizamos la tabla Compra
-                $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
+                $sql = "UPDATE Compra  SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ? ";
         
                 $stmt = mysqli_prepare($con, $sql);
                     mysqli_stmt_bind_param($stmt, "sss", $fechaFormateada, $id_Usuario, $id_Compra);
                     mysqli_stmt_execute($stmt);
 
 
-                // Actualizamos la tabla Contiene
-                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Compra = ? AND cod_Prod = ?";
+                // Obtenemos el precio_Un del producto de la tabla Productos
+                $sql = "SELECT precio FROM Productos WHERE cod_Prod = ?";
 
                 $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "iss", $cantidad, $id_Compra, $cod_Prod);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+
+                $resultado = mysqli_stmt_get_result($stmt);
+
+                // Lo guardamos en un array asociativo para trabajar posteriormente con él
+                $producto = mysqli_fetch_assoc($resultado);
+
+                // Calculamos el total
+                $precio_Un = $producto['precio'];
+                $total = $precio_Un * $cantidad;
+                
+                // Actualizamos la tabla Contiene
+                $sql = "UPDATE Contiene SET cantidad = ?, total = ? WHERE id_Compra = ? AND cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "idss", $cantidad, $total, $id_Compra, $cod_Prod);
                     mysqli_stmt_execute($stmt);
             }
 
         } catch (\Throwable $th) {
 
             switch ($th -> getMessage()) {
-
-                case 'fecha_Compra_incorrecta':
-                    echo $f;
-                    break;
 
                 case 'cod_Prod_incorrecto':
                     echo $c;
@@ -772,6 +772,52 @@
     }
 
 
+// Función para borrar una venta
+    function eliminarVenta($id_Usuario, $id_Compra, $cod_Prod){
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Eliminamos una venta de la tabla Contiene, ya que esta tabla tiene una clave foránea de la tabla Compra
+            $sql = "DELETE FROM Contiene WHERE id_Compra = ? AND cod_Prod = ?";
+
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "ss", $id_Compra, $cod_Prod);
+                mysqli_stmt_execute($stmt);
+
+
+            // Comprobamos si la venta tiene más productos
+            $sql = "SELECT * FROM Contiene WHERE id_Compra = ?";
+
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "s", $id_Compra);
+                mysqli_stmt_execute($stmt);
+
+            $resultado = mysqli_stmt_get_result($stmt);
+
+            // Si no tiene más productos, eliminamos la venta de la tabla Compra
+            if ($resultado -> num_rows == 0) {
+                $sql = "DELETE FROM Compra WHERE id_Usuario = ? AND id_Compra = ?";
+    
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "ss", $id_Usuario, $id_Compra);
+                    mysqli_stmt_execute($stmt);
+            }
+
+            echo "<div class='alert alert-success text-center'><b>Se ha eliminado la venta ". $id_Compra ." correctamente</b></div>";
+                        
+        } catch (\Throwable $th) {
+            echo "<div class='alert alert-danger text-center'><b>Error al eliminar la venta ". $id_Compra ."</b></div>";
+            // erroresBD($th);
+            
+        } finally {
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+
+    }
+
+
 // Función para generar una línea en la tabla Albaranes
     function generarAlbaran() {
 
@@ -779,19 +825,34 @@
             $con = mysqli_connect(IP, USER, PASS, BD);
 
             // Recogemos los datos del formulario
-            $cantidades = $_POST['cantidades'];
+            $cantidades = $_POST['stocks'];
             $cod_Prods = $_POST['cod_Prods'];
 
             for ($i = 0; $i < count($cantidades); $i++) {
                     $cantidad = $cantidades[$i];
                     $cod_Prod = $cod_Prods[$i];
 
-                // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
-                $sql = "INSERT INTO Albaranes (fecha_Albaran, cod_Prod, cantidad, id_Usuario) VALUES (NOW(), ?, ?, ?)";
-        
+
+                // Consultamos el valor original del stock para compararlo con el nuevo y solo insertar los valores modificados
+                $sql = "SELECT stock FROM Productos WHERE cod_Prod = ?";
+
                 $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "sis", $cod_Prod, $cantidad, $_SESSION['usuario']['id_Usuario']);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
                     mysqli_stmt_execute($stmt);
+
+                $resultado = mysqli_stmt_get_result($stmt);
+                $dato = mysqli_fetch_assoc($resultado);
+
+                // Si el stock es diferente, insertamos una línea en la tabla Albaranes
+                if ($dato['stock'] != $cantidad) {
+
+                    // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
+                    $sql = "INSERT INTO Albaranes (fecha_Albaran, cod_Prod, cantidad, id_Usuario) VALUES (NOW(), ?, ?, ?)";
+            
+                    $stmt = mysqli_prepare($con, $sql);
+                        mysqli_stmt_bind_param($stmt, "sis", $cod_Prod, $cantidad, $_SESSION['usuario']['id_Usuario']);
+                        mysqli_stmt_execute($stmt);
+                }
             }
 
         } catch (\Throwable $th) {
@@ -845,16 +906,47 @@
                 $cod_Prod = $cod_Prods[$i];
                 $id_Albaran = $id_Albaranes[$i];
 
+                // Comprobamos si el nuevo cod_Prod existe en la tabla Productos
+                $sql = "SELECT * FROM Productos WHERE cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+
+                $c = "<div class='alert alert-danger text-center'><b>El cod_Prod: ". $cod_Prod ." no existe en los Productos</b></div>";
+
+                // Si no existe, devuelve una excepción
+                if (mysqli_stmt_get_result($stmt) -> num_rows == 0) {
+                    throw new Exception('cod_Prod_incorrecto');
+                }
+
                 // Actualizamos la tabla Albaranes (cantidad)
-                $sql = "UPDATE Albaranes SET cantidad = ? WHERE id_Albaran = ?";
+                $sql = "UPDATE Albaranes SET cod_Prod = ?, cantidad = ? WHERE id_Albaran = ?";
         
                 $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "is", $cantidad, $id_Albaran);
+                    mysqli_stmt_bind_param($stmt, "sis", $cod_Prod, $cantidad, $id_Albaran);
+                    mysqli_stmt_execute($stmt);
+
+                // Actualizamos el stock de la tabla Productos
+                $sql = "UPDATE Productos SET stock = ? WHERE cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "is", $cantidad, $cod_Prod);
                     mysqli_stmt_execute($stmt);
             }
 
         } catch (\Throwable $th) {
-            erroresBD($th);
+
+            switch ($th -> getMessage()) {
+                
+                case 'cod_Prod_incorrecto':
+                    echo $c;
+                    break;
+                
+                default:
+                    erroresBD($th);
+                    break;
+            }
             
         } finally {
             mysqli_stmt_close($stmt);
@@ -864,28 +956,32 @@
     }
 
 
-// Función para borrar datos de la base de datos
-    function borrar($tabla, $idSQL) {
-
+// Función para borrar un albarán
+    function eliminarAlbaran($id_Albaran) {
+            
         try {
             $con = mysqli_connect(IP, USER, PASS, BD);
 
-            $sql = "DELETE FROM $tabla WHERE $idSQL = ?";
-   
-            $stmt = $con -> stmt_init();
-            $stmt -> prepare($sql);
-            $stmt -> bind_param("s", $_REQUEST["id"]);
-            $stmt -> execute();
+            // Insertamos un nuevo producto en la tabla Productos
+            $sql = "DELETE FROM Albaranes WHERE id_Albaran = ?";
+    
+            $stmt = mysqli_prepare($con, $sql);
+                mysqli_stmt_bind_param($stmt, "i", $id_Albaran);
+                mysqli_stmt_execute($stmt);
 
+            echo "<div class='alert alert-success text-center'><b>Se ha eliminado el albarán ". $id_Albaran ." correctamente</b></div>";
+                        
         } catch (\Throwable $th) {
-            erroresBD($th);
+            echo "<div class='alert alert-danger text-center'><b>Error al eliminar el albarán ". $id_Albaran ."</b></div>";
+            // erroresBD($th);
             
         } finally {
-
             mysqli_stmt_close($stmt);
             mysqli_close($con);
         }
     }
+
+
 
     
 // Función para mostrar los errores que pueden generarse en la base de datos

@@ -11,14 +11,12 @@
         exit;
 
     } elseif (existe('eliminar')) {
-        $cod_Prod = $_POST['cod_Prod'];
-        eliminarProducto($cod_Prod);
+        $id_Albaran = $_POST['id_Albaran'];
+        eliminarAlbaran($id_Albaran);
 
     } elseif (existe('actualizarAlbaranes')) {
         actualizarAlbaranes();
- 
-        
-    
+     
     } elseif (existe('vaciar')) {
         vaciarCarrito();            
 
@@ -100,7 +98,7 @@
                     <?php  
                         $consulta = consultarAlbaranes();
 
-                        echo "<form method='post' action='./gestionarProductos.php' enctype='multipart/form-data'>";
+                        echo "<form method='post' action='./albaran.php' enctype='multipart/form-data'>";
     
                             // Comprobamos si hay resultados
                             if ($consulta -> num_rows > 0) {
@@ -130,7 +128,7 @@
                                     // Mostrar los datos de la tabla
                                     while ($fila = $consulta -> fetch_assoc()) {
 
-                                        $cod_Prod = $fila['cod_Prod'];
+                                        $id_Albaran = $fila['id_Albaran'];
                                                                 
                                         echo "<tr>";
         
@@ -138,45 +136,36 @@
             
                                                 switch ($indice) {
 
-                                                    case 'cod_Prod':                            
+                                                    case 'id_Albaran':
                                                         echo "<td>";
-                                                            echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
+                                                            echo "<input type='text' id='id_Albaran' name='id_Albaranes[]' value='". $campo."' readonly>";
                                                         echo "</td>";
                                                         break;
 
-                                                    case 'compañia':
+                                                    case 'cod_Prod':
+                                                        
+                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
+                                                            echo "<td>";
+                                                                echo "<input type='text' id='cod_ProdAlb' name='cod_Prods[]' value='". $campo."'>";
+                                                            echo "</td>";
+                                                        
+                                                        } else {
+                                                            echo "<td>" . $campo . "</td>";
+                                                        }
+
+                                                        break;
+
+                                                    case 'cantidad':
                                                     
                                                         if ($_SESSION['usuario']['rol'] == 'admin') {
                                                             echo "<td>";
-                                                                echo "<input type='text' id='compañiaGest' name='compañias[]' value='". $campo."'>";
+                                                                echo "<input type='number' id='cantidadAlb' name='cantidades[]' value='". $campo."'>";
                                                             echo "</td>";
                                                         
                                                         } else {
                                                             echo "<td>" . $campo . "</td>";
                                                         }
     
-                                                        break;
-                                                    
-                                                    case 'stock':
-                                                        echo "<td>";
-                                                            echo "<input type='number' class='inputStock' name='stocks[]' value='". $campo."' min='1' max='100'>";
-                                                            echo "€";
-                                                        echo "</td>";
-
-                                                        break;
-
-                                                    case 'precio':
-                                                        
-                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
-                                                            echo "<td>"; 
-                                                                echo "<input type='text' id='precioGest' name='precios[]' value='". $campo."'>";
-                                                                echo "€";
-                                                            echo "</td>";
-                                                        
-                                                        } else {
-                                                            echo "<td>" . $campo . "</td>";
-                                                        }
-
                                                         break;
 
                                                     default:
@@ -191,7 +180,7 @@
 
                                                     echo "<form method='post'>";
 
-                                                        echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";
+                                                        echo "<input type='hidden' name='id_Albaran' value='" . $id_Albaran . "'>";
 
                                                         echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
                                                             <i class='bi bi-trash'></i>
@@ -209,7 +198,11 @@
 
                                 echo "<br>";
 
-                                echo "<button type='submit' id='actualizarAlbaranes' name='actualizarAlbaranes' class='btn bg-primary bg-gradient formu'>Actualizar Albaranes</button>";
+                                if ($_SESSION['usuario']['rol'] == 'admin') {
+                                    // echo "<button type='submit' id='vaciar' name='vaciar' class='btn bg-primary bg-gradient formu'>Vaciar Carrito</button>";
+                                    echo "<button type='submit' id='actualizarAlbaranes' name='actualizarAlbaranes' class='btn bg-primary bg-gradient formu'>Actualizar Albaranes</button>";
+                                }
+
 
                             } else {
                                 echo "No se encontraron resultados en la base de datos";

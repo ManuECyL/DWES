@@ -17,13 +17,16 @@
     } elseif (existe('actualizarProductos')) {
           
         if ($_SESSION['usuario']['rol'] == 'moderador') {
-            actualizarStock();
             generarAlbaran();
+            actualizarStock();
         
         } else {
-            actualizarProductos();
             generarAlbaran();
+            actualizarProductos();
         } 
+
+        header('Location: ./albaran.php');
+        exit;
     
     } elseif (existe('vaciar')) {
         vaciarCarrito();            

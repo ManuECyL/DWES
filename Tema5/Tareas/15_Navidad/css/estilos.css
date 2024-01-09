@@ -173,14 +173,14 @@ i {
     margin-right: 5px;
 }
 
-#cantidad {
-    width: 60px;
+#precio_Un {
+    width: 80px;
     text-align: center;
     margin-right: 5px;
 }
 
-#fecha_Compra {
-    width: 110px;
+#cantidad {
+    width: 60px;
     text-align: center;
     margin-right: 5px;
 }
@@ -199,6 +199,26 @@ i {
 
 
 /* ALBARANES */
+#id_Albaran {
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#cod_ProdAlb {
+    width: 110px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#cantidadAlb {
+    width: 60px;
+    text-align: center;
+    margin-right: 5px;
+}
+
 #actualizarAlbaranes {
     width: 20%;
     margin-top: 5px;

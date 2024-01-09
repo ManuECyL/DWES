@@ -13,7 +13,9 @@
     } elseif (existe('eliminar')) {
         $id_Usuario = $_POST['id_Usuario'];
         $id_Compra = $_POST['id_Compra'];
-        eliminarVenta($id_Usuario, $id_Compra);
+        $cod_Prod = $_POST['cod_Prod'];
+
+        eliminarVenta($id_Usuario, $id_Compra, $cod_Prod);
 
     } elseif (existe('actualizarVentas')) {
         actualizarVentas();
@@ -133,6 +135,7 @@
 
                                         $id_Usuario = $fila['id_Usuario'];
                                         $id_Compra = $fila['id_Compra'];
+                                        $cod_Prod = $fila['cod_Prod'];
                                                                 
                                         echo "<tr>";
         
@@ -154,15 +157,21 @@
 
                                                         break;
 
-                                                    case 'cod_Prod':                            
-                                                        echo "<td>";
-                                                            echo "<input type='text' id='cod_ProdVentas' name='cod_Prods[]' value='". $campo."'>";
-                                                        echo "</td>";
+                                                    case 'cod_Prod':
+                                                        
+                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
+                                                            echo "<td>";
+                                                                echo "<input type='text' id='cod_ProdVentas' name='cod_Prods[]' value='". $campo."'>";
+                                                            echo "</td>";
+                                                        
+                                                        } else {
+                                                            echo "<td>" . $campo . "</td>";
+                                                        }
 
                                                         break;
 
-                                                    case 'precio_Un':           
-                                                        echo "<td>" . $campo . " €</td>";
+                                                    case 'precio_Un':                                                     
+                                                        echo "<td>" . $campo . "</td>";                                        
                                                         break;
                                                     
                                                     case 'cantidad':
@@ -185,19 +194,6 @@
 
                                                         break;
 
-                                                    case 'fecha_Compra':
-
-                                                        if ($_SESSION['usuario']['rol'] == 'admin') {
-                                                            echo "<td>"; 
-                                                                echo "<input type='text' id='fecha_Compra' name='fecha_Compras[]' value='". $campo."'>";
-                                                            echo "</td>";
-                                                        
-                                                        } else {
-                                                            echo "<td>" . $campo . "</td>";
-                                                        }
-                                                        
-                                                        break;
-
                                                     default:
                                                         echo "<td>" . $campo . "</td>";
                                                         break; 
@@ -212,6 +208,7 @@
 
                                                         echo "<input type='hidden' name='id_Usuario' value='" . $id_Usuario . "'>";
                                                         echo "<input type='hidden' name='id_Compra' value='" . $id_Compra . "'>";
+                                                        echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";
 
                                                         echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
                                                             <i class='bi bi-trash'></i>
