@@ -93,7 +93,13 @@
                                     echo "<label class='form-label lblForm'>" . $campo . ":";
 
                                         if ($campo == 'id_Usuario' || $campo == 'rol') {
-                                            echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $valor . "' size=25px readonly>";
+
+                                            if ($_SESSION['usuario']['rol'] == 'admin') {
+                                                echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $valor . "' size=25px >";
+                                        
+                                            } else {
+                                                echo "<input type='text' class='form-control mx-auto inputForm' name='" . $campo . "' value='" . $valor . "' size=25px readonly>";
+                                            }
 
                                         } elseif ($campo == 'fecha_Nacimiento') {
                                             $fechaOriginal = date("d-m-Y", strtotime($valor));

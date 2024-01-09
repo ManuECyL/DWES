@@ -141,13 +141,6 @@
                     <?php
                             }
 
-                            if ($_SESSION['usuario']['rol'] == 'admin') {
-                    ?>
-                              <div class="mb-3">
-                                <button type="submit" name="gestUsuarios" class="btn bg-dark formu">Gestionar Usuarios</button>
-                              </div>
-                    <?php    
-                            }
                     ?>    
                               <div class="mb-3">
                                   <button type="submit" id="cerrarSesion" name="cerrarSesion" class="btn bg-dark formu">Cerrar Sesión</button>
