@@ -16,7 +16,7 @@
 
             $stmt = $con -> prepare($sql);
 
-            $pass = sha1($pass); // Desencriptamos la contraseña
+            $pass = sha1($pass); // Encriptamos la contraseña
 
             $stmt -> execute([$user, $pass]);
             

@@ -122,67 +122,6 @@
     }
 
 
-// Función para comprobar a que páginas tiene acceso el usuario
-    function misPaginas() {
-
-        try {
-            $con = mysqli_connect(IP, USER, PASS, BD);
-        
-            // Consulta a la BBDD
-            $sql = 'SELECT url FROM paginas WHERE codigo IN (SELECT codigoPagina FROM accede WHERE codigoPerfil = ?)'; // Mejor hacer un JOIN
-
-            $stmt = mysqli_prepare($con, $sql);
-                mysqli_stmt_bind_param($stmt, 's', $_SESSION['usuario']['perfil']);
-                mysqli_stmt_execute($stmt);
-
-            $resultado = mysqli_stmt_get_result($stmt);
-
-            $paginas = array();
-
-            // Lo guardamos en un array asociativo y lo recorremos
-            while ($pagina = mysqli_fetch_assoc($resultado)) {
-                array_push($paginas, $pagina['url']);
-            }
-
-            // Comprueba si tiene contenido, sino, devuelve false
-            if (count($paginas) > 0) {
-                $_SESSION['usuario']['paginas'] = $paginas;
-                return $paginas;   
-
-            } else {
-                return false;
-            }
-
-        } catch (\Throwable $th) {
-            erroresBD($th);
-        
-        } finally {
-            mysqli_close($con);
-        }
-    }
-
-// Función para consultar los datos de la base de datos
-    function consultar($tabla) {
-
-        try {
-            $con = mysqli_connect(IP, USER, PASS, BD);
-
-            // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
-            $sql = "SELECT * FROM $tabla ORDER BY 2 DESC";
-    
-            $resultado = mysqli_query($con, $sql);
-    
-        } catch (\Throwable $th) {
-            erroresBD($th);
-        
-        } finally {
-            mysqli_close($con);
-        }
-
-        return $resultado;
-    }
-
-
 // Función para consultar los datos de la base de datos por id
     function consultarId($tabla, $idSQL, $id) {
 
@@ -197,7 +136,6 @@
                 mysqli_stmt_execute($stmt);
     
             $resultado = mysqli_stmt_get_result($stmt);
-
             $usuario = mysqli_fetch_assoc($resultado);
 
             if ($usuario) {
@@ -274,6 +212,28 @@
     }
 
 
+// Función para consultar los productos de la base de datos
+    function consultarProductos() {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultamos los productos y los ordena de forma descendente por el segundo campo (titulo)
+            $sql = "SELECT * FROM Productos ORDER BY 2 DESC";
+    
+            $resultado = mysqli_query($con, $sql);
+    
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            mysqli_close($con);
+        }
+
+        return $resultado;
+    }
+
+
 // Función para insertar Productos 
     function insertarProducto(){
 
@@ -287,6 +247,51 @@
                 mysqli_stmt_bind_param($stmt, "ssss", $_REQUEST["id_Usuario"], $_REQUEST["contraseña"], $_REQUEST["email"], $_REQUEST["fecha_Nacimiento"]);
                 mysqli_stmt_execute($stmt);
             
+        } catch (\Throwable $th) {
+            erroresBD($th);
+            
+        } finally {
+            mysqli_stmt_close($stmt);
+            mysqli_close($con);
+        }
+    }
+
+
+// Función para actualizar el stock de los Productos
+    function actualizarStock($cod_Prods) {
+        
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Recuperar los nuevos valores de stock del array $_POST
+            $stocks = $_POST['stocks'];
+            // echo "<pre>";
+            //     var_dump($stocks);
+            // echo "</pre>";
+
+            // foreach ($stocks as $stock) {
+
+            //     // Actualizamos la tabla Productos (stock)
+            //     $sql = "UPDATE Productos SET stock = ? WHERE cod_Prod = ?";
+        
+            //     $stmt = mysqli_prepare($con, $sql);
+            //         mysqli_stmt_bind_param($stmt, "is", $stock, $cod_Prod);
+            //         mysqli_stmt_execute($stmt);
+            // }
+
+            for ($i = 0; $i < count($stocks); $i++) {
+
+                $stock = $stocks[$i];
+                $cod_Prod = $cod_Prods[$i];
+
+                // Actualizamos la tabla Productos (stock)
+                $sql = "UPDATE Productos SET stock = ? WHERE cod_Prod = ?";
+        
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "is", $stock, $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+            }
+        
         } catch (\Throwable $th) {
             erroresBD($th);
             
@@ -542,6 +547,36 @@
         }
     }
 
+
+// Función para consultar los productos de la base de datos
+    function consultarPedidosUsuario() {
+
+        try {
+            $con = mysqli_connect(IP, USER, PASS, BD);
+
+            // Consultamos los datos de una tabla y los ordena de forma descendente por el segundo campo
+            $sql = "SELECT Contiene.id_Compra, Contiene.cod_Prod, Productos.precio AS precio_Un, Contiene.cantidad, Contiene.total, DATE_FORMAT(Compra.fecha_Compra, '%d-%m-%Y') AS fecha_Compra
+                    FROM Contiene 
+                    JOIN Compra ON Contiene.id_Compra = Compra.id_Compra 
+                    JOIN Productos ON Contiene.cod_Prod = Productos.cod_Prod
+                    WHERE Compra.id_Usuario = ? ORDER BY Compra.fecha_Compra DESC";
+    
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "s", $_SESSION['usuario']['id_Usuario']);
+            mysqli_stmt_execute($stmt);
+
+            // Obtenemos el resultado de la consulta
+            $resultado = mysqli_stmt_get_result($stmt);
+
+        } catch (\Throwable $th) {
+            erroresBD($th);
+        
+        } finally {
+            mysqli_close($con);
+        }
+
+        return $resultado;
+    }
 
 
 // Función para borrar datos de la base de datos

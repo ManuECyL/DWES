@@ -1,14 +1,3 @@
-<?php
-  // Muestra el mensaje de error si se intenta acceder al carrito sin iniciar sesión
-    $mensaje = '';
-
-    if (isset($_GET['accion']) && $_GET['accion'] == 'carrito') {
-        $mensaje = '<div class="alert alert-danger text-center"><b>Debe iniciar sesión para acceder al carrito</b></div>';
-    }
-
-    echo $mensaje;
-?>
-
 <header class="bg-info bg-gradient">
 
     <div class="row container-fluid p-2">
@@ -45,7 +34,7 @@
                 echo '
                   <div class="col-3 col-sm-3 col-md-3">
                     <span style="font-size: 30px;">
-                      <p>Home</p>
+                      <p>🎮🕹️🎰</p>
                     </span>
                   </div>
                 ';
@@ -80,11 +69,12 @@
             <span>
               <?php
                   if (isset($_SESSION['usuario'])) {
-                    echo '<a href="./carrito.php"><i class="bi bi-cart4 icono" style="font-size: 150%;"></i></a>';
-
+                      echo '<a href="./carrito.php"><i class="bi bi-cart4 icono" style="font-size: 150%;"></i></a>';
+              
                   } else {
                   ?>
-                    <a href="?accion=carrito"><i class="bi bi-cart4 icono carrito" style="font-size: 150%;"></i></a> 
+                    <!-- <a href="?accion=carrito"><i class="bi bi-cart4 icono carrito" style="font-size: 150%;"></i></a> -->
+                    <a href="?carrito=true" name="carrito"><i class="bi bi-cart4 icono carrito" style="font-size: 150%;"></i></a>
                   <?php
                   }
               ?>
@@ -113,7 +103,7 @@
                     
                     <?php
                       if (isset($_SESSION['usuario'])) {
-                        echo '<h5 style="color: white;">Usuario</h5>';
+                        echo '<h5 style="color: white;">'. $_SESSION['usuario']['id_Usuario'] .'</h5>';
     
                       } else {
                         echo '<h5 style="color: white;">Login</h5>';
@@ -126,21 +116,28 @@
                   <div class="modal-body text-center">
 
                     <?php
-
                         if (isset($_SESSION['usuario'])) {
-                          echo '
+                    ?>
                             <form action="" method="post" name="formularioT15" enctype="multipart/form-data">
 
                               <div class="mb-3">
                                   <button type="submit" id="perfil" name="perfil" class="btn bg-dark formu">Perfil</button>
                               </div>
-
+                    <?php       
+                            if ($_SESSION['usuario']['rol'] == 'cliente') {
+                    ?>
+                              <div class="mb-3">
+                                <button type="submit" id="pedidos" name="pedidos" class="btn bg-dark formu">Pedidos</button>
+                              </div>
+                    <?php    
+                            }
+                    ?>    
                               <div class="mb-3">
                                   <button type="submit" id="cerrarSesion" name="cerrarSesion" class="btn bg-dark formu">Cerrar Sesión</button>
                               </div>
 
                             </form>
-                          ';
+                    <?php    
                         
                         } else {
                           echo '
@@ -182,5 +179,4 @@
         </div>                  
       </div>                 
     </div>
-
   </header>

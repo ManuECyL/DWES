@@ -9,7 +9,6 @@
         crearScript();
     }
 
-    
     if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
           
       $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
@@ -20,7 +19,7 @@
         $contraseña = $_REQUEST['pass'];
             
       } else {
-          echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
+        $_SESSION['errorInicioSesion'] = "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
       }
     
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
@@ -32,10 +31,43 @@
         header('Location: ./perfil.php');
         exit;
 
-      } elseif (existe('cerrarSesion')) {
+      } elseif (existe('pedidos')) {
+        header('Location: ./pedidos.php');
+        exit;
+
+      }elseif (existe('cerrarSesion')) {
         cerrarSesion();
       }
+
+    // Si no se ha iniciado sesión
+    } else {
+
+      if (existe('registrarse')) {
+        header('Location: ./registro.php');
+        exit;
+
+      } elseif (existe('comprar')) {
+          echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
+      
+      } elseif (existe('carrito')) {
+          echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
+      } 
     }
+
+    // Comprueba si se ha pulsado el icono del carrito
+    existeCarrito('carrito');
+ 
+    // Muestra el mensaje de error de inicio de sesión fallido
+    if (isset($_SESSION['errorInicioSesion'])) {
+      echo $_SESSION['errorInicioSesion'];
+      unset($_SESSION['errorInicioSesion']);
+    
+    // Muestra el mensaje de error de carrito si no se ha iniciado sesión
+    } elseif (isset($_SESSION['mensaje'])) {
+      echo $_SESSION['mensaje'];
+      unset($_SESSION['mensaje']);  
+    }
+    
 ?>
 
 <!DOCTYPE html>
@@ -58,20 +90,6 @@
 
 <!-- HEADER -->
         <?php
-          if (!isset($_SESSION['usuario'])) {
-
-            if (existe('registrarse')) {
-                header('Location: ./registro.php');
-                exit;
-        
-            } elseif (existe('comprar')) {
-                echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
-            
-            } elseif (existe('carrito')) {
-                echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
-            } 
-          } 
-
           include_once("./html/header.php");
         ?>
           

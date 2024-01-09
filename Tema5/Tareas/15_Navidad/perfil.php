@@ -7,7 +7,11 @@
 
     $usuario = $_SESSION['usuario'];
 
-    if (cerrado()) {
+    if (existe('pedidos')) {
+        header('Location: ./pedidos.php');
+        exit;
+        
+    } elseif (cerrado()) {
         cerrarSesion();
     }
 ?>

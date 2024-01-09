@@ -3,32 +3,25 @@ CREATE DATABASE gameshop;
 USE gameshop;
 
 CREATE TABLE Roles (
-    rol VARCHAR(20) NOT NULL PRIMARY KEY
+    rol VARCHAR(9) NOT NULL PRIMARY KEY
 );
 
 CREATE TABLE Usuarios (
-    id_Usuario VARCHAR(20) PRIMARY KEY UNIQUE,
-    contraseña VARCHAR(50),
+    id_Usuario VARCHAR(20) NOT NULL PRIMARY KEY UNIQUE,
+    contraseña VARCHAR(50) NOT NULL,
     email VARCHAR(50),
     fecha_Nacimiento DATE,
-    rol VARCHAR(20),
+    rol VARCHAR(9) NOT NULL,
     FOREIGN KEY (rol) REFERENCES Roles(rol)
 );
 
-CREATE TABLE Compra (
-    id_Compra INT PRIMARY KEY AUTO_INCREMENT,
-    id_Usuario VARCHAR(20),
-    fecha_Compra DATE,
-    FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
-);
-
 CREATE TABLE Productos (
-    cod_Prod VARCHAR(10) PRIMARY KEY,
+    cod_Prod VARCHAR(10) NOT NULL PRIMARY KEY,
     titulo VARCHAR(50) NOT NULL,
     compañia VARCHAR(50) NOT NULL,
     stock INT NOT NULL,
     precio FLOAT NOT NULL,
-    ruta_Imagen VARCHAR(255)
+    ruta_Imagen VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE Carrito (
@@ -37,6 +30,13 @@ CREATE TABLE Carrito (
     cantidad INT,
     FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario),
     FOREIGN KEY (cod_Prod) REFERENCES Productos(cod_Prod)
+);
+
+CREATE TABLE Compra (
+    id_Compra INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    id_Usuario VARCHAR(20),
+    fecha_Compra DATE,
+    FOREIGN KEY (id_Usuario) REFERENCES Usuarios(id_Usuario)
 );
 
 CREATE TABLE Contiene (

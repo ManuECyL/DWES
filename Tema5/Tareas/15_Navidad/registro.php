@@ -17,11 +17,25 @@
           exit;
               
         } else {
-            echo "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
+            $_SESSION['errorInicioSesion'] = "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
         }
 
     } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
         echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
+    }
+
+    // Comprueba si se ha pulsado el icono del carrito
+    existeCarrito('carrito');
+
+    // Muestra el mensaje de error de inicio de sesión fallido
+    if (isset($_SESSION['errorInicioSesion'])) {
+        echo $_SESSION['errorInicioSesion'];
+        unset($_SESSION['errorInicioSesion']);
+    
+    // Muestra el mensaje de error de carrito si no se ha iniciado sesión
+    } elseif (isset($_SESSION['mensaje'])) {
+        echo $_SESSION['mensaje'];
+        unset($_SESSION['mensaje']);  
     }
 ?>
 

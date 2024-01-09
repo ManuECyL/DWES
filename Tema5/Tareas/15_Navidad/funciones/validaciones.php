@@ -18,6 +18,22 @@
         return false;
     }
 
+    // Comprobar si se ha pulsado el icono del carrito para posteriormente mostrar el mensaje de error y evitar que se mantenga en la página si existe otro error
+    function existeCarrito($name) {
+
+        if(isset($_REQUEST[$name])) {
+           
+            // Si existe el carrito, pero no se ha iniciado sesión
+            $_SESSION['mensaje'] = "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
+
+            // Redirigir a la página anterior sin el parámetro 'carrito', es decir, con la url original
+            header('Location: ' . strtok($_SERVER['REQUEST_URI'], '?'));
+            exit;
+        }
+
+        return false;
+    }
+
 
     function textVacio($name) {
         

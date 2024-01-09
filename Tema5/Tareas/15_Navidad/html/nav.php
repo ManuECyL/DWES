@@ -4,18 +4,65 @@
 
       <ul class="navbar-nav row row-cols">
 
-        <div class="col-md-6 col-lg">
-          <li class="nav-item">
-            <a class="nav-link navNombre" href="./index.php">Inicio</a>             
-          </li>
-        </div>
+      <?php
+        if (!isset($_SESSION['usuario'])) {
+          echo '
+            <div class="col-md-6 col-lg">
+              <li class="nav-item">
+                <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+              </li>
+            </div>
 
-        <div class="col-md-6 col-lg">
-          <li class="nav-item">
-            <a class="nav-link navNombre" href="./productos.php">Productos</a>
-          </li>
-        </div>
+            <div class="col-md-6 col-lg">
+              <li class="nav-item">
+                <a class="nav-link navNombre" href="./productos.php">Productos</a>
+              </li>
+            </div>
+          ';
+        }
+      ?>
 
+      <?php
+        if (isset($_SESSION['usuario'])) {
+
+          echo '
+            <div class="col-md-3 col-lg">
+              <li class="nav-item">
+                <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+              </li>
+            </div>
+
+            <div class="col-md-3 col-lg">
+              <li class="nav-item">
+                <a class="nav-link navNombre" href="./productos.php">Productos</a>
+              </li>
+            </div>
+          ';
+
+          if ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin') {
+            echo '
+              <div class="col-md-3 col-lg">
+                <li class="nav-item">
+                  <a class="nav-link navNombre" href="./gestionarProductos.php">Gestionar Productos</a>
+                </li>
+              </div>
+
+              <div class="col-md-3 col-lg">
+                <li class="nav-item">
+                  <a class="nav-link navNombre" href="./ventas.php">Ventas</a>
+                </li>
+              </div>
+
+              <div class="col-md-3 col-lg">
+                <li class="nav-item">
+                  <a class="nav-link navNombre" href="./albaran.php">Albaran</a>
+                </li>
+              </div>
+            ';
+          } 
+        }
+      ?>
+      
       </ul>
 
   </div>
