@@ -1,0 +1,7 @@
+                        SESSION                 COOKIE
+
+Localización            Servidor  <-- http --> Navegador
+
+                        Destroy                 Time() -
+Borran                  Tiempo        --->      Borrarla
+                                               Session x
