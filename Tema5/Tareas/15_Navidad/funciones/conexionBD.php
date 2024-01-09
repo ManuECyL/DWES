@@ -708,20 +708,25 @@
                 // Comprobar que el formato de la fecha_Compra sea d-m-Y
                 $fecha = DateTime::createFromFormat('d-m-Y', $fecha_Compra);
                 if ($fecha === false || $fecha -> format('d-m-Y') !== $fecha_Compra) {
-                    throw new Exception($f);
+                    throw new Exception('fecha_Compra_incorrecta');
                 
                 } else {
-                    $fechaOriginal = $fecha_Compra;
-                    $fechaFormateada = date("Y-m-d", strtotime($fechaOriginal));
+                    $fechaFormateada = $fecha -> format('Y-m-d');
                 }
 
-                $c = "<div class='alert alert-danger text-center'><b>El cod_Prod: ". $cod_Prod ." introducido no existe en la base de datos</b></div>";
+                // Comprobamos si el nuevo cod_Prod existe en la tabla Productos
+                $sql = "SELECT * FROM Productos WHERE cod_Prod = ?";
+
+                $stmt = mysqli_prepare($con, $sql);
+                    mysqli_stmt_bind_param($stmt, "s", $cod_Prod);
+                    mysqli_stmt_execute($stmt);
+
+                $c = "<div class='alert alert-danger text-center'><b>El cod_Prod: ". $cod_Prod ." no existe en los Productos</b></div>";
 
                 // Si no existe, devuelve una excepción
                 if (mysqli_stmt_get_result($stmt) -> num_rows == 0) {
-                    throw new Exception($c);
+                    throw new Exception('cod_Prod_incorrecto');
                 }
-                
 
                 // Actualizamos la tabla Compra
                 $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
@@ -732,26 +737,30 @@
 
 
                 // Actualizamos la tabla Contiene
-                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Usuario = ? AND id_Compra = ? AND cod_Prod = ?";
+                $sql = "UPDATE Contiene SET cantidad = ? WHERE id_Compra = ? AND cod_Prod = ?";
 
                 $stmt = mysqli_prepare($con, $sql);
-                    mysqli_stmt_bind_param($stmt, "isss", $cantidad, $id_Usuario, $id_Compra, $cod_Prod);
+                    mysqli_stmt_bind_param($stmt, "iss", $cantidad, $id_Compra, $cod_Prod);
                     mysqli_stmt_execute($stmt);
             }
 
         } catch (\Throwable $th) {
-            
-            if (isset($f)) {
-                echo $f;
-            
-            } elseif (isset($c)) {
-                echo $c;
-            
-            } else {
-                erroresBD($th);
-            }
 
-            
+            switch ($th -> getMessage()) {
+
+                case 'fecha_Compra_incorrecta':
+                    echo $f;
+                    break;
+
+                case 'cod_Prod_incorrecto':
+                    echo $c;
+                    break;
+                
+                default:
+                    erroresBD($th);
+                    break;
+            }
+                        
         } finally {
 
             if (isset($stmt)) {
