@@ -721,6 +721,7 @@
                 if (mysqli_stmt_get_result($stmt) -> num_rows == 0) {
                     throw new Exception($c);
                 }
+                
 
                 // Actualizamos la tabla Compra
                 $sql = "UPDATE Compra SET fecha_Compra = ? WHERE id_Usuario = ? AND id_Compra = ?";
