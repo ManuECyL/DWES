@@ -33,7 +33,6 @@
         echo "<br><br>";
         
         // Utiliza la función __get
-        // echo "CIF __get: " . $empresaM -> cif;
         echo $empresaM -> cif; 
 
         echo "<br";
@@ -44,7 +43,7 @@
 
         echo "<br><br>";
 
-        // echo "CIF __get(Modificado con set): " . $empresaM -> cifa;
+        // CIF __get(Modificado con set)
         echo $empresaM -> cif;
 
         echo "<br><br>";
