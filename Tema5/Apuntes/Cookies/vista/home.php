@@ -59,7 +59,7 @@
 
                         foreach ($_COOKIE['id'] as $value) {
                             
-                            $producto = findById($_COOKIE['id']);
+                            $producto = findById($value);
                             
                             if ($producto) {
                                 echo "<td><a href='verProducto.php?id=" . $producto['codigo'] . "'>";

@@ -53,7 +53,7 @@
 
             $stmt = $con -> prepare($sql);
             
-            $stmt -> execute(array($id));
+            $producto = $stmt -> execute([$id]);
             
             $producto = $stmt -> fetch(PDO::FETCH_ASSOC);
              
@@ -74,8 +74,7 @@
         }
     }
 
-    function usuarioPermitido($url)
-{
+    function usuarioPermitido($url) {
     if (in_array($url, $_SESSION['usuario']['paginas'])) {
         return true;
     }

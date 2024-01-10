@@ -23,7 +23,7 @@
 
     <body>
 
-        <a href="home.php">Volver</a>
+        <a href="./home.php">Volver</a>
 
         <?php
             $producto = findById($_REQUEST['id']);
