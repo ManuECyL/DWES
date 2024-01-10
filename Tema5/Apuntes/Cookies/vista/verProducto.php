@@ -2,7 +2,7 @@
     require('../funciones/funcionesBD.php');
     require('../funciones/funciones.php');
     
-    if (!isset($_GET['id'])) {
+    if (!isset($_REQUEST['id'])) {
         header('Location: home.php');
         exit;
     }
@@ -26,11 +26,11 @@
         <a href="home.php">Volver</a>
 
         <?php
-            $producto = findById($_GET['id']);
+            $producto = findById($_REQUEST['id']);
 
             if ($producto) {
                 // Crear Cookie
-                insertarCookie();
+                insertarCookie($_REQUEST['id']);
 
                 echo "<h1>". $producto['nombre'] ."</h1>";
                 echo "<p>". $producto['descripcion'] ."</p>";

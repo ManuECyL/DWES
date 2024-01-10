@@ -55,12 +55,16 @@
 
                     if(!empty($_COOKIE)) {
                         
+                        ksort($_COOKIE['id']);
+
                         foreach ($_COOKIE['id'] as $value) {
                             
                             $producto = findById($_COOKIE['id']);
                             
                             if ($producto) {
-                                echo "<a href='verProducto.php?id=".$producto['codigo']."'><img src='../" . $producto['alta'] ."'></a>";                                 
+                                echo "<td><a href='verProducto.php?id=" . $producto['codigo'] . "'>";
+                                echo "<img src='../" . $producto['baja'] . "'>";
+                                echo "</a>";
                             }
                         }
 

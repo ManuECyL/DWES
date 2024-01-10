@@ -57,7 +57,12 @@
             
             $producto = $stmt -> fetch(PDO::FETCH_ASSOC);
              
-            return $producto;
+            if ($producto) {
+                unset($con);
+                return $producto;
+            }
+
+            return false;
 
 
         } catch (PDOException $e) {
@@ -69,6 +74,13 @@
         }
     }
 
+    function usuarioPermitido($url)
+{
+    if (in_array($url, $_SESSION['usuario']['paginas'])) {
+        return true;
+    }
+    return false;
+}
     
 
 ?>
