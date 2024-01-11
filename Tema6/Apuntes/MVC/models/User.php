@@ -4,15 +4,13 @@
         private $codUsuario;
         private $password;
         private $descUsuario;
-        private $numAccesos;
         private $fechaUltimaConexion;
         private $perfil; // Rol
 
-        function __construct($codUsuario, $password, $descUsuario, $numAccesos, $fechaUltimaConexion, $perfil) {
+        function __construct($codUsuario, $password, $descUsuario, $fechaUltimaConexion, $perfil) {
             $this -> codUsuario = $codUsuario;
             $this -> password = $password;
             $this -> descUsuario = $descUsuario;
-            $this -> numAccesos = $numAccesos;
             $this -> fechaUltimaConexion = $fechaUltimaConexion;
             $this -> perfil = $perfil;
         }
