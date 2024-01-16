@@ -8,6 +8,7 @@
 
     if (isset($_REQUEST['login'])) {  
         $_SESSION['vista'] = VIEW . 'login.php';
+        $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
     
     } elseif (isset($_REQUEST['home'])) {
         $_SESSION['vista'] = VIEW . 'home.php';

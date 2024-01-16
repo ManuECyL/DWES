@@ -6,6 +6,7 @@
         define ('CSS', "./webroot/css/"); // Para insertar estilos css contantenando el fichero css  a la ruta
         define ('JS', "./webroot/js/"); // Para insertar código js contantenando el nombre del fichero js a la ruta
         define ('VIEW', "./views/");
+        define ('CONTROLLER', "./controllers/");
 
         /* En casa no funciona
             define ('IMG', "/Tema6/Apuntes/MVC/webroot/img/");
