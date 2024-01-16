@@ -6,13 +6,15 @@
         private $descUsuario;
         private $fechaUltimaConexion;
         private $perfil; // Rol
+        private $activo;
 
-        function __construct($codUsuario, $password, $descUsuario, $fechaUltimaConexion, $perfil) {
+        function __construct($codUsuario, $password, $descUsuario, $fechaUltimaConexion, $perfil = 'usuario', $activo = true) {
             $this -> codUsuario = $codUsuario;
             $this -> password = $password;
             $this -> descUsuario = $descUsuario;
             $this -> fechaUltimaConexion = $fechaUltimaConexion;
             $this -> perfil = $perfil;
+            $this -> activo = $activo;
         }
 
         // Es una variable de variables, por eso en el return se pone el $ a la varible att
