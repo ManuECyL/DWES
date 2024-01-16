@@ -1,6 +1,24 @@
 <?php
+    // El index es como otro controlador
 
     require("./config/config.php");
+
+    // Entramos en la app por el index, por ello iniciamos la sesion aquí
+    session_start();
+
+    if (isset($_REQUEST['login'])) {  
+        $_SESSION['vista'] = VIEW . 'login.php';
+    
+    } elseif (isset($_REQUEST['home'])) {
+        $_SESSION['vista'] = VIEW . 'home.php';
+    }
+
+    require("./views/layout.php");
+
+
+
+
+
 
     // // Para hacer pruebas
     // echo "findAll<pre>";
@@ -20,7 +38,7 @@
 
     // UserDAO::update($usuario);
 
-    echo "<pre>";
+    // echo "<pre>";
 
     // echo "-------------------------- Find All -----------------------------------";
     // UserDAO::findAll();
@@ -63,9 +81,9 @@
 
     // echo "<br>";
 
-    echo "-------------------------- Valida User -----------------------------------";
-    $usuario = UserDAO::validaUser('maria', 'maria');
-    print_r($usuario);
+    // echo "-------------------------- Valida User -----------------------------------";
+    // $usuario = UserDAO::validaUser('maria', 'maria');
+    // print_r($usuario);
 
 
 ?>
