@@ -124,6 +124,8 @@
             if ($result -> rowCount() > 0) {
                 return true;
             }
+
+            return false;
         }
 
 
@@ -145,6 +147,8 @@
             if ($result -> rowCount() > 0) {
                 return true;
             }
+
+            return false;
         }
 
 
@@ -215,7 +219,7 @@
         }
 
 
-        public static function validaUser($nombre, $pass) {
+        public static function validarUser($nombre, $pass) {
 
             $sql = "SELECT * FROM Usuario WHERE descUsuario = ? AND password = ? AND activo = true";
 
@@ -235,11 +239,11 @@
                 // Hay que crear un nuevo usuario con todos los campos de la tabla de Usuario. Para poder mostrarlo, lo guardamos en la variable $usuario
                 $usuario = new User(
                     $usuarioStd -> codUsuario,
+                    $usuarioStd -> password,
+                    $usuarioStd -> descUsuario,
                     $usuarioStd -> fechaUltimaConexion,
                     $usuarioStd -> perfil,
-                    $usuarioStd -> activo,
-                    $usuarioStd -> descUsuario,
-                    $usuarioStd -> password
+                    $usuarioStd -> activo
                 );
                                                     
                 return $usuario;                    

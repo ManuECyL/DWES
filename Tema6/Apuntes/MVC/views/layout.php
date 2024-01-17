@@ -25,9 +25,27 @@
             <nav>
 
                 <div>
-                    <form action="" method="post">
-                        <input type="submit" value="Login" name="login">
-                    </form>
+
+                    <?php
+                        if (validado()) {
+                            echo "Bienvenido " . $_SESSION['usuario'] -> descUsuario;
+
+                            echo "<br><br>";
+                    ?>
+                            <form action="" method="post">
+                                <input type="submit" value="Ver Perfil" name="User_verPerfil">
+                                <input type="submit" value="Cerrar Sesion" name="logout">
+                            </form>
+                    <?php                        
+
+                        } else {
+                    ?>
+                            <form action="" method="post">
+                                <input type="submit" value="Login" name="login">
+                            </form>
+                    <?php
+                        }
+                    ?>
                 </div>
 
             </nav>
@@ -38,6 +56,7 @@
 
             <!-- Aquí van a ir las vistas -->
             <?php
+                // Si no hay ninguna vista va al home, si hay alguna, muestra la que esté
                 if (!isset($_SESSION['vista'])) {
                     require VIEW . 'home.php';
                 
