@@ -36,6 +36,9 @@
         } else {
 
         }
+    
+    } else if (isset($_REQUEST['Login_Registro'])) {
+        $_SESSION['vista'] = VIEW . 'home.php';
     }
 
 ?>
