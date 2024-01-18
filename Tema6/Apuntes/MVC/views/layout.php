@@ -33,7 +33,11 @@
                             echo "<br><br>";
                     ?>
                             <form action="" method="post">
+                                
+                                <input type="submit" value="Ver Citas" name="User_verCitas">
+
                                 <input type="submit" value="Ver Perfil" name="User_verPerfil">
+
                                 <input type="submit" value="Cerrar Sesion" name="logout">
                             </form>
                     <?php                        

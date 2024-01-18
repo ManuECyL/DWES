@@ -18,7 +18,7 @@
             // Recorre el resultado  y lo devuelve como un objeto. Este objeto se guarda en la variable $usuarioStd, ya que el resultado anterior devuelvía un stdObject, es decir un Objeto Standard
             while ($citaStd = $result -> fetchObject()) {
     
-                $cita = new User(
+                $cita = new Cita(
                     $citaStd -> id,
                     $citaStd -> especialista,
                     $citaStd -> motivo,
@@ -29,9 +29,7 @@
                 
                 // Añadimos cada usuario al array de usuarios
                 array_push($array_citas, $cita);
-                
-                // Para visualizar el resultado
-                print_r($cita);
+
             }
             
             // return de un array con todos los User
@@ -55,7 +53,7 @@
                 $citaStd = $result -> fetchObject();
     
                 // Hay que crear un nuevo usuario con todos los campos de la tabla de Usuario. Para poder mostrarlo, lo guardamos en la variable $usuario
-                $cita = new User(
+                $cita = new Cita(
                     $citaStd -> id,
                     $citaStd -> especialista,
                     $citaStd -> motivo,
@@ -63,10 +61,7 @@
                     $citaStd -> activo,
                     $citaStd -> paciente
                 );
-                                                    
-                // Para visualizar el resultado
-                    print_r($cita);
-            
+                                                                
             } else {
                 // No muestra nada
                 return null;
@@ -150,7 +145,7 @@
             // Recorre el resultado  y lo devuelve como un objeto. Este objeto se guarda en la variable $usuarioStd, ya que el resultado anterior devuelvía un stdObject, es decir un Objeto Standard
             while ($citaStd = $result -> fetchObject()) {
     
-                $cita = new User(
+                $cita = new Cita(
                     $citaStd -> id,
                     $citaStd -> especialista,
                     $citaStd -> motivo,
@@ -161,9 +156,6 @@
                 
                 // Añadimos cada usuario al array de usuarios
                 array_push($array_citas, $cita);
-                
-                // Para visualizar el resultado
-                print_r($cita);
             }
             
             // return de un array con todos los User
@@ -187,7 +179,7 @@
             // Recorre el resultado  y lo devuelve como un objeto. Este objeto se guarda en la variable $usuarioStd, ya que el resultado anterior devuelvía un stdObject, es decir un Objeto Standard
             while ($citaStd = $result -> fetchObject()) {
     
-                $cita = new User(
+                $cita = new Cita(
                     $citaStd -> id,
                     $citaStd -> especialista,
                     $citaStd -> motivo,
@@ -199,8 +191,6 @@
                 // Añadimos cada usuario al array de usuarios
                 array_push($array_citas, $cita);
                 
-                // Para visualizar el resultado
-                print_r($cita);
             }
             
             // return de un array con todos los User
