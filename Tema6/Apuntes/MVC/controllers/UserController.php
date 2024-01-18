@@ -19,7 +19,7 @@
         } else if (isset($_REQUEST['User_Guardar'])) {
             $usuario = $_SESSION['usuario'];
 
-            if (!textVacio($_REQUEST['nombre'])) {
+            if (!textVacio('nombre')) {
                 $usuario -> descUsuario = $_REQUEST['nombre'];
                 
                 if (UserDAO::update($usuario)) {
@@ -37,13 +37,13 @@
                 $errores['nombre'] = "No puede estar vacío";
             }
 
-        } else if (isset($_REQUEST['User_CambiaContraseña'])) {
+        } else if (isset($_REQUEST['User_GuardarContraseña'])) {
             $usuario = $_SESSION['usuario'];
 
             if (!textVacio('pass1') && !textVacio('pass2') && passIgual($_REQUEST['pass1'], $_REQUEST['pass2'])) {
                 $usuario -> password = $_REQUEST['pass1'];
 
-                if (UserDAO::cambioContraseña($usuario)) {
+                if (UserDAO::cambioContraseña($_REQUEST['pass1'], $usuario -> codUsuario)) {
                     $sms = "Se ha cambiado la contraseña correctamente";
                     $_SESSION['usuario'] = $usuario;
                     $_SESSION['vista'] = VIEW . 'verUsuario.php';

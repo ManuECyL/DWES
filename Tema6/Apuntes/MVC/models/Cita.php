@@ -1,19 +1,20 @@
 <?php
 
-    class User {
-        private $codUsuario;
-        private $password;
-        private $descUsuario;
-        private $fechaUltimaConexion;
-        private $perfil; // Rol
-        private $activo;
+    class Cita {
+        private $id;
+        private $especialista;
+        private $motivo;
+        private $fecha;
+        private $activo; 
+        private $paciente;
 
-        function __construct($codUsuario, $password, $descUsuario, $fechaUltimaConexion, $perfil = 'usuario', $activo = true) {
-            $this -> codUsuario = $codUsuario;
-            $this -> password = $password;
-            $this -> descUsuario = $descUsuario;
-            $this -> fechaUltimaConexion = $fechaUltimaConexion;
-            $this -> perfil = $perfil;
+        // Los valores que tienen valores por defecto en la BBDD deberían ir al final, en este caso 'activo'
+        function __construct($id, $especialista, $motivo, $fecha, $activo, $paciente) {
+            $this -> id = $id;
+            $this -> especialista = $especialista;
+            $this -> motivo = $motivo;
+            $this -> fecha = $fecha;
+            $this -> paciente = $paciente;
             $this -> activo = $activo;
         }
 

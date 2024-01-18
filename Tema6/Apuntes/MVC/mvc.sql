@@ -14,3 +14,16 @@
 
     insert into Usuario(codUsuario, descUsuario, password, fechaUltimaConexion) values (1, 'maria', sha1('maria'), now());
     insert into Usuario(codUsuario, descUsuario, password, fechaUltimaConexion) values (2, 'pepe', sha1('pepe'), now());
+
+    CREATE TABLE Cita (
+        id INT PRIMARY KEY AUTO_INCREMENT,
+        especialista VARCHAR(25) NOT NULL,
+        motivo VARCHAR(200) NOT NULL,
+        fecha DATE NOT NULL,
+        activo BOOLEAN DEFAULT true,
+        paciente VARCHAR(15)
+    ) engine =innodb;
+
+ALTER TABLE Cita ADD CONSTRAINT paciente_fk FOREIGN KEY (paciente) REFERENCES Usuario (codUsuario);
+
+INSERT INTO Cita VALUES(1, 'traumatologo', 'Tengo la rodilla hinchada', '2024-01-16', true, '1');

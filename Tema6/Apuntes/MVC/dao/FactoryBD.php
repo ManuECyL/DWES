@@ -20,7 +20,7 @@
                 $stmt = null;
 
                 // Muestra el mensaje de error y cierra la conexión
-                echo $e -> getMessage();
+                // echo $e -> getMessage();
                 unset($conn);
             }
 

@@ -38,7 +38,30 @@
         }
     
     } else if (isset($_REQUEST['Login_Registro'])) {
-        $_SESSION['vista'] = VIEW . 'home.php';
+        
+        $_SESSION['vista'] = VIEW . 'registro.php';
+
+        $errores = array();
+
+        // Comprobar si nombre y contraseña no están vacios
+        if (validarFormularioR($errores)) {
+            
+            $usuario = new User(
+                $_REQUEST['cod'],
+                $_REQUEST['nombre'],
+                $_REQUEST['pass1'],
+                date('Y-m-d')
+            );
+
+            if (UserDAO::insert($usuario)) {
+                // Mandarlo a la vista
+                $_SESSION['vista'] = VIEW . 'login.php';
+                $sms = "Se ha registrado con éxito";
+            
+            } else {
+                $errores['registrar']  = "No se ha podido registrar";
+            }
+        }
     }
 
 ?>

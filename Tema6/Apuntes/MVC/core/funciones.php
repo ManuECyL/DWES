@@ -18,6 +18,33 @@
         return false;
     }
 
+    function validarFormularioR(&$errores) {
+
+        if (textVacio('cod')) {
+            $errores['cod'] = "CodUsuario Vacío";
+        } 
+
+        if (textVacio('nombre')) {
+            $errores['nombre'] = "Nombre Vacío";
+        } 
+        
+        if (textVacio('pass1')) {
+            $errores['pass1'] = "Contraseña vacía";
+        }
+
+        if (textVacio('pass2')) {
+            $errores['pass2'] = "Contraseña vacía";
+        }
+
+        passIgual($_REQUEST['pass1'], $_REQUEST['pass2']);
+  
+        if (count($errores) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
     function textVacio($name) {
 
         if (empty($_REQUEST[$name])) 

@@ -103,7 +103,11 @@
 
             $result = FactoryBD::realizaConsulta($sql, $parametros);
 
-            return true;
+            if ($result -> rowCount() > 0) {
+                return true;
+            }
+
+            return false;
         }
 
 
@@ -129,22 +133,17 @@
         }
 
 
-        public static function cambioContraseña($usuario) {
+        public static function cambioContraseña($password, $codUsuario) {
 
-            $sql = "UPDATE Usuario SET password = ?, fechaUltimaConexion = ?, perfil = ?, activo = ? WHERE codUsuario = ?";
+            $sql = "UPDATE Usuario SET password = ? WHERE codUsuario = ?";
 
-            $parametros = array( 
-                sha1($usuario -> password),
-                $usuario -> descUsuario, 
-                $usuario -> fechaUltimaConexion,
-                $usuario -> perfil,
-                $usuario -> activo,
-                $usuario -> codUsuario
-            );
+            $password = sha1($password);
+
+            $parametros = array($password, $codUsuario);
 
             $result = FactoryBD::realizaConsulta($sql, $parametros);
 
-            if ($result -> rowCount() > 0) {
+            if ($result) {
                 return true;
             }
 
