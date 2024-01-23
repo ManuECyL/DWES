@@ -1,0 +1,32 @@
+1. Problema
+
+    - Análisis:
+
+        + Requisitos: 
+            -> Casos de Uso o UML (Usuario No Registrado: Ver Home, Login y Registro | Usuario Registrado: Ver Perfil, Modificar Perfil y Compras)
+            -> 3 Usuarios: Cliente, Moderador y Admin.
+            -> Usuario Registrado: Ver Perfil, Modificar Perfil (Menos el User/Id) y Compras
+            -> Moderador: Ver Productos, Insertar productos en el almacen.
+            -> Administradores: Ver Productos, Insertar, Modificar y Borrar productos en el almacen.
+
+        + BBDD:
+            -> Entidad Relación - ER (Conceptual)
+            -> Relacional (Ya está normalizada, ER no)
+            -> Campos:
+                ~ Id
+                ~ Contraseña: 8 caracteres min (1 Mayúscula, 1 Minúscula y 1 Número), validar 2 veces (repetir contraseña)
+                ~ Email
+                ~ Telefono
+    
+
+
+
+
+
+Tips:
+    - Identificar problemas
+    - Requisitos:
+        * HOME
+        * Novedades (Opcional)
+        * Productos más vendidos (Opcional)
+        * LOGIN: Un usuario no registrado va a tener acceso a un login

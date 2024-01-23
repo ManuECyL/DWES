@@ -1,0 +1,279 @@
+/* ERRORES */
+.error {
+    color: red;
+    position: absolute;
+}
+
+/* ALERTAS */
+.alert {
+    margin-bottom: 0;
+}
+
+
+/* HEADER */
+header {
+    margin-top: 0;
+}
+
+i {
+    color: rgb(0, 0, 0);
+}
+
+.logo:link {
+    text-decoration: none;
+}
+
+.icono:hover {
+    color: rgb(255, 255, 255);
+}
+
+/* NAV */
+.navNombre {
+    color: white;
+    text-shadow: 1px 1px black;
+    font-size: 18px;
+}
+
+.navNombre:hover {
+    color: rgba(10, 10, 10, 0.658);
+}
+
+/* BOTONES FORMULARIOS */
+.formu {
+    font-size: 20px;
+    color: white;
+    width: 80%;
+}
+
+.btn.formu:hover, .btn.formu:focus, .btn.formu:active {
+  color: white !important;
+}
+
+
+/* FORMULARIOS */
+.lblForm {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.inputForm {
+    width: 400px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+/* PRODUCTOS */
+#modificarProductos {
+    width: 15%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+    text-align: center;
+}
+
+
+/* IMAGENES PRODUCTOS */
+.productos {
+    height: 450px;
+    width: 90%;
+    margin-top: 10px;
+    box-shadow: 0px 0px 10px black;
+    border: 1px solid black;
+}
+
+/* GESTIONAR PRODUCTOS */
+.inputStock {
+    width: 60px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#compañiaGest {
+    width: 100%;
+    text-align: center;
+}
+
+#precioGest {
+    width: 80px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#cod_ProdGest {
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+.botonesGest {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.botonesGest:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* CARRITO */
+.divCantidad {
+    width: 110px; 
+}
+
+.inputCantidad {
+    width: 60px; 
+    text-align: center;
+    margin-right: 10px;
+}
+
+.bi-trash {
+    font-size: 15px;
+}
+
+.bi-check2-square{
+    font-size: 15px;
+}
+
+
+/* BOTONES CARRITO */
+.inputCarrito {
+    width: 12%;
+    margin-left: 20px;
+    margin-right: 10px;
+    margin-top: 15px;
+}
+
+#realizarPedido {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#realizarPedido:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* VENTAS */
+#id_UsuarioVentas {    
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#id_CompraVentas{
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#cod_ProdVentas {
+    width: 80px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#precio_Un {
+    width: 80px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#cantidad {
+    width: 60px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#actualizarVentas {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#actualizarVentas:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+
+/* ALBARANES */
+#id_Albaran {
+    border: none; 
+    background: none; 
+    text-align: center; 
+    outline: none;
+    width: 80px;
+}
+
+#cod_ProdAlb {
+    width: 110px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#cantidadAlb {
+    width: 60px;
+    text-align: center;
+    margin-right: 5px;
+}
+
+#actualizarAlbaranes {
+    width: 20%;
+    margin-top: 5px;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#actualizarAlbaranes:hover {
+    color: rgb(255, 255, 255) !important;
+    background-color: rgb(13, 151, 31) !important;
+}
+
+/* FOOTER */
+.footerTitulo {
+    color: white;
+    text-shadow: 1px 1px 8px black;
+}
+
+.footerTitulo:hover {
+    color: black;
+}
+
+.footerLink {
+    color: white;
+    width: fit-content;
+}
+
+.footerLink:link {
+    text-decoration: none;
+}
+
+.footerLink:hover {
+    color: black;
+    text-shadow: 1px 1px black;
+}
+
+/* ICONOS FOOTER REDES */
+.iconoRed {
+    color: white;
+}
+
+.iconoRed:hover {
+    color: black;
+}
+

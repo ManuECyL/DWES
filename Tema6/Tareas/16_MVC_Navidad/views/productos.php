@@ -165,7 +165,12 @@
 
                                                     <div class="d-flex justify-content-center small mb-3">
                                                         <div style="font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
-                                                    </div>                                               
+                                                    </div>
+
+                                                    <div class="d-flex justify-content-center small mb-3">
+                                                        <div style="font-size: 18px"><b>' . $producto['stock'] . '€</b></div>
+                                                    </div>
+                                                
         
                                                     <div class="d-flex justify-content-center small mb-0">
                                                         <div>Stock: ' . $producto['stock'] . '</div>
