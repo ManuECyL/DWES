@@ -28,6 +28,11 @@
         // Llamará a la vista que muestra el usuario
         $_SESSION['vista'] = VIEW . 'verCitas.php';
         $_SESSION['controller'] = CONTROLLER . 'CitasController.php';
+    
+    }  elseif (isset($_REQUEST['Cita_VerCitasTodas'])) {
+        // Llamará a la vista que muestra el usuario
+        $_SESSION['vista'] = VIEW . 'verCitas.php';
+        $_SESSION['controller'] = CONTROLLER . 'CitasController.php';
     }
 
 

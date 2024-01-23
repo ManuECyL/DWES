@@ -64,9 +64,6 @@
                     $usuarioStd -> perfil,
                     $usuarioStd -> activo
                 );
-                                                    
-                // Para visualizar el resultado
-                    print_r($usuario);
             
                 // return de un objeto usuario 
                 return $usuario;

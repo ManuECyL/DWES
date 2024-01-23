@@ -5,7 +5,7 @@
     <br>
 
     <label for="cod"> CodUsuario: 
-        <input type="text" name="cod" id="cod" readonly>
+        <input type="text" name="cod" id="cod">
     </label>
     <span class="error">
         <?php
@@ -31,7 +31,7 @@
 
     <br><br>
 
-    <label for="pass"> Contraseña: 
+    <label for="pass1"> Contraseña: 
         <input type="password" name="pass1" id="pass1">
     </label>
     <span class="error">
@@ -44,7 +44,7 @@
 
     <br><br>
 
-    <label for="pass"> Repetir Contraseña: 
+    <label for="pass2"> Repetir Contraseña: 
         <input type="password" name="pass2" id="pass2">
     </label>
     <span class="error">

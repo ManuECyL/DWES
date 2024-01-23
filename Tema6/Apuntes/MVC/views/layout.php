@@ -33,6 +33,14 @@
                             echo "<br><br>";
                     ?>
                             <form action="" method="post">
+
+                    <?php
+                                if (isAdmin()) {                    
+                    ?>
+                                    <input type="submit" value="Ver Todas Citas" name="Cita_VerCitasTodas">
+                    <?php
+                                }
+                    ?>
                                 
                                 <input type="submit" value="Ver Citas" name="User_verCitas">
 

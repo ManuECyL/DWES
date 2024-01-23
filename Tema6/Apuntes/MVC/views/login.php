@@ -1,5 +1,4 @@
 <?php
-
     if (isset($sms)) {
         echo $sms;
     }

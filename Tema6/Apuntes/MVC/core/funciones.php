@@ -36,7 +36,29 @@
             $errores['pass2'] = "Contraseña vacía";
         }
 
-        passIgual($_REQUEST['pass1'], $_REQUEST['pass2']);
+        passIgual($_REQUEST['pass1'], $_REQUEST['pass2'], $errores);
+  
+        if (count($errores) == 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+
+    function validaFormularioNuevaCita(&$errores) {
+
+        if (textVacio('especialista')) {
+            $errores['especialista'] = "Especialista Vacío";
+        } 
+
+        if (textVacio('fecha')) {
+            $errores['fecha'] = "Fecha Vacío";
+        } 
+        
+        if (textVacio('motivo')) {
+            $errores['motivo'] = "Motivo vacía";
+        }
   
         if (count($errores) == 0) {
             return true;
@@ -68,7 +90,7 @@
         return false;
     }
 
-    function passIgual($pass1, $pass2, &$errores) {
+    function passIgual($pass1, $pass2, $errores) {
 
         if ($pass1 !== $pass2) {
             $errores['igual'] = "Las contraseñas no coinciden";
@@ -78,4 +100,14 @@
         return true;
     }
 
+
+    function isAdmin() {
+        
+        if ($_SESSION['usuario'] -> perfil == 'administrador') {
+            return true;
+        
+        } else {
+            return false;
+        }
+    }
 ?>

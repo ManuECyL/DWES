@@ -27,3 +27,7 @@
 ALTER TABLE Cita ADD CONSTRAINT paciente_fk FOREIGN KEY (paciente) REFERENCES Usuario (codUsuario);
 
 INSERT INTO Cita VALUES(1, 'traumatologo', 'Tengo la rodilla hinchada', '2024-01-16', true, '1');
+
+INSERT INTO Usuario(codUsuario, descUsuario, password, fechaUltimaConexion) VALUES (6, 'admin', sha1('admin'), now());
+
+UPDATE Usuario SET perfil = 'administrador' WHERE codUsuario = 6;
