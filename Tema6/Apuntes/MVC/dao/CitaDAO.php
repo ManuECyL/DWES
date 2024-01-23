@@ -61,14 +61,13 @@
                     $citaStd -> activo,
                     $citaStd -> paciente
                 );
+
+                return $cita;
                                                                 
             } else {
                 // No muestra nada
                 return null;
             }
-            
-            // return de un objeto usuario 
-            return $cita;
         }
 
 
@@ -92,6 +91,7 @@
 
             return false;
         }
+        
 
         public static function update($cita) {
     

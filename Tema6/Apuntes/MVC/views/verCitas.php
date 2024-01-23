@@ -12,7 +12,7 @@
             foreach ($array_citas as $cita) {
                 echo "<tr>";
                     echo "<form method='post'>";
-                        echo "<input type='hidden' name='id' value='id'";
+                        echo "<input type='hidden' name='id' value='".$cita -> id."'";
                         echo "<td>". $cita -> especialista ."</td>";
                         echo "<td>". $cita -> fecha ."</td>";
                         echo "<input type='submit' name='Cita_Ver' value='Ver'";

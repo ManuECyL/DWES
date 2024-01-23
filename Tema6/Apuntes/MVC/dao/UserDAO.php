@@ -68,13 +68,13 @@
                 // Para visualizar el resultado
                     print_r($usuario);
             
+                // return de un objeto usuario 
+                return $usuario;
+
             } else {
                 // No muestra nada
                 return null;
             }
-            
-            // return de un objeto usuario 
-            return $usuario;
         }
 
 
@@ -190,31 +190,21 @@
 
             // Llamamos a la función realizaConsulta() del fichero FactoryBD.php y la guardamos en la variable $result para tratarla posteriormente
             $result = FactoryBD::realizaConsulta($sql, $parametros);
-            
-             // Aquí guardaremos el array de la consulta
-             $array_usuarios = array();
-            
-             // Recorre el resultado  y lo devuelve como un objeto. Este objeto se guarda en la variable $usuarioStd, ya que el resultado anterior devuelvía un stdObject, es decir un Objeto Standard
-             while ($usuarioStd = $result -> fetchObject()) {
- 
-                 $usuario = new User($usuarioStd -> codUsuario,
-                     $usuarioStd -> password,
-                     $usuarioStd -> descUsuario,
-                     $usuarioStd -> fechaUltimaConexion,
-                     $usuarioStd -> perfil,
-                     $usuarioStd -> activo
-                 );
-                 
-                 // Añadimos cada usuario al array de usuarios
-                 array_push($array_usuarios, $usuario);
-                 
-                 // Para visualizar el resultado
-                 print_r($usuario);
-             }
-             
-             // return de un array con todos los User
-             return $array_usuarios;
+                        
+            if($result->rowCount()==1){
+                $usuarioStd  = $result->fetchObject();
+                $usuario = new User($usuarioStd->codUsuario,
+                                $usuarioStd->password,
+                                $usuarioStd->descUsuario,
+                                $usuarioStd->fechaUltimaConexion,
+                                $usuarioStd->perfil,
+                                $usuarioStd->activo);
+                return $usuario;
 
+            //return 1 objeto usuario
+            } else {
+                return null;
+            }
         }
 
 

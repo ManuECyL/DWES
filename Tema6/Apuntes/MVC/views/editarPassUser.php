@@ -7,7 +7,7 @@
     <br>
 
     <label for="pass1"> Contraseña:
-        <input type="text" name="pass1" id="pass1">
+        <input type="password" name="pass1" id="pass1">
     </label>
 
     <span class="error">
@@ -21,7 +21,7 @@
     <br><br>
 
     <label for="pass2"> Repetir Contraseña:
-        <input type="text" name="pass2" id="pass2">
+        <input type="password" name="pass2" id="pass2">
     </label>
 
     <span class="error">

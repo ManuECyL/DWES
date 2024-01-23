@@ -21,9 +21,9 @@
 
         require('./dao/FactoryBD.php');
 
-        require('./dao/UserDAO.php');
         require('./models/User.php');
+        require('./dao/UserDAO.php');
 
-        require('./dao/CitaDAO.php');
         require('./models/Cita.php');
+        require('./dao/CitaDAO.php');
 ?>

@@ -41,6 +41,10 @@
         
         $_SESSION['vista'] = VIEW . 'registro.php';
 
+    } 
+    
+    if (isset($_REQUEST['Login_GuardaRegistro'])) {
+
         $errores = array();
 
         // Comprobar si nombre y contraseña no están vacios

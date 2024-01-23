@@ -38,10 +38,5 @@
                 echo "No existe el att (atributo)";
             }
         }
-
-        // To String para mostrar el resultado
-        public function __toString() {
-            // return $this -> cif .":". $this -> nombre .":". $this -> localidad;
-        }
     }
 ?>

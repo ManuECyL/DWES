@@ -68,7 +68,7 @@
         return false;
     }
 
-    function passIgual($pass1, $pass2) {
+    function passIgual($pass1, $pass2, &$errores) {
 
         if ($pass1 !== $pass2) {
             $errores['igual'] = "Las contraseñas no coinciden";
