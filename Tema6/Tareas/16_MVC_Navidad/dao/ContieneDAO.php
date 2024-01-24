@@ -1,9 +1,7 @@
 <?php
-    // Cada modelo tiene su DAO
+    
+    class ContieneDAO {
 
-    class UsuarioDAO {
-
-        // Es static porque no se desea crear(instanciar) un objeto de UserDAO, es decir, se busca que la función sirva para todos los Usuarios
         public static function findAll() {
 
             $sql = "SELECT * FROM Usuarios";

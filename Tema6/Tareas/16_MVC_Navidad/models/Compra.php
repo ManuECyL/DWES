@@ -1,18 +1,14 @@
 <?php
 
-    class Usuario {
+    class Compra {
+        private $id_Compra;
         private $id_Usuario;
-        private $contraseña;
-        private $email;
-        private $fecha_Nacimiento;
-        private $rol;
+        private $fecha_Compra;
 
-        function __construct($id_Usuario, $contraseña, $email, $fecha_Nacimiento, $rol = 'cliente') {
+        function __construct($id_Compra, $id_Usuario, $fecha_Compra) {
+            $this -> id_Compra = $id_Compra;
             $this -> id_Usuario = $id_Usuario;
-            $this -> contraseña = $contraseña;
-            $this -> email = $email;
-            $this -> fecha_Nacimiento = $fecha_Nacimiento;
-            $this -> rol = $rol;
+            $this -> fecha_Compra = $fecha_Compra;
         }
 
         // Es una variable de variables, por eso en el return se pone el $ a la varible att

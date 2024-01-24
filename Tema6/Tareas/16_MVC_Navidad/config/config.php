@@ -16,10 +16,10 @@
 
         require('./dao/FactoryBD.php');
 
-        require('./models/User.php');
-        require('./dao/UserDAO.php');
+        require('./models/Usuario.php');
+        require('./dao/UsuarioDAO.php');
 
-        require('./models/Cita.php');
-        require('./dao/CitaDAO.');
+        require('./models/Producto.php');
+        require('./dao/ProductoDAO.php');
 
 ?>

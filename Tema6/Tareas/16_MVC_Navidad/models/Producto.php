@@ -1,15 +1,15 @@
 <?php
 
     class Producto {
-        private $codProd;
+        private $cod_Prod;
         private $titulo;
         private $compañia;
         private $stock;
         private $precio;
         private $ruta_Imagen;
 
-        function __construct($codProd, $titulo, $compañia, $stock, $precio, $ruta_Imagen) {
-            $this -> codProd = $codProd;
+        function __construct($cod_Prod, $titulo, $compañia, $stock, $precio, $ruta_Imagen) {
+            $this -> cod_Prod = $cod_Prod;
             $this -> titulo = $titulo;
             $this -> compañia = $compañia;
             $this -> stock = $stock;
