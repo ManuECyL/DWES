@@ -9,17 +9,21 @@
 
             $metodo = $_SERVER['REQUEST_METHOD'];
             $recursos = self::divideURI();
+            $filtros = self::condiciones();
 
             switch ($metodo) {
 
                 case 'GET':
                     
                     // Si no hay nada después de index/institutos o si hay ?
-                    if (count($recursos) == 2) {
+                    if (count($recursos) == 2 && count($filtros) == 0) {
                         $datos = InstitutoDAO::findAll();
-                        // Faltan cosas
                     
-                    // Se le pasa un id 
+                        
+                    } else if (count($recursos) == 2 && count($filtros) > 0) {
+                        self::buscaConFiltros();
+
+                    // Se le pasa un id en la URI
                     } elseif (count($recursos) == 3) {
                         $datos = InstitutoDAO::findById($recursos[2]);
                     
@@ -50,7 +54,20 @@
                     self::response("HTTP/1.0 404 No permite el metodo utilizado");
                     break;
             }
+        }
 
+        // Comprobar si el nombre del filtro/parámetro está permitido
+        static function buscaConFiltros() {
+
+            $permitimos = ['nombre', 'localidad'];
+            $filtros = self::condiciones();
+
+            foreach ($filtros as $key => $value) {
+                
+                if (!in_array($key, $permitimos)) {
+                    self::response("HTTP/1.0 404 No permite usar el parametro: " .$key);
+                }
+            }
 
         }
 
