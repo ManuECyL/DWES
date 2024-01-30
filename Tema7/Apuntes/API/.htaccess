@@ -1,0 +1,4 @@
+# Intrepretar el fichero como php por si no se ha escrito con el código de .htaccess
+Options +MultiViews
+AddHandler php5-script php
+AddType text/html php
