@@ -14,21 +14,23 @@
             switch ($metodo) {
 
                 case 'GET':
-                    
-                    // Si no hay nada después de index/institutos o si hay ?
+                                        
+                    // Si no hay nada después de index/institutos(recursos) o si hay ? y algo más después(filtros/parametros)
                     if (count($recursos) == 2 && count($filtros) == 0) {
                         $datos = InstitutoDAO::findAll();
-                    
-                        
+                       
                     } else if (count($recursos) == 2 && count($filtros) > 0) {
-                        self::buscaConFiltros();
+                        $datos = self::buscaConFiltros();
 
                     // Se le pasa un id en la URI
                     } elseif (count($recursos) == 3) {
                         $datos = InstitutoDAO::findById($recursos[2]);
                     
-                    // Que sea 3 o > 3
+                    } else {
+                        self::response("HTTP/1.0 404 No esta indicando los recursos necesarios");
                     }
+
+                    // Que sea 3 o > 3
 
                     // Convertimos el array en un json
                     $datos = json_encode($datos);
@@ -38,17 +40,50 @@
 
                     break;
                 
+                
                 case 'POST':
-                    # code...
+
+                    // Recogemos los datos que se han enviado
+                    $datos = file_get_contents('php://input');
+
+                    // Pasamos los datos a un array asociativo de un fichero JSON(string)
+                    $datos = json_decode($datos, true);
+
+                    // Si están introducidos los valores de los atributos
+                    if (isset($datos['nombre']) && isset($datos['localidad']) && isset($datos['telefono'])) {
+                        
+                        // Creamos el objeto insti
+                        $insti = new Instituto(null, $datos['nombre'], $datos['localidad'], $datos['telefono']);
+                        
+                        // Si se ha insertado correctamente
+                        if (InstitutoDAO::insert($insti)) {
+    
+                            // Buscamos el objeto para devolverlo en el body. Como no sabemos el id, ya que es auto incremental, buscamos el último registro insertado
+                            $insti = InstitutoDAO::findLast();
+                            
+                            $insti = json_encode($insti);
+    
+                            // Mostramos mensaje correcto y el instituto creado en el body
+                            self::response("HTTP/1.0 201 Insertado Correctamente", $insti);
+                        }
+                    
+                    } else {
+                        self::response("HTTP/1.0 404 No esta introduciendo los atributos de instituto: nombre, localidad, telefono");
+                    }
+
                     break;
+
 
                 case 'PUT':
-                    # code...
+                    self::put();
+
                     break;
 
+
                 case 'DELETE':
-                    # code...
+                    
                     break;
+
 
                 default:
                     self::response("HTTP/1.0 404 No permite el metodo utilizado");
@@ -65,10 +100,59 @@
             foreach ($filtros as $key => $value) {
                 
                 if (!in_array($key, $permitimos)) {
-                    self::response("HTTP/1.0 404 No permite usar el parametro: " .$key);
+                    self::response("HTTP/1.0 400 No permite usar el parametro: " .$key);
                 }
             }
 
+            return InstitutoDAO::findByFiltros($filtros);
+        }
+
+        // Función para comprobar que el put funciona correctamente
+        static function put() {
+
+            $recursos = self::divideURI();
+
+            if (count($recursos) == 3) {
+
+                $permitimos = ['nombre', 'localidad', 'telefono'];
+
+                // Recogemos los datos que se han enviado
+                $datos = file_get_contents('php://input');
+
+                // Pasamos los datos a un array asociativo de un fichero JSON(string)
+                $datos = json_decode($datos, true);
+
+                // Si están introducidos los valores de los atributos
+                if (isset($datos['nombre']) && isset($datos['localidad']) && isset($datos['telefono'])) {
+                    
+                    // Verificar que los datos del body son los de instituto
+                    $datos = self::condiciones();
+
+                    foreach ($datos as $key => $value) {
+                        
+                        if (!in_array($key, $permitimos)) {
+                            self::response("HTTP/1.0 400 No permite usar el parametro: " .$key);
+                        }
+                    }
+
+                    $insti = InstitutoDAO::findById($recursos[2]);
+
+                    if(count($insti) == 1) {
+
+                        $insti = (object)$insti[0];
+                        
+                        if (InstitutoDAO::update($insti)) {
+                            self::response("HTTP/1.0 201 Actualizado Correctamente", $insti);
+                        }
+                    
+                    } else {
+                        self::response("HTTP/1.0 404 Esta intentando modificar un instituto que no existe");
+                    }
+                } 
+            
+            } else {
+                self::response("HTTP/1.0 404 No ha indicado el id");
+            }
         }
 
     }
