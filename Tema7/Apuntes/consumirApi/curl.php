@@ -91,7 +91,7 @@
 
             if ($http_code == 400) {
                 echo "No existe el id";
-                $sms = curl_getinfo($ch, CURLINFO_HEADER_OUT);
+                // $sms = curl_getinfo($ch, CURLINFO_HEADER_OUT);
             }
         }
 
@@ -126,7 +126,7 @@
 
             if ($http_code == 400) {
                 echo "No existe el id";
-                $sms = curl_getinfo($ch, CURLINFO_HEADER_OUT);
+                // $sms = curl_getinfo($ch, CURLINFO_HEADER_OUT);
             }
         }
 
