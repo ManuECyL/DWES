@@ -81,6 +81,19 @@
 
 
                 case 'DELETE':
+
+                    if (count($recursos) == 3) {
+
+                        if(InstitutoDAO::delete($recursos[2])) {
+                            self::response("HTTP/1.0 201 Eliminado Correctamente");
+
+                        } else {
+                            self::response("HTTP/1.0 404 No se ha encontrado el id a eliminar");    
+                        }
+                    
+                    }  else {
+                        self::response("HTTP/1.0 404 No esta indicando el id");
+                    }
                     
                     break;
 
@@ -90,6 +103,7 @@
                     break;
             }
         }
+
 
         // Comprobar si el nombre del filtro/parámetro está permitido
         static function buscaConFiltros() {
@@ -107,6 +121,7 @@
             return InstitutoDAO::findByFiltros($filtros);
         }
 
+
         // Función para comprobar que el put funciona correctamente
         static function put() {
 
@@ -122,37 +137,41 @@
                 // Pasamos los datos a un array asociativo de un fichero JSON(string)
                 $datos = json_decode($datos, true);
 
-                // Si están introducidos los valores de los atributos
-                if (isset($datos['nombre']) && isset($datos['localidad']) && isset($datos['telefono'])) {
-                    
-                    // Verificar que los datos del body son los de instituto
-                    $datos = self::condiciones();
+                if ($datos == null) {
+                    self::response("HTTP/1.0 400 El json del body no esta bien formado");
+                }
 
+                // Verificar que los datos del body son los de instituto
+                foreach ($datos as $key => $value) {
+                    
+                    if (!in_array($key, $permitimos)) {
+                        self::response("HTTP/1.0 400 No permite usar el parametro: " .$key);
+                    }
+                }
+
+                $insti = InstitutoDAO::findById($recursos[2]);
+
+                if(count($insti) == 1) {
+
+                    $insti = (object)$insti[0];
+
+                    // Parametros a modificar
                     foreach ($datos as $key => $value) {
-                        
-                        if (!in_array($key, $permitimos)) {
-                            self::response("HTTP/1.0 400 No permite usar el parametro: " .$key);
-                        }
+                        $insti -> $key = $value;
                     }
 
-                    $insti = InstitutoDAO::findById($recursos[2]);
-
-                    if(count($insti) == 1) {
-
-                        $insti = (object)$insti[0];
-                        
-                        if (InstitutoDAO::update($insti)) {
-                            self::response("HTTP/1.0 201 Actualizado Correctamente", $insti);
-                        }
                     
-                    } else {
-                        self::response("HTTP/1.0 404 Esta intentando modificar un instituto que no existe");
+                    if (InstitutoDAO::update($insti)) {
+
+                        $insti = json_encode($insti);
+
+                        self::response("HTTP/1.0 201 Modificado Correctamente", $insti);
                     }
-                } 
-            
-            } else {
-                self::response("HTTP/1.0 404 No ha indicado el id");
-            }
+                
+                } else {
+                    self::response("HTTP/1.0 404 Esta intentando modificar un instituto que no existe");
+                }
+            } 
         }
 
     }

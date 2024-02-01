@@ -107,6 +107,23 @@
             }                
         }
 
+        public static function delete($id) {
+
+            $sql = "DELETE FROM institutos WHERE id = ?";
+    
+            $parametros = array($id); 
+    
+            // Llamamos a la función realizaConsulta() del fichero FactoryBD.php y la guardamos en la variable $result para tratarla posteriormente
+            $result = FactoryBD::realizaConsulta($sql, $parametros);
+            
+            if ($result -> rowCount() > 0){
+                return true;
+            
+            } else {
+                return false;
+            }
+        }
+
     }
 
 ?>

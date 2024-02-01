@@ -5,6 +5,8 @@
         // Función que muestra la respuesta. Le pasamos como párametros lo que queremos enviar. En el body es opcional pasarle algo
         public static function response($head, $body = '') {
 
+            header('Content-Type: application/json');
+
             // $head es el codigo de la petición y $body los datos que se mostrarán o no
             header($head, $body);
 

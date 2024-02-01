@@ -8,7 +8,7 @@
     // La variable que me dice que es lo que me llega en la ruta. (index/institutos para evitar error al no existir registros)
     if (isset($_SERVER['PATH_INFO'])) {
         
-    //     // Comprobar el recurso
+        // Comprobar el recurso
         $recurso = Base::divideURI();
 
         // echo $recurso[1];
