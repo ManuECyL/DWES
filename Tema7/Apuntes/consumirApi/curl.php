@@ -105,7 +105,6 @@
 
     function delete($recurso, $id) {
 
-
         // Iniciamos la conexión
         $ch = curl_init();
 
