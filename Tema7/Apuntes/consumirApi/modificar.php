@@ -18,7 +18,7 @@
             $array['telefono'] = $_REQUEST['telefono'];
         }
 
-        // POST válido para todos (recurso, body(array))
+        // PUT válido para todos (recurso, id, body(array))
         put('institutos', $_REQUEST['id'], $array);
 
         header('Location: ./index.php');

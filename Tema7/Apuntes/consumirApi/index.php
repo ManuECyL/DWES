@@ -61,6 +61,10 @@
 
         <a href="./modificar.php">Modificar</a>
 
+        <br><br>
+
+        <a href="./eliminar.php">Eliminar</a>
+
     </body>
 
 </html>
