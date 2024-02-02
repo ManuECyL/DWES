@@ -1,3 +1,8 @@
+<?
+  if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+  }
+?>
 <nav class="navbar navbar-expand-md navbar-dark bg-dark bg-gradient lg-sticky-top d-flex">
 
   <div class="navbar row container-fluid d-flex text-center">
@@ -39,7 +44,7 @@
             </div>
           ';
 
-          if ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin') {
+          if ($usuario -> rol == 'moderador' || $usuario -> rol == 'admin') {
             echo '
 
               <div class="col-md-3 col-lg">

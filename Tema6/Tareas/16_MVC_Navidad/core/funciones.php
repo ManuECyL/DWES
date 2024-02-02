@@ -66,6 +66,15 @@
         } 
     }
 
+    function validado() {
+        
+        if (isset($_SESSION['usuario'])) {
+            return true;    
+        }
+        
+        return false;
+    }
+
     function imagen($name) {
 
         if (isset($_FILES[$name])) {
@@ -91,6 +100,23 @@
         } else {
             echo "Error al subir el archivo";
         }
+    }
+
+    function validarFormularioInicioSesion(&$errores) {
+
+        if (textVacio('user')) {
+            $errores['user'] = "Usuario Vacío";
+        } 
+        
+        if (textVacio('pass')) {
+            $errores['pass'] = "Contraseña vacía";
+        }
+
+        if (count($errores) == 0) {
+            return true;
+        }
+
+        return false;
     }
 
 

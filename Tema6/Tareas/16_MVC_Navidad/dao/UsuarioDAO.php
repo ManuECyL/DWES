@@ -164,7 +164,7 @@
                 $usuarioStd = $result -> fetchObject();
 
                 // Hay que crear un nuevo usuario con todos los campos de la tabla de Usuario. Para poder mostrarlo, lo guardamos en la variable $usuario
-                $usuario = new User(
+                $usuario = new Usuario(
                     $usuarioStd -> id_Usuario,
                     $usuarioStd -> contraseña,
                     $usuarioStd -> email,

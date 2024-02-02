@@ -1,12 +1,21 @@
 <?php
 
+  // require_once('./config/conexionBD.php');
   require("./config/config.php");
+  // require_once('./core/funciones.php');
 
   session_start();
 
-  // if (isset($_REQUEST['login'])) {  
-  //   $_SESSION['vista'] = VIEW . 'login.php';
-  //   $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
+  require("./views/layout.php");
+
+  if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
+    $_SESSION['vista'] = VIEW . 'layout.php';
+    $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
+  
+  } elseif (existe('registrarse')) {
+    $_SESSION['vista'] = VIEW . 'registro.php';
+    $_SESSION['controller'] = CONTROLLER . 'RegistroController.php';
+  }
 
   // } elseif (isset($_REQUEST['home'])) {
   //     $_SESSION['vista'] = VIEW . 'home.php';
@@ -34,10 +43,10 @@
   // }
 
 
-  // if (isset($_SESSION['controller'])) {
-  //     require($_SESSION['controller']);
-  // }
+  if (isset($_SESSION['controller'])) {
+      require($_SESSION['controller']);
+  }
 
-  require("./views/layout.php");
+  // require("./views/layout.php");
 
 ?>

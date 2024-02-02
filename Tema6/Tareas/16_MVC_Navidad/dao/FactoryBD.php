@@ -8,7 +8,7 @@
 
             try {
                 // Conexión a la BBDD
-                $conn = new PDO("mysql:host=".IP.";dbname=".BBDD,USER,PASS);
+                $conn = new PDO("mysql:host=".IP.";dbname=".BD,USER,PASS);
 
                 // Preparamos el statement y lo ejecutamos
                 $stmt = $conn -> prepare($sql);

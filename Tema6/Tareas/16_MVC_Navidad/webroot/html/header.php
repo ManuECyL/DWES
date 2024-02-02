@@ -1,3 +1,8 @@
+<?
+  if (isset($_SESSION['usuario'])) {
+    $usuario = $_SESSION['usuario'];
+  }
+?>
 <header class="bg-info bg-gradient">
 
     <div class="row container-fluid p-2">
@@ -88,7 +93,8 @@
 
             <?php
                 if (isset($_SESSION['usuario'])) {
-                    echo '<p style="font-size: 15px; margin-left: 10px; margin-top: 5px">'. $_SESSION['usuario']['id_Usuario'].'</p>';
+                    
+                    echo '<p style="font-size: 15px; margin-left: 10px; margin-top: 5px">'. $id_Usuario = $usuario -> id_Usuario.'</p>';
                 }
             ?>
 
@@ -103,7 +109,7 @@
                     
                     <?php
                       if (isset($_SESSION['usuario'])) {
-                        echo '<h5 style="color: white;">'. $_SESSION['usuario']['id_Usuario'] .'</h5>';
+                        echo '<h5 style="color: white;">'. $id_Usuario = $usuario -> id_Usuario .'</h5>';
     
                       } else {
                         echo '<h5 style="color: white;">Login</h5>';
@@ -124,7 +130,7 @@
                                   <button type="submit" id="perfil" name="perfil" class="btn bg-dark formu">Perfil</button>
                               </div>
                     <?php       
-                            if ($_SESSION['usuario']['rol'] == 'cliente') {
+                            if ($usuario -> rol == 'cliente') {
                     ?>
                               <div class="mb-3">
                                 <button type="submit" id="pedidos" name="pedidos" class="btn bg-dark formu">Pedidos</button>
@@ -132,7 +138,7 @@
                     <?php    
                             }
 
-                            if ($_SESSION['usuario']['rol'] == 'admin' || $_SESSION['usuario']['rol'] == 'moderador') {
+                            if ($usuario -> rol == 'admin' || $usuario -> rol == 'moderador') {
                     ?>
                               <div class="mb-3">
                                 <button type="submit" name="modificarProductos" class="btn bg-dark formu">Modificar Productos</button>

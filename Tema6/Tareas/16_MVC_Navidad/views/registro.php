@@ -1,28 +1,10 @@
 <?php
+
+/*
     session_start();
 
     require('./funciones/conexionBD.php');
     require('./funciones/validaciones.php');
-
-    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-          
-        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
-        
-        if ($usuario) {
-          
-          $_SESSION['usuario'] = $usuario;
-          $contraseña = $_REQUEST['pass'];
-
-          header('Location: ./index.php');
-          exit;
-              
-        } else {
-            $_SESSION['errorInicioSesion'] = "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-        }
-
-    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
-        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    }
 
     // Comprueba si se ha pulsado el icono del carrito
     existeCarrito('carrito');
@@ -37,6 +19,8 @@
         echo $_SESSION['mensaje'];
         unset($_SESSION['mensaje']);  
     }
+
+*/
 ?>
 
 <!DOCTYPE html>
@@ -52,31 +36,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href= "<?= CSS . 'estilos.css' ?>" >
     </head>
 
     <body>
 
-        <?php
-
-            $errores = array();
-
-            if (existe("crearCuenta") && validarRegistro($errores)) {
-                insertarUsuario();
-                header('Location: ./index.php');
-                exit;
-                            
-            } else {
-        ?>
-
 <!-- HEADER -->
         <?php
-            include_once("./html/header.php");
+            require_once HTML . 'header.php';
         ?>
           
 <!-- NAV -->
         <?php
-            include_once("./html/nav.php");
+            require_once HTML . 'nav.php';
         ?>
     
 <!-- MAIN -->
@@ -95,7 +67,7 @@
 
                 <br>
 
-                <form action="./registro.php" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
+                <form action="" method="post" name="formularioRegistro" enctype="multipart/form-data" class="formularioRegistro mx-auto">
 
                     <div class="mb-3">
                         <label for="id_Usuario" class="form-label lblForm">Usuario
@@ -157,15 +129,21 @@
                         </span>
                     </div>
 
+                    <span class="error">
+                        <?php
+                            if (isset($errores)) {
+                                errores($errores,'igual');
+                                errores($errores,'registrar');
+                                echo "<br>";
+                            }            
+                        ?>
+                    </span>
+
                     <br>
 
                     <button type="submit" id="crearCuenta" name="crearCuenta" class="btn btn-dark formu" style="width: 40%;">Crear Cuenta</button>
                 </form>
                 <br>
-
-            <?php
-                }
-            ?>
             
             </div>
 
@@ -173,7 +151,7 @@
 
 <!-- FOOTER -->
         <?php
-            include_once("./html/footer.php");
+            require_once HTML . 'footer.php';
         ?>
 
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

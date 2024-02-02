@@ -1,13 +1,9 @@
 <?php
     // session_start();
 
-    require_once('./config/conexionBD.php');
-    require_once('./config/config.php');
-    require_once('./core/funciones.php');
+    // require_once('../config/conexionBD.php');
+    require_once('../config/config.php');
 
-    if (!comprobarBD()) {
-        crearScript();
-    }
     
     if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
         

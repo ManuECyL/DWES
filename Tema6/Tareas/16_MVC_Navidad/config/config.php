@@ -15,6 +15,7 @@
         require('./core/funciones.php');
 
         require('./config/confBD.php');
+        require('./config/conexionBD.php');
 
         require('./dao/FactoryBD.php');
 

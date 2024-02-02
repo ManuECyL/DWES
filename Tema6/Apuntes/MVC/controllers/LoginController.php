@@ -31,11 +31,7 @@
             } else {
                 $errores['validado']  = "No existe el usuario y contraseña";
             }
-
-        
-        } else {
-
-        }
+        } 
     
     } else if (isset($_REQUEST['Login_Registro'])) {
         

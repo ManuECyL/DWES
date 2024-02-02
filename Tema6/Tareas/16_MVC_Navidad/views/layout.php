@@ -1,31 +1,14 @@
 <?php
     // session_start();
 
-    require_once('./config/conexionBD.php');
-    require_once('./config/config.php');
-    require_once('./core/funciones.php');
+    // require("./config/config.php");
 
     if (!comprobarBD()) {
         crearScript();
     }
 
-    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-          
-      $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
-      
-      if ($usuario) {
-        
-        $_SESSION['usuario'] = $usuario;
-        $contraseña = $_REQUEST['pass'];
-            
-      } else {
-        $_SESSION['errorInicioSesion'] = "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-      }
-    
-    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
-        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    
-    } elseif (isset($_SESSION['usuario'])) {
+    // Si se ha iniciado sesión
+    if (validado()) {
 
       if (existe('perfil')) {
         header('Location: ./perfil.php');
@@ -46,11 +29,7 @@
     // Si no se ha iniciado sesión
     } else {
 
-      if (existe('registrarse')) {
-        header('Location: ./registro.php');
-        exit;
-
-      } elseif (existe('comprar')) {
+      if (existe('comprar')) {
           echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
       
       } elseif (existe('carrito')) {
