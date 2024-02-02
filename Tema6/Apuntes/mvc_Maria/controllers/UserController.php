@@ -29,7 +29,7 @@ if(!validado()){
     }else if(isset($_REQUEST['User_GuardaContraseña'])){
         $usuario = $_SESSION['usuario'];
         if(!textVacio('pass') && !textVacio('pass1') &&
-        passIgual($_REQUEST['pass'],$_REQUEST['pass1'])){
+        passIgual($_REQUEST['pass'],$_REQUEST['pass1'], $errores)){
             $usuario->password = $_REQUEST['pass'];
             if(UserDAO::cambioContraseña($usuario)) {
                 $sms = "Se ha cambiado la contraseña correctamente";

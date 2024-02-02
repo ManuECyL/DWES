@@ -2,7 +2,9 @@
     /* Otras configuraciones */
 
     // Constantes que vayamos a usar en toda la aplicación
-        define ('IMG', "./webroot/imagenes/"); // Para insertar imágenes contantenando el nombre de la imga la ruta
+        define ('HTML', "./webroot/html/"); // Para insertar imágenes contantenando el nombre de la imga la ruta
+        define ('IMGI', "./webroot/imagenes/inicio/"); // Para insertar imágenes de inicio contantenando el nombre de la img la ruta
+        define ('IMGP', "./webroot/imagenes/productos/"); // Para insertar imágenes de productos contantenando el nombre de la img la ruta
         define ('CSS', "./webroot/css/"); // Para insertar estilos css contantenando el fichero css  a la ruta
         define ('JS', "./webroot/js/"); // Para insertar código js contantenando el nombre del fichero js a la ruta
         define ('VIEW', "./views/"); // Para redirigir a una vista contantenando el nombre del fichero php a la ruta

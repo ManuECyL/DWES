@@ -1,9 +1,10 @@
 <?php
     // session_start();
 
-    require('./funciones/conexionBD.php');
-    require('./funciones/validaciones.php');
-    require('./funciones/logout.php');
+    require_once('./config/conexionBD.php');
+    require_once('./config/config.php');
+    require_once('./core/funciones.php');
+    
 
     if (!comprobarBD()) {
         crearScript();
@@ -87,19 +88,19 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href= "<?= CSS . 'estilos.css' ?>" >
     </head>
 
     <body>
 
 <!-- HEADER -->
         <?php
-          include_once("./html/header.php");
+            require_once HTML . 'header.php';
         ?>
           
 <!-- NAV -->
         <?php
-            include_once("./html/nav.php");
+            require_once HTML . 'nav.php';
         ?>
     
 <!-- MAIN -->
@@ -125,19 +126,19 @@
   
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img src="./imagenes/inicio/inicio1.jpg" class="d-block mx-auto w-100 imgC" alt="inicio1"> 
+                <img src="<?= IMGI . 'inicio1.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio1"> 
               </div>
   
               <div class="carousel-item">               
-                <img src="./imagenes/inicio/inicio2.jpg" class="d-block mx-auto w-100 imgC" alt="inicio2">                    
+                <img src="<?= IMGI . 'inicio2.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio2">                    
               </div>
   
               <div class="carousel-item">
-                <img src="./imagenes/inicio/inicio3.jpg" class="d-block mx-auto w-100 imgC" alt="inicio3"> 
+                <img src="<?= IMGI . 'inicio3.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio3"> 
               </div>
 
               <div class="carousel-item">
-                <img src="./imagenes/inicio/inicio4.jpg" class="d-block mx-auto w-100 imgC" alt="inicio4"> 
+                <img src="<?= IMGI . 'inicio4.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio4"> 
               </div>
   
             </div>
@@ -158,7 +159,7 @@
 
 <!-- FOOTER -->
         <?php
-            include_once("./html/footer.php");
+            require_once HTML . 'footer.php';
         ?>
 
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

@@ -40,7 +40,7 @@
         } else if (isset($_REQUEST['User_GuardarContraseña'])) {
             $usuario = $_SESSION['usuario'];
 
-            if (!textVacio('pass1') && !textVacio('pass2') && passIgual($_REQUEST['pass1'], $_REQUEST['pass2'])) {
+            if (!textVacio('pass1') && !textVacio('pass2') && passIgual($_REQUEST['pass1'], $_REQUEST['pass2'], $errores)) {
                 $usuario -> password = $_REQUEST['pass1'];
 
                 if (UserDAO::cambioContraseña($_REQUEST['pass1'], $usuario -> codUsuario)) {

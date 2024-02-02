@@ -1,5 +1,5 @@
 <?php
-    require('./funciones/confBD.php');
+    // require('confBD.php');
 
 // Función que comprueba si la base de datos existe
     function comprobarBD() {
