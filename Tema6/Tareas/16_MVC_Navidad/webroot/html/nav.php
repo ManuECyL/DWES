@@ -15,7 +15,7 @@
 
             <div class="col-md-6 col-lg">
               <li class="nav-item">
-                <a class="nav-link navNombre" href="./productos.php">Productos</a>
+                <a class="nav-link navNombre" href="' . VIEW . 'productos.php ">Productos</a>
               </li>
             </div>
           ';
@@ -34,7 +34,7 @@
 
             <div class="col-md-3 col-lg">
               <li class="nav-item">
-                <a class="nav-link navNombre" href="./productos.php">Productos</a>
+              <a class="nav-link navNombre" href="' . VIEW . 'productos.php ">Productos</a>
               </li>
             </div>
           ';

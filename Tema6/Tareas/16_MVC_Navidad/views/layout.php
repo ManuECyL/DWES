@@ -4,7 +4,6 @@
     require_once('./config/conexionBD.php');
     require_once('./config/config.php');
     require_once('./core/funciones.php');
-    
 
     if (!comprobarBD()) {
         crearScript();
