@@ -32,6 +32,8 @@ i {
     color: white;
     text-shadow: 1px 1px black;
     font-size: 18px;
+    border: none;
+    background-color: none;
 }
 
 .navNombre:hover {

@@ -137,7 +137,7 @@
         } elseif (strlen($_REQUEST['contraseña']) < 8) {
             $errores['contraseña'] = "La contraseña debe tener mínimo 8 caracteres";
 
-        } elseif (!comprobarExpresionRegular($exp_contraseña = '/(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)/', 'contraseña')) {
+        } elseif (!comprobarExpresionRegular('/(?=.*[a-z]+)(?=.*[A-Z]+)(?=.*\d+)/', 'contraseña')) {
             $errores['contraseña'] = "Al menos 1 Mayúscula, 1 minúscula y 1 número";
         }
 
@@ -153,7 +153,7 @@
         if (textVacio('email')) {
             $errores['email'] = "Correo Electrónico Vacío";
 
-        } elseif (!comprobarExpresionRegular($exp_email = '/^\w+\@\w+\.\w{2,}$/', 'email')) {
+        } elseif (!comprobarExpresionRegular('/^\w+\@\w+\.\w{2,}$/', 'email')) {
             $errores['email'] = "Formato de email incorrecto";
         
         }
@@ -162,7 +162,7 @@
         if (textVacio('fecha_Nacimiento')) {
             $errores['fecha_Nacimiento'] = "Debe seleccionar una fecha";
         
-        } elseif (!comprobarExpresionRegular($exp_fecha = '/^\d{2}\-\d{2}\-\d{4}$/', 'fecha_Nacimiento')) {
+        } elseif (!comprobarExpresionRegular('/^\d{2}\-\d{2}\-\d{4}$/', 'fecha_Nacimiento')) {
             $errores['fecha_Nacimiento'] = "Formato de fecha incorrecto: dd-mm-yyyy";
         } 
 

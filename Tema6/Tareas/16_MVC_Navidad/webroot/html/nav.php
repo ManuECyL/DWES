@@ -14,10 +14,24 @@
           echo '
             <div class="col-md-6 col-lg">
               <li class="nav-item">
-                <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+          ';
+          
+          if (isset($_SESSION['vista']) == 'productos.php') {
+            echo '
+                <a class="nav-link navNombre" href="../index.php">Inicio</a>             
               </li>
             </div>
+            ';
 
+          } else {
+            echo '
+                  <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+                </li>
+              </div>
+            ';
+          }
+          
+          echo '
             <div class="col-md-6 col-lg">
               <li class="nav-item">
                 <a class="nav-link navNombre" href="' . VIEW . 'productos.php ">Productos</a>
@@ -25,18 +39,29 @@
             </div>
           ';
         }
-      ?>
 
-      <?php
         if (isset($_SESSION['usuario'])) {
-
           echo '
             <div class="col-md-3 col-lg">
               <li class="nav-item">
-                <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+          ';
+
+          if (isset($_SESSION['vista']) == 'productos.php') {
+            echo '
+                <a class="nav-link navNombre" href="../index.php">Inicio</a>             
               </li>
             </div>
+            ';
 
+          } else {
+            echo '
+                  <a class="nav-link navNombre" href="./index.php">Inicio</a>             
+                </li>
+              </div>
+            ';
+          }
+
+          echo '
             <div class="col-md-3 col-lg">
               <li class="nav-item">
               <a class="nav-link navNombre" href="' . VIEW . 'productos.php ">Productos</a>

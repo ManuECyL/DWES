@@ -74,6 +74,10 @@
 
         public static function insert($usuario) {
 
+            $fechaOriginal = $usuario -> fecha_Nacimiento;
+            $fechaObjeto = DateTime::createFromFormat('d-m-Y', $fechaOriginal);
+            $fechaFormateada = $fechaObjeto -> format('Y-m-d');
+
             $sql = "INSERT INTO Usuarios (id_Usuario, contraseña, email, fecha_Nacimiento, rol) VALUES(?,?,?,?,?)";
 
             // Lo mismo que lo instrucción siguiente, pero haciéndolo a mano
@@ -81,7 +85,7 @@
                 $usuario -> id_Usuario, 
                 $usuario -> contraseña, 
                 $usuario -> email, 
-                $usuario -> fecha_Nacimiento,
+                $fechaFormateada,
                 $usuario -> rol
             );
 

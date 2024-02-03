@@ -1,7 +1,7 @@
 <?php
+    
+    if (existe('crearCuenta')) {
 
-    if (existe('registrarse')) {
-            
         $errores = array();
 
         if (validarRegistro($errores)) {
@@ -14,7 +14,6 @@
             );
 
             if (UsuarioDAO::insert($usuario)) {
-                $_SESSION['vista'] = VIEW . 'layout.php';
                 $sms = "<div class='alert alert-success text-center'><b>Usuario registrado correctamente</b></div>";
             
             } else {

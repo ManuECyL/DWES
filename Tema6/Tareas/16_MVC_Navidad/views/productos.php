@@ -1,8 +1,6 @@
 <?php
-    // session_start();
-
-    // require_once('../config/conexionBD.php');
-    require_once('../config/config.php');
+    require_once('../config/config2.php');
+/*
 
     
     if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
@@ -69,6 +67,28 @@
       echo $_SESSION['mensaje'];
       unset($_SESSION['mensaje']);  
     }
+
+    */
+
+    $_SESSION['vista'] = VIEW . 'productos.php';
+
+      if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
+        $_SESSION['vista'] = VIEW . 'layout.php';
+        $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
+    
+    } elseif (existe('registrarse')) {
+        $_SESSION['vista'] = VIEW . 'registro.php';
+        $_SESSION['controller'] = CONTROLLER . 'RegistroController.php';
+    }
+    
+    
+    if (isset($_SESSION['controller'])) {
+        require($_SESSION['controller']);
+    }
+    
+    if (isset($sms)) {
+        echo $sms;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -83,7 +103,7 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-        <link rel="stylesheet" href="css/estilos.css">
+        <link rel="stylesheet" href= "<?= CSS . 'estilos.css' ?>" >
 
         <style>
             #cantidadProd {
@@ -99,120 +119,128 @@
 
     <!-- HEADER -->
         <?php              
-            include_once("./html/header.php");
+            require_once HTML . 'header.php';
         ?>
           
     <!-- NAV -->
         <?php
-            include_once("./html/nav.php");
+            require_once HTML . 'nav.php';
         ?>
     
     <!-- MAIN -->
         <main>
             <?php
 
-                $productos = consultarProductos();
+                if (!isset($_SESSION['vista']) || $_SESSION['vista'] == VIEW . 'productos.php') {
+                    
+                    $_SESSION['view'] = VIEW .'productos.php';
 
-                if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin')) {
-                    echo '
-  
-                        <form action="" method="post" name="formularioGest" enctype="multipart/form-data">
+                    $productos = ProductoDAO::findAll();
 
-                            <div class="container mt-5 text-center">
-        
-                                <button type="submit" class="btn btn-primary" name="modificarProductos" id="modificarProductos">Modificar Producto</button>
-                                
-                            </div>
-
-                        </form>
-                    ';
+                    if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin')) {
+                        echo '
     
-                    echo '<br>';
-                }
-                
-                echo '
-                    <div class="container">
+                            <form action="" method="post" name="formularioGest" enctype="multipart/form-data">
 
-                        <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
-                ';
+                                <div class="container mt-5 text-center">
+            
+                                    <button type="submit" class="btn btn-primary" name="modificarProductos" id="modificarProductos">Modificar Producto</button>
+                                    
+                                </div>
 
-                            while (($producto = mysqli_fetch_assoc($productos))) {
-
-                                echo '
-                                    <div class="col-12 col-sm-6 col-xl-4 mb-4">
-
-                                        <div class="card h-80 d-block mx-auto">
-
-                                            <img class="card-img-top productos" src="'.$producto['ruta_Imagen'].'" alt="'.$producto['ruta_Imagen'].'"/>
-
-                                            <div class="card-body p-4">
-
-                                                <div class="text-center">
-
-                                                    <h5 class="fw-bolder mb-3">' . $producto['titulo'] . '</h5>
-
-                                                    <div class="d-flex justify-content-center small mb-3">
-                                                        <div>' . $producto['cod_Prod'] . '</div>
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-center small mb-3">
-                                                        <div>' . $producto['compañia'] . '</div>
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-center small mb-3">
-                                                        <div style="font-size: 18px"><b>' . $producto['precio'] . '€</b></div>
-                                                    </div>
-
-                                                    <div class="d-flex justify-content-center small mb-3">
-                                                        <div style="font-size: 18px"><b>' . $producto['stock'] . '€</b></div>
-                                                    </div>
-                                                
+                            </form>
+                        ';
         
-                                                    <div class="d-flex justify-content-center small mb-0">
-                                                        <div>Stock: ' . $producto['stock'] . '</div>
+                        echo '<br>';
+                    }
+                    
+                    echo '
+                        <div class="container">
+
+                            <div class="row gx-2 gx-lg-5 row-cols-2 row-cols-lg-3 py-3" style="text-align: center">
+                    ';
+
+                                foreach ($productos as $producto) {
+
+                                    echo '
+                                        <div class="col-12 col-sm-6 col-xl-4 mb-4">
+
+                                            <div class="card h-80 d-block mx-auto">
+
+                                                <img class="card-img-top productos" src="'. IMGP. $producto -> ruta_Imagen.'" alt="'. IMGP . $producto -> ruta_Imagen.'"/>
+                                                
+                                                <div class="card-body p-4">
+
+                                                    <div class="text-center">
+
+                                                        <h5 class="fw-bolder mb-3">' . $producto -> titulo . '</h5>
+
+                                                        <div class="d-flex justify-content-center small mb-3">
+                                                            <div>' . $producto -> cod_Prod . '</div>
+                                                        </div>
+
+                                                        <div class="d-flex justify-content-center small mb-3">
+                                                            <div>' . $producto -> compañia . '</div>
+                                                        </div>
+
+                                                        <div class="d-flex justify-content-center small mb-3">
+                                                            <div style="font-size: 18px"><b>' . $producto -> precio . '€</b></div>
+                                                        </div>                                              
+            
+                                                        <div class="d-flex justify-content-center small mb-0">
+                                                            <div>Stock: ' . $producto -> stock . '</div>
+                                                        </div>
                                                     </div>
+
+                                                </div>
+
+                                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+
+                                                    <form action="" method="post" name="formularioCarrito" enctype="multipart/form-data">
+                                    ';
+                                                        if (isset($_SESSION['usuario']) ) {
+                                    echo '
+                                                            <input type="hidden" name="id_Usuario" value="'. $_SESSION['usuario']['id_Usuario'] .'">
+                                                            <input type="hidden" name="cod_Prod" value="'. $producto['cod_Prod'] .'">
+                                                            <input type="hidden" name="cantidad" value="1">
+                                    ';
+                                                            echo '<input type="submit" value="Comprar" name="comprar">';
+
+                                                        } else {
+                                                            echo '<input type="submit" value="Comprar" name="comprar">';
+                                                        }
+                                    echo '
+                                                    </form>    
+
                                                 </div>
 
                                             </div>
 
-                                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-
-                                                <form action="" method="post" name="formularioCarrito" enctype="multipart/form-data">
-                                ';
-                                                    if (isset($_SESSION['usuario']) ) {
-                                echo '
-                                                        <input type="hidden" name="id_Usuario" value="'. $_SESSION['usuario']['id_Usuario'] .'">
-                                                        <input type="hidden" name="cod_Prod" value="'. $producto['cod_Prod'] .'">
-                                                        <input type="hidden" name="cantidad" value="1">
-                                ';
-                                                        echo '<input type="submit" value="Comprar" name="comprar">';
-
-                                                    } else {
-                                                        echo '<input type="submit" value="Comprar" name="comprar">';
-                                                    }
-                                echo '
-                                                </form>    
-
-                                            </div>
-
                                         </div>
+                                    ';
+                                }
 
-                                    </div>
-                                ';
-                            }
-
-                echo '
+                    echo '
+                            </div>
+                            
                         </div>
-                        
-                    </div>
-                ';
+                    ';
+                
+                } else {
+                    require $_SESSION['vista'];
+                }
+    
+                // Si por lo que sea la sesion tiene datos (que es un error)
+                if (isset($_SESSION['error'])) {
+                echo "<span style='color:red'>". $_SESSION['error'] ."</span>";
+                }
             ?>
             
         </main>
 
         <!-- FOOTER -->
         <?php
-            include_once("./html/footer.php");
+            require_once HTML . 'footer.php';
         ?>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

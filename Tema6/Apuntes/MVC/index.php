@@ -43,8 +43,7 @@
     require("./views/layout.php");
 
 
-
-
+    
     // // Para hacer pruebas
     // echo "findAll<pre>";
     //     UserDAO::findAll();

@@ -76,7 +76,9 @@
                         
                         <span class="error">
                             <?php            
-                                errores($errores,'id_Usuario');
+                                if (isset($errores)) {
+                                    errores($errores,'id_Usuario');
+                                }   
                             ?>
                         </span>
                     </div>
@@ -88,7 +90,9 @@
 
                         <span class="error">
                             <?php            
-                                errores($errores,'contraseña');
+                                if (isset($errores)) {
+                                    errores($errores,'contraseña');
+                                }   
                             ?>
                         </span>
                     </div>
@@ -100,7 +104,9 @@
 
                         <span class="error">
                             <?php            
-                                errores($errores,'passRepetida');
+                                if (isset($errores)) {
+                                    errores($errores,'passRepetida');
+                                }   
                             ?>
                         </span>
                     </div>
@@ -112,7 +118,9 @@
 
                         <span class="error">
                             <?php            
-                                errores($errores,'email');
+                                if (isset($errores)) {
+                                    errores($errores,'email');
+                                }  
                             ?>
                         </span>
                     </div>
@@ -124,7 +132,9 @@
 
                         <span class="error">
                             <?php            
-                                errores($errores,'fecha_Nacimiento');
+                                if (isset($errores)) {
+                                    errores($errores,'fecha_Nacimiento');
+                                }  
                             ?>
                         </span>
                     </div>

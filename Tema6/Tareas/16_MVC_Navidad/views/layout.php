@@ -1,11 +1,5 @@
 <?php
-    // session_start();
-
-    // require("./config/config.php");
-
-    if (!comprobarBD()) {
-        crearScript();
-    }
+  /*
 
     // Si se ha iniciado sesión
     if (validado()) {
@@ -50,6 +44,8 @@
       echo $_SESSION['mensaje'];
       unset($_SESSION['mensaje']);  
     }
+
+    */
     
 ?>
 
@@ -84,55 +80,67 @@
 <!-- MAIN -->
         <main>
 
-        <?php
+          <?php
 
-          // Si por lo que sea la sesion tiene datos (que es un error)
-          if (isset($_SESSION['error'])) {
-            echo "<span style='color:red'>". $_SESSION['error'] ."</span>";
-          }
-        ?>
+              // Si no hay ninguna vista va al layout, si hay alguna, muestra la que esté
+            if (!isset($_SESSION['vista']) || $_SESSION['vista'] == VIEW . 'layout.php') {
+              $_SESSION['view'] = VIEW .'layout.php'
+                
+          ?>
 
-    <!-- CARRUSEL -->
-          <div id="miCarousel" class="carousel carousel-dark slide mx-auto" data-bs-ride="true" style="width:100%;">
-  
-            <ol class="carousel-indicators">
-              <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="0" class="active"></li>
-              <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="1"></li>
-              <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="2"></li>
-              <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="3"></li>
-            </ol>
-  
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <img src="<?= IMGI . 'inicio1.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio1"> 
-              </div>
-  
-              <div class="carousel-item">               
-                <img src="<?= IMGI . 'inicio2.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio2">                    
-              </div>
-  
-              <div class="carousel-item">
-                <img src="<?= IMGI . 'inicio3.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio3"> 
+                  <!-- CARRUSEL -->
+            <div id="miCarousel" class="carousel carousel-dark slide mx-auto" data-bs-ride="true" style="width:100%;">
+    
+              <ol class="carousel-indicators">
+                <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="0" class="active"></li>
+                <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="1"></li>
+                <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="2"></li>
+                <li type="button" data-bs-target="#miCarousel" data-bs-slide-to="3"></li>
+              </ol>
+
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="<?= IMGI . 'inicio1.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio1"> 
+                </div>
+
+                <div class="carousel-item">               
+                  <img src="<?= IMGI . 'inicio2.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio2">                    
+                </div>
+
+                <div class="carousel-item">
+                  <img src="<?= IMGI . 'inicio3.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio3"> 
+                </div>
+
+                <div class="carousel-item">
+                  <img src="<?= IMGI . 'inicio4.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio4"> 
+                </div>
+
               </div>
 
-              <div class="carousel-item">
-                <img src="<?= IMGI . 'inicio4.jpg' ?>" class="d-block mx-auto w-100 imgC" alt="inicio4"> 
-              </div>
-  
+              <button class="carousel-control-prev" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="prev">
+                <i class="bi bi-arrow-left-circle" style="margin-left: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>                  
+                <span class="visually-hidden">Previous</span>
+              </button>
+
+              <button class="carousel-control-next" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="next">
+                <i class="bi bi-arrow-right-circle" style="margin-right: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>
+                <span class="visually-hidden">Next</span>
+              </button>
+
             </div>
-  
-            <button class="carousel-control-prev" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="prev">
-              <i class="bi bi-arrow-left-circle" style="margin-left: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>                  
-              <span class="visually-hidden">Previous</span>
-            </button>
-  
-            <button class="carousel-control-next" type="button" style="width: fit-content;" data-bs-target="#miCarousel" data-bs-slide="next">
-              <i class="bi bi-arrow-right-circle" style="margin-right: 80px; font-size: 250%; color: rgb(180, 123, 0);"></i>
-              <span class="visually-hidden">Next</span>
-            </button>
 
-          </div>
-
+            
+          <?php
+                
+              } else {
+                require $_SESSION['vista'];
+              }
+              
+              // Si por lo que sea la sesion tiene datos (que es un error)
+              if (isset($_SESSION['error'])) {
+                echo "<span style='color:red'>". $_SESSION['error'] ."</span>";
+              }
+          ?>
         </main>
 
 <!-- FOOTER -->
