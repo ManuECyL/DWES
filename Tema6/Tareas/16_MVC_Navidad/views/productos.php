@@ -1,84 +1,25 @@
 <?php
     require_once('../config/config2.php');
-/*
 
-    
-    if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-        
-        $usuario = validaUsuario($_REQUEST['user'], $_REQUEST['pass']);
-
-        if ($usuario) {
-            
-            $_SESSION['usuario'] = $usuario;
-            $contraseña = $_REQUEST['pass'];
-        
-        } else {
-            $_SESSION['errorInicioSesion'] = "<div class='alert alert-danger text-center'><b>No existe el usuario o la contraseña es incorrecta</b></div>";
-        }
-    
-    } elseif (existe('iniciarSesion') && (textVacio('user') || textVacio('pass'))) {
-        echo "<div class='alert alert-danger text-center'><b>Debe rellenar los campos para Iniciar Sesión</b></div>";
-    
-    } elseif (isset($_SESSION['usuario'])) {
-
-        if (existe('perfil')) {
-            header('Location: ./perfil.php');
-            exit;
-  
-        } elseif (existe('pedidos')) {
-            header('Location: ./pedidos.php');
-            exit;
-            
-        } elseif (existe('comprar')) {
-            añadirCarrito();
-        
-        } elseif (existe('modificarProductos')) {
-            header('Location: ./modificarProductos.php');
-            exit;
-        
-        }  elseif (existe('cerrarSesion')) {
-            cerrarSesion();
-        }
-
-    // Si no se ha iniciado sesión
-    } else {
-        if (existe('registrarse')) {
-            header('Location: ./registro.php');
-            exit;
-    
-        } elseif (existe('comprar')) {
-            echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para comprar</b></div>";
-        
-        } elseif (existe('carrito')) {
-            echo "<div class='alert alert-danger text-center'><b>Debe iniciar sesión para acceder al carrito</b></div>";
-        }
-    }
-
-    // Comprueba si se ha pulsado el icono del carrito
-    existeCarrito('carrito');
- 
-    // Muestra el mensaje de error de inicio de sesión fallido
-    if (isset($_SESSION['errorInicioSesion'])) {
-      echo $_SESSION['errorInicioSesion'];
-      unset($_SESSION['errorInicioSesion']);
-    
-    // Muestra el mensaje de error de carrito si no se ha iniciado sesión
-    } elseif (isset($_SESSION['mensaje'])) {
-      echo $_SESSION['mensaje'];
-      unset($_SESSION['mensaje']);  
-    }
-
-    */
+    session_start();
 
     $_SESSION['vista'] = VIEW . 'productos.php';
 
       if (existe('iniciarSesion') && !textVacio('user') && !textVacio('pass')) {
-        $_SESSION['vista'] = VIEW . 'layout.php';
+        $_SESSION['vista'] = VIEW . 'productos.php';
         $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
     
     } elseif (existe('registrarse')) {
         $_SESSION['vista'] = VIEW . 'registro.php';
         $_SESSION['controller'] = CONTROLLER . 'RegistroController.php';
+    
+    } elseif (existe('modificarProductos')) {
+        $_SESSION['vista'] = VIEW . 'modificarProductos.php';
+        $_SESSION['controller'] = CONTROLLER . 'ModificarProductosController.php';
+    
+    } elseif (existe('comprar')) {
+        $_SESSION['vista'] = VIEW . 'carrito.php';
+        // $_SESSION['controller'] = CONTROLLER . 'CarritoController.php';
     }
     
     
@@ -137,7 +78,7 @@
 
                     $productos = ProductoDAO::findAll();
 
-                    if (isset($_SESSION['usuario']) && ($_SESSION['usuario']['rol'] == 'moderador' || $_SESSION['usuario']['rol'] == 'admin')) {
+                    if (isset($_SESSION['usuario']) && ($usuario -> rol == 'admin' || $usuario -> rol == 'moderador')) {
                         echo '
     
                             <form action="" method="post" name="formularioGest" enctype="multipart/form-data">
@@ -200,8 +141,8 @@
                                     ';
                                                         if (isset($_SESSION['usuario']) ) {
                                     echo '
-                                                            <input type="hidden" name="id_Usuario" value="'. $_SESSION['usuario']['id_Usuario'] .'">
-                                                            <input type="hidden" name="cod_Prod" value="'. $producto['cod_Prod'] .'">
+                                                            <input type="hidden" name="id_Usuario" value="'. $usuario -> id_Usuario .'">
+                                                            <input type="hidden" name="cod_Prod" value="'. $producto -> cod_Prod .'">
                                                             <input type="hidden" name="cantidad" value="1">
                                     ';
                                                             echo '<input type="submit" value="Comprar" name="comprar">';

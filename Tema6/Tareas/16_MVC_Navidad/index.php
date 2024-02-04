@@ -1,6 +1,6 @@
 <?php
 
-  require("./config/config.php");
+  require_once("./config/config.php");
 
   session_start();
 
@@ -28,6 +28,6 @@
     echo $sms;
   }
 
-  require("./views/layout.php");
+  require_once("./views/layout.php");
 
 ?>

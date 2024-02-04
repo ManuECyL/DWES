@@ -24,6 +24,7 @@
           <?php
             if (isset($_SESSION['vista']) == 'productos.php') {
               echo '<a href="../index.php" class="logo"><i class="bi bi-controller px-4 icono"> Gameshop</i></a>';
+              
             } else {
                 echo '<a href="./index.php" class="logo"><i class="bi bi-controller px-4 icono"> Gameshop</i></a>';
             }

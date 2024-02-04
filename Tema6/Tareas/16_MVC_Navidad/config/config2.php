@@ -14,7 +14,7 @@
         require('../core/funciones.php');
 
         require('../config/confBD.php');
-        require('../config/conexionBD.php');
+        // require('../config/conexionBD.php');
 
         require('../dao/FactoryBD.php');
 
@@ -24,4 +24,6 @@
         require('../models/Producto.php');
         require('../dao/ProductoDAO.php');
 
+        require('../models/Carrito.php');
+        require('../dao/CarritoDAO.php');
 ?>

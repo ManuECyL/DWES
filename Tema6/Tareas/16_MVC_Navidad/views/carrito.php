@@ -1,37 +1,31 @@
 <?php
-    session_start();
-
-    require('./funciones/conexionBD.php');
-    require('./funciones/validaciones.php');
-    require('./funciones/logout.php');
-
 
     if (isset($_SESSION['usuario'])) {
 
-        if (existe('perfil')) {
-            header('Location: ./perfil.php');
-            exit;
+        // if (existe('perfil')) {
+        //     header('Location: ./perfil.php');
+        //     exit;
     
-        } elseif (existe('pedidos')) {
-            header('Location: ./pedidos.php');
-            exit;
+        // } elseif (existe('pedidos')) {
+        //     header('Location: ./pedidos.php');
+        //     exit;
             
-        }elseif (existe('eliminar')) {
-            $cod_Prod = $_POST['cod_Prod'];
-            eliminarProductoCarrito($cod_Prod);
+        // }elseif (existe('eliminar')) {
+        //     $cod_Prod = $_POST['cod_Prod'];
+        //     eliminarProductoCarrito($cod_Prod);
 
-        } elseif (existe('actualizarCantidad')) {
-            actualizarCantidadCarrito();
+        // } elseif (existe('actualizarCantidad')) {
+        //     actualizarCantidadCarrito();
 
-        } elseif (existe('vaciar')) {
-            vaciarCarrito();            
+        // } elseif (existe('vaciar')) {
+        //     vaciarCarrito();            
 
-        } elseif (existe('realizarPedido')){
-            realizarPedido();           
+        // } elseif (existe('realizarPedido')){
+        //     realizarPedido();           
         
-        } elseif (existe('cerrarSesion')) {
-            cerrarSesion();
-        }
+        // } elseif (existe('cerrarSesion')) {
+        //     cerrarSesion();
+        // }
     }
 
 ?>
@@ -78,17 +72,12 @@
 
     <!-- HEADER -->
         <?php              
-            if (isset($_SESSION['usuario'])) {
-                include_once("./html/header.php");
-                
-            } else {
-                include_once("./html/header.php");
-            }
+            require_once HTML . 'header.php';
         ?>
           
     <!-- NAV -->
         <?php
-            include_once("./html/nav.php");
+            require_once HTML . 'nav.php';
         ?>
     
     <!-- MAIN -->
@@ -102,91 +91,39 @@
 
                     <?php
 
-                        $consulta = consultarCarrito($_SESSION['usuario']['id_Usuario']);
+                        $consulta = CarritoDAO::consultarCarrito($usuario -> id_Usuario);
 
                         echo "<form method='post' action='./carrito.php' enctype='multipart/form-data'>";
     
-                            // Comprobamos si hay resultados
-                            if ($consulta -> num_rows > 0) {
+                            echo "<table>";
+
+                                if ($consulta !== null) {
+                                    // La consulta devolvió un resultado, puedes acceder a las propiedades del carrito
+                                    $campos = get_object_vars($consulta);
                                 
-                                // Obtenemos los nombres de los campos que contiene la tabla
-                                $camposTabla = array();
-        
-                                while ($campo = $consulta -> fetch_field()) {
-                                    $camposTabla[] = $campo -> name;
-                                }
-        
-                                echo "<table>";
-        
                                     echo "<tr>";
-        
-                                    // Mostrar los campos en el encabezado de la tabla
-                                    foreach ($camposTabla as $columna) {
-                                        echo "<th>" . $columna . "</th>";
+
+                                    foreach ($campos as $nombre => $valor) {
+                                        echo "<th>" . $nombre . "</th>";
                                     }
 
-                                        echo "<th> Eliminar </th>";
-        
-                                    echo "</tr>";                               
-    
-                                    $total = 0;
+                                    echo "</tr>";
+                                
+                                    echo "<tr>";
 
-                                    // Mostrar los datos de la tabla
-                                    while ($fila = $consulta -> fetch_assoc()) {
-
-                                        $cod_Prod = $fila['cod_Prod'];
-                                        $total += $fila['precio'] * $fila['cantidad'];
-                                        
-                                        echo "<tr>";
-        
-                                            foreach ($fila as $indice => $campo) {
-            
-                                                switch ($indice) {
-                                                    
-                                                    case 'cod_Prod':                            
-                                                        echo "<td>";
-                                                            echo "<input type='text' id='cod_ProdGest' name='cod_Prods[]' value='". $campo."' readonly>";
-                                                        echo "</td>";
-                                                        break;
-                                                    
-                                                    case 'cantidad':
-                                                        echo "<td>";
-                                                            echo "<input type='number' class='inputCantidad' name='cantidades[]' value='". $campo."' min='1' max='100'>";
-                                                        echo "</td>";
-                                                        break;
-
-                                                    case 'total':
-                                                        echo "<td>" . $campo . "€</td>";
-                                                        break;
-   
-                                                    case 'precio':
-                                                        echo "<td>" . $campo . "€</td>";
-                                                        break;
-
-                                                    default:
-                                                        echo "<td>" . $campo . "</td>";
-                                                        break;
-                                                }
-                                            }
-        
-                                            echo "<td>";
-
-                                                echo "<form method='post'>";
-
-                                                    echo "<input type='hidden' name='cod_Prod' value='" . $cod_Prod . "'>";                                                    
-
-                                                    echo "<button type='submit' name='eliminar' value='Eliminar' class='btn btn-danger'>
-                                                        <i class='bi bi-trash'></i>
-                                                    </button>";
-
-                                                echo "</form>";
-
-                                            echo "</td>";
-    
-                                        echo "</tr>";
+                                    foreach ($campos as $nombre => $valor) {
+                                        echo "<td>" . $valor . "</td>";
                                     }
+                                    echo "</tr>";
 
-                                echo "</table>";
+                                } else {
+                                    // La consulta no devolvió ningún resultado
+                                    echo "<tr>";
+                                    echo "<td colspan='3'>No se encontraron resultados en la base de datos</td>";
+                                    echo "</tr>";
+                                }
+                            
+                            echo "</table>";
 
                                 echo "<br>";
 
@@ -195,10 +132,6 @@
                                 echo "<input type='submit' value='Actualizar Cantidad' name='actualizarCantidad' class='inputCarrito'>";
 
                                 echo "<input type='submit' value='Vaciar Carrito' name='vaciar' class='inputCarrito'>";
-
-                            } else {
-                                echo "No se encontraron resultados en la base de datos";
-                            }  
                                 
                         echo "</form>";
                     ?>
@@ -216,7 +149,7 @@
 
         <!-- FOOTER -->
         <?php
-            include_once("./html/footer.php");
+            require_once HTML . 'footer.php';
         ?>
 
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

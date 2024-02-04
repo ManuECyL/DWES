@@ -12,7 +12,7 @@
             if ($usuario != null) {
 
                 $_SESSION['usuario'] = $usuario;
-                $_SESSION['vista'] = VIEW . 'layout.php';
+                // $_SESSION['vista'] = VIEW . 'layout.php';
                 unset($_SESSION['controller']);
 
             } else {

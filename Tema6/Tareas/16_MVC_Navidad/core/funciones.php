@@ -1,4 +1,80 @@
 <?php
+
+    // Función que comprueba si la base de datos existe
+    function comprobarBD() {
+
+        // Establecemos la conexion
+        $con = new mysqli();
+
+        try {
+            // Iniciamos la conexion
+            $con = mysqli_connect(IP, USER, PASS);
+
+            // Consulta para obtener la lista de bases de datos
+            $consultaBD = $con -> query('SHOW databases');
+
+            // Comprobar si la base de datos existe
+            while ($array = $consultaBD -> fetch_assoc()) {
+
+                // Si existe, devuelve true
+                if ($array['Database'] == BD) {
+                    return true;
+                }
+            }
+
+            return false;
+
+        } catch (\Throwable $th) {
+            // Si hay un error lo muestra
+            erroresBD($th);
+            
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
+
+
+    // Función para generar un script de creación para la Base de Datos
+    function crearScript() {
+
+        $con = new mysqli();
+
+        try {   
+            $con = mysqli_connect(IP, USER, PASS);
+
+            // Obtenemos el contenido del fichero sql
+            $script = file_get_contents('./gameshop.sql');
+
+            // Lee el contenido del script
+            $con -> multi_query($script);
+
+            // Comprobamos si hay un error de sintaxis y nos lo muestra
+            do {
+                $con -> store_result();
+
+                if (!$con -> next_result()) {
+                    break;
+                }
+
+            } while(true);
+
+            // if (true) {
+            //     echo "<p style='text-align:center;color:green'>Base de datos creada con éxito";
+            // }
+            
+        } catch (\Throwable $th) {
+            // Si hay un error, borra la BBDD
+            $sql = "DROP database " . BD;
+            $con -> query($sql);
+
+            erroresBD($th);
+
+        } finally {
+            // Cerramos la conexion
+            mysqli_close($con);
+        }
+    }
     
     function enviado() {
 
