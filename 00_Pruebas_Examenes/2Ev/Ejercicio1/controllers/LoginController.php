@@ -37,8 +37,14 @@
                     }
                 }
                 
-                // Redirigimos al login, pero con modificaciones
-                $_SESSION['vista'] = './index.php';
+                // Si el usuario es administrador, lo redirigimos a la página de admin
+                if ($usuario -> perfil == 'admin') {
+                    $_SESSION['vista'] = VIEW . 'sorteo.php';
+
+                } else {
+                    // Si el usuario no es administrador, lo redirigimos a la página de usuario
+                    $_SESSION['vista'] = VIEW . 'apuesta.php';
+                }
     
                 // No creamos un home Controller, aunque se podría. Para ello cerramos el controlador de Login que se encuentra en este momento
                 unset($_SESSION['controller']); 

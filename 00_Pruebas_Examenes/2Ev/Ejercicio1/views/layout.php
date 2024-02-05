@@ -19,14 +19,7 @@
 
                     <?php
                         if (validado()) {
-                            echo "Bienvenido " . $_SESSION['usuario'] -> descUsuario;
-
-                            echo "<br><br>";
-                    ?>
-                            <form action="" method="post">                                
-                                <input type="submit" value="Cerrar Sesion" name="logout">
-                            </form>
-                    <?php                        
+                            echo "Bienvenido " . $_SESSION['usuario'] -> descUsuario;                 
 
                         } 
                     ?>

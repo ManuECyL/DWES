@@ -19,4 +19,6 @@
         require('./models/Sorteo.php');
 
         require('./dao/UserDAO.php');
+        require('./dao/ApuestaDAO.php');
+        require('./dao/SorteoDAO.php');
 ?>
