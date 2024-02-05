@@ -103,7 +103,7 @@
 
     function isAdmin() {
         
-        if ($_SESSION['usuario'] -> perfil == 'administrador') {
+        if ($_SESSION['usuario'] -> perfil == 'admin') {
             return true;
         
         } else {

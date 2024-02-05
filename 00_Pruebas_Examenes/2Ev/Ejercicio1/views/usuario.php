@@ -10,7 +10,7 @@
         ?>
                 <form action="" method="post">
 
-        
+            
                 <input type="submit" value="Hacer Apuesta" name="Apuesta_HacerApuesta">
                 <input type="submit" value="Ver Mis Apuestas" name="Apuesta_VerApuestas">
         <?php

@@ -8,6 +8,13 @@
 
     if (isset($_REQUEST['Login_IniciarSesion'])) {  
         $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
+
+        if (isAdmin()) {
+            $_SESSION['vista'] = VIEW . 'admin.php';
+            
+        } else {
+            $_SESSION['vista'] = VIEW . 'usuario.php';
+        }
     
     }  elseif (isset($_REQUEST['logout'])) {
         // Hasta que no se recarga la página, no expira
