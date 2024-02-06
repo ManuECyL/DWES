@@ -39,6 +39,12 @@
                             <a class="nav-link navTema" href="./1Ev/index.php">1a Evaluación</a>
                         </li>
                     </div>
+
+                    <div class="col-md-6 col-lg">
+                        <li class="nav-item">
+                            <a class="nav-link navTema" href="./2Ev/Ejercicio1/index.php">2a Evaluación</a>
+                        </li>
+                    </div>
                 </ul>
             </div>
         </nav>
