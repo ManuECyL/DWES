@@ -87,6 +87,26 @@
             }
         }
 
+        public static function realizarSorteo($sorteo) {
+
+            $sql = "INSERT INTO Sorteo (numero1, numero2, numero3, numero4, numero5, fechaSorteo) VALUES (?, ?, ?, ?, ?, ?)";
+
+            $parametros = array(
+                $sorteo -> numero1, 
+                $sorteo -> numero2, 
+                $sorteo -> numero3, 
+                $sorteo -> numero4, 
+                $sorteo -> numero5, 
+                $sorteo -> fechaSorteo
+            );
+
+            $result = FactoryBD::realizaConsulta($sql, $parametros);
+
+            if ($result -> rowCount() > 0) {
+                return true;
+            }
+        }
+
 
         public static function comprobarSorteo($fechaSorteo) {
 
@@ -100,6 +120,43 @@
                 return true;
             }
 
+        }
+
+        public static function findAciertos($fechaSorteo) {
+
+            $sql = "SELECT * FROM Sorteo WHERE fechaSorteo = ?";
+
+            $parametros = array($fechaSorteo);
+
+            $result = FactoryBD::realizaConsulta($sql, $parametros);
+            
+            $array_sorteo = array();
+            
+            // Si encuentra resultados entra en la condición
+            if ($result -> rowCount() == 1) {
+
+                // El resultado lo devuelve como un objeto. Este objeto se guarda en la variable $sorteoStd
+                while ($sorteoStd = $result -> fetchObject()) {
+
+                    $sorteo = new Sorteo (
+                        $sorteoStd -> id_sorteo,
+                        $sorteoStd -> fechasorteo,
+                        $sorteoStd -> numero1,
+                        $sorteoStd -> numero2,
+                        $sorteoStd -> numero3,
+                        $sorteoStd -> numero4,
+                        $sorteoStd -> numero5
+                    );
+                
+                    array_push($array_sorteo, $sorteo);
+                }
+
+                return $array_sorteo;
+
+            } else {
+                // No muestra nada
+                return null;
+            }
         }
     }
 

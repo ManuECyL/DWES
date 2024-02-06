@@ -6,9 +6,8 @@
 
     } elseif (isset($_REQUEST['volver'])) {
         $_SESSION['vista'] = VIEW . 'sorteo.php';
-    } 
     
-    elseif (isset($_REQUEST['Sorteo_RealizarSorteo'])) {
+    } elseif (isset($_REQUEST['Sorteo_RealizarSorteo'])) {
 
         // URL de la API REST
         $apiUrl = "http://ruta/a/tu/api";
@@ -25,18 +24,18 @@
         if (isset($data['numero1'], $data['numero2'], $data['numero3'], $data['numero4'], $data['numero5'])) {
 
             // Crea un nuevo sorteo con los números y la fecha actual
-
-            // $sorteo = new Sorteo();
-            $sorteo->numero1 = $data['numero1'];
-            $sorteo->numero2 = $data['numero2'];
-            $sorteo->numero3 = $data['numero3'];
-            $sorteo->numero4 = $data['numero4'];
-            $sorteo->numero5 = $data['numero5'];
-            $sorteo->fechaSorteo = date('Y-m-d H:i:s');
+            $sorteo = new Sorteo(
+                null,
+                $sorteo->numero1 = $data['numero1'],
+                $sorteo->numero2 = $data['numero2'],
+                $sorteo->numero3 = $data['numero3'],
+                $sorteo->numero4 = $data['numero4'],
+                $sorteo->numero5 = $data['numero5'],
+                $sorteo->fechaSorteo = date('Y-m-d H:i:s')
+            );
 
             // Guarda el sorteo en la base de datos
-            
-            // SorteoDAO::realizarSorteo($sorteo);
+            SorteoDAO::realizarSorteo($sorteo);
 
         } else {
             echo "La respuesta de la API no contiene los números del sorteo.";

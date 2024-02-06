@@ -50,6 +50,13 @@
         $apuesta -> numero5 = $numeros[4];
         $apuesta -> fechaApuesta = date('Y-m-d');
 
+        $sorteoRealizado = SorteoDAO::comprobarSorteo($apuesta -> fechaApuesta);
+
+        if ($sorteoRealizado) {
+            $sms = "El sorteo ya se ha realizado, no se pueden hacer más apuestas";
+            return;
+        }
+
         try {
             ApuestaDAO::update($apuesta);
             $sms = "Apuesta modificada con éxito";

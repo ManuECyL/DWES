@@ -84,20 +84,22 @@
         public static function update($apuesta) {
 
             // Comprobamos si se ha realizado el sorteo
-            $sorteoRealizado = SorteoDAO::comprobarSorteo($apuesta -> fechaApuesta);
-            // $aciertos = 0;
+            $sorteo = SorteoDAO::findAciertos($apuesta -> fechaApuesta);
+            $aciertos = 0;
+            $numerosAcertados = [];
 
-            if ($sorteoRealizado) {
-                // $numerosSorteo = [$sorteo->numero1, $sorteo->numero2, $sorteo->numero3, $sorteo->numero4, $sorteo->numero5];
-                // $numerosApuesta = [$apuesta->numero1, $apuesta->numero2, $apuesta->numero3, $apuesta->numero4, $apuesta->numero5];
+            if ($sorteo) {
+                $numerosSorteo = [$sorteo['numero1'], $sorteo['numero2'], $sorteo['numero3'], $sorteo['numero4'], $sorteo['numero5']];
+                $numerosApuesta = [$apuesta->numero1, $apuesta->numero2, $apuesta->numero3, $apuesta->numero4, $apuesta->numero5];
             
-                // foreach ($numerosApuesta as $numero) {
-                //     if (in_array($numero, $numerosSorteo)) {
-                //         $aciertos++;
-                //     }
-                // }
+                foreach ($numerosApuesta as $numero) {
+                    if (in_array($numero, $numerosSorteo)) {
+                        $aciertos++;
+                        array_push($numerosAcertados, $numero);
+                    }
+                }
             
-                // echo "Has acertado $aciertos números.";
+                echo "Has acertado $aciertos números: " . implode(", ", $numerosAcertados) . "<br>";
                 
                 throw new Exception("El sorteo ya se ha realizado, no se pueden hacer más apuestas");
             }
