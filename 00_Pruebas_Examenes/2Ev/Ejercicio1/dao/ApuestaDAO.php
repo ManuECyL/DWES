@@ -33,9 +33,6 @@
                 
                 // Añadimos cada usuario al array de usuarios
                 array_push($array_apuestas, $apuesta);
-                
-                // Para visualizar el resultado
-                print_r($apuesta);
             }
             
             // return de un array con todos los User
@@ -43,34 +40,39 @@
         }
 
 
-        public static function findById($id_Usuario) {
+        public static function findById($id) {
 
             $sql = "SELECT * FROM Apuesta WHERE id_Usuario = ?";
 
             // En findById se necesita pasarle el parámetro del id por el que hay que buscar
-            $parametros = array($id_Usuario); 
+            $parametros = array($id); 
 
             // Llamamos a la función realizaConsulta() del fichero FactoryBD.php y la guardamos en la variable $result para tratarla posteriormente
             $result = FactoryBD::realizaConsulta($sql, $parametros);
+
+            $array_apuestas = array();
             
             // Si encuentra resultados entra en la condición
             if ($result -> rowCount() == 1) {
 
                 // El resultado lo devuelve como un objeto. Este objeto se guarda en la variable $usuarioStd
-                $apuestaStd = $result -> fetchObject();
+                while ($apuestaStd = $result -> fetchObject()) {
 
-                $apuesta = new Apuesta (
-                    $apuestaStd -> id_Apuesta,
-                    $apuestaStd -> id_Usuario,
-                    $apuestaStd -> numero1,
-                    $apuestaStd -> numero2,
-                    $apuestaStd -> numero3,
-                    $apuestaStd -> numero4,
-                    $apuestaStd -> numero5,
-                    $apuestaStd -> fechaApuesta
-                );
-            
-                return $apuesta;
+                    $apuesta = new Apuesta (
+                        $apuestaStd -> id_Apuesta,
+                        $apuestaStd -> id_Usuario,
+                        $apuestaStd -> numero1,
+                        $apuestaStd -> numero2,
+                        $apuestaStd -> numero3,
+                        $apuestaStd -> numero4,
+                        $apuestaStd -> numero5,
+                        $apuestaStd -> fechaApuesta
+                    );
+                
+                    array_push($array_apuestas, $apuesta);
+                }
+
+                return $array_apuestas;
 
             } else {
                 // No muestra nada
@@ -79,15 +81,37 @@
         }
 
 
-        public static function update($usuario) {
+        public static function update($apuesta) {
 
-            $sql = "UPDATE Usuario SET descUsuario = ?, perfil = ?, fechaUltimaConexion = ? WHERE codUsuario = ?";
+            // Comprobamos si se ha realizado el sorteo
+            $sorteoRealizado = SorteoDAO::comprobarSorteo($apuesta -> fechaApuesta);
+            // $aciertos = 0;
+
+            if ($sorteoRealizado) {
+                // $numerosSorteo = [$sorteo->numero1, $sorteo->numero2, $sorteo->numero3, $sorteo->numero4, $sorteo->numero5];
+                // $numerosApuesta = [$apuesta->numero1, $apuesta->numero2, $apuesta->numero3, $apuesta->numero4, $apuesta->numero5];
+            
+                // foreach ($numerosApuesta as $numero) {
+                //     if (in_array($numero, $numerosSorteo)) {
+                //         $aciertos++;
+                //     }
+                // }
+            
+                // echo "Has acertado $aciertos números.";
+                
+                throw new Exception("El sorteo ya se ha realizado, no se pueden hacer más apuestas");
+            }
+
+            $sql = "UPDATE Apuesta SET numero1 = ?, numero2 = ?, numero3 = ?, numero4 = ?, numero5 = ?, fechaApuesta = ? WHERE id_Usuario = ?";
 
             $parametros = array( 
-                $usuario -> descUsuario, 
-                $usuario -> perfil,
-                $usuario -> fechaUltimaConexion,
-                $usuario -> codUsuario
+                $apuesta -> numero1,
+                $apuesta -> numero2,
+                $apuesta -> numero3,
+                $apuesta -> numero4,
+                $apuesta -> numero5,
+                $apuesta -> fechaApuesta,
+                $apuesta -> id_Usuario
             );
 
             $result = FactoryBD::realizaConsulta($sql, $parametros);
@@ -123,14 +147,11 @@
                 throw new Exception("El sorteo ya se ha realizado, no se pueden hacer más apuestas");
             }
 
-            // Pasar la variable $sorteoRealizado a la vista
-            require_once('views/apuesta.php');
-
-            $apuestaRealizada = self::findById($_SESSION['usuario'] -> id_Usuario);
+            $apuestaRealizada = self::findById($apuesta -> id_Usuario);
 
             // Si el usuario ya ha realizado una apuesta y intenta insertar la misma, se lanza una excepción
             if ($apuestaRealizada) {
-                throw new Exception("Ya has realizado esta apuesta");
+                throw new Exception("Ya has realizado una apuesta");
             
             } else {
                 $sql = "INSERT INTO Apuesta (id_Usuario, numero1, numero2, numero3, numero4, numero5, fechaApuesta) VALUES(?,?,?,?,?,?,?)";

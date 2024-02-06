@@ -5,15 +5,16 @@
     USE sorteo;
 
     CREATE TABLE IF NOT EXISTS Usuario(
-        codUsuario varchar(15) PRIMARY KEY,
-        descUsuario varchar(250) NOT null,
-        password varchar(64) NOT null,
+        codUsuario INT PRIMARY KEY AUTO_INCREMENT,
+        descUsuario VARCHAR(250) NOT NULL,
+        password VARCHAR(64) NOT NULL,
         perfil enum('admin', 'usuario') default 'usuario', -- Valor por defecto usuario
         fechaUltimaConexion timestamp
     );
 
     insert into Usuario(codUsuario, descUsuario, password, perfil, fechaUltimaConexion) values (1, 'admin', sha1('admin'), 'admin', now());
     insert into Usuario(codUsuario, descUsuario, password, fechaUltimaConexion) values (2, 'maria', sha1('maria'), now());
+    insert into Usuario(codUsuario, descUsuario, password, fechaUltimaConexion) values (3, 'pepe', sha1('pepe'), now());
 
     CREATE TABLE Apuesta (
         id_Apuesta INT PRIMARY KEY AUTO_INCREMENT,

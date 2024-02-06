@@ -30,9 +30,7 @@
                 
                 // Añadimos cada usuario al array de usuarios
                 array_push($array_usuarios, $usuario);
-                
-                // Para visualizar el resultado
-                print_r($usuario);
+
             }
             
             // return de un array con todos los User

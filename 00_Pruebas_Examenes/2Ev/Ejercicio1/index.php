@@ -10,6 +10,7 @@
         $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
 
     } elseif (isset($_REQUEST['Apuesta_HacerApuesta'])) {
+        $_SESSION['vista'] = VIEW . 'apuesta.php';
         $_SESSION['controller'] = CONTROLLER . 'ApuestaController.php';
 
     } elseif (isset($_REQUEST['Apuesta_ModificarApuesta'])) {
@@ -17,6 +18,13 @@
 
     } elseif (isset($_REQUEST['Apuesta_VerApuestas'])) {
         $_SESSION['controller'] = CONTROLLER . 'ApuestaController.php';
+
+    } elseif (isset($_REQUEST['Sorteo_VerApuestasTodas'])) {
+        $_SESSION['vista'] = VIEW . 'verApuestasTodas.php';
+        $_SESSION['controller'] = CONTROLLER . 'SorteoController.php';
+
+    } elseif (isset($_REQUEST['Sorteo_RealizarSorteo'])) {
+        $_SESSION['controller'] = CONTROLLER . 'SorteoController.php';
     
       
     } elseif (isset($_REQUEST['logout'])) {

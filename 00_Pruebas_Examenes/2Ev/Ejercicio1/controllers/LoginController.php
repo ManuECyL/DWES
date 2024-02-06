@@ -45,6 +45,7 @@
                     // Si el usuario no es administrador, lo redirigimos a la página de usuario
                     $_SESSION['vista'] = VIEW . 'apuesta.php';
                 }
+
     
                 // No creamos un home Controller, aunque se podría. Para ello cerramos el controlador de Login que se encuentra en este momento
                 unset($_SESSION['controller']); 

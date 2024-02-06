@@ -19,8 +19,7 @@
 
                     <?php
                         if (validado()) {
-                            echo "Bienvenido " . $_SESSION['usuario'] -> descUsuario;                 
-
+                            echo "Bienvenido " . $_SESSION['usuario'] -> descUsuario . "<br>";                 
                         } 
                     ?>
                 </div>
@@ -33,7 +32,7 @@
             <?php 
                 // Si no hay ninguna vista va al index, si hay alguna, muestra la que esté
                 if (!isset($_SESSION['vista'])) {
-                    require_once 'login.php';
+                    require_once $_SESSION['vista'] = VIEW . 'login.php';
                 
                 } else {
                     require_once $_SESSION['vista'];

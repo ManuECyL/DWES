@@ -2,15 +2,32 @@
     if (isset($sms)) {
         echo $sms;
     }
+
+    if (isset($array_apuestas)) {
+
+        foreach ($array_apuestas as $apuesta) {
+            echo "<br>";
+            echo "Apuesta: " . $apuesta -> id_Apuesta . ", Fecha: " . $apuesta -> fechaApuesta .
+                 ", Números:" 
+                . $apuesta -> numero1 . " - " . $apuesta -> numero2 . " - " . $apuesta -> numero3 . " - " 
+                . $apuesta -> numero4 . " - " . $apuesta -> numero5 . "<br>";
+        }
+    }
 ?>
 
 <nav>
     <div>
         <?php
 
+            $codUsuario = $_SESSION['usuario'] -> codUsuario;
+
             if (isset($_POST['numeros'])) {
                 $numerosSeleccionados = $_POST['numeros'];
+                setcookie('numerosSeleccionados_' . $codUsuario, serialize($numerosSeleccionados), time() + 60 * 60 * 24 * 365);
             
+            } elseif (isset($_COOKIE['numerosSeleccionados_' . $codUsuario])) {
+                $numerosSeleccionados = unserialize($_COOKIE['numerosSeleccionados_' . $codUsuario]);
+
             } else {
                 $numerosSeleccionados = array();
             }
@@ -51,7 +68,7 @@
                 }
             ?>
 
-            <br>
+            <br><br>
 
             <input type="submit" value="Hacer Apuesta" name="Apuesta_HacerApuesta">
             <input type="submit" value="Modificar Apuesta" name="Apuesta_ModificarApuesta">
