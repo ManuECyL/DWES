@@ -1,9 +1,32 @@
 <?php
 
-    if (isset($_REQUEST['User_IniciarPartida'])) {
+    if (isset($_REQUEST['User_IniciarPartidaAleatorio'])) {
         
-        $palabra = PalabraDAO::findPalabra();
+        $array_palabras = PalabraDAO::findPalabraRand();
 
+    } elseif (isset($_REQUEST['User_IniciarPartidaMin'])) {
+        
+        try {
+            $palabra = PalabraDAO::findByNum($_REQUEST['minLetras']);
+
+            $_SESSION['palabra'] = $palabra;
+        
+        } catch (Exception $e) {
+            $sms = "Debe introducir un numero minimo de letras";
+        }
+
+    } elseif (isset($_REQUEST['Letra_Enviar'])) {
+
+        try {
+            $palabra = PalabraDAO::findByPalabra($palabra);
+        
+        } catch (Exception $e) {
+            $sms = "Debe introducir un numero minimo de letras";
+        }
+    
+    
+    } elseif (isset($_REQUEST['volver'])) {
+        $_SESSION['vista'] = VIEW . 'user.php';
     }
 
     // if (isset($_REQUEST['User_IniciarPartida'])) {

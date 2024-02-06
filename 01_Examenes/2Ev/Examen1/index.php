@@ -10,11 +10,19 @@
     if (isset($_REQUEST['Login_IniciarSesion'])) {  
         $_SESSION['controller'] = CONTROLLER . 'LoginController.php';
 
-    if (isset($_REQUEST['User_IniciarPartida'])) {
+    } elseif (isset($_REQUEST['User_IniciarPartidaAletoria'])) {
         $_SESSION['vista'] = VIEW . 'partida.php';
         $_SESSION['controller'] = CONTROLLER . 'PalabraController.php';
-    }
-      
+
+    } elseif (isset($_REQUEST['User_IniciarPartidaMin'])) {
+        $_SESSION['vista'] = VIEW . 'partida.php';
+        $_SESSION['controller'] = CONTROLLER . 'PalabraController.php';
+
+    } elseif (isset($_REQUEST['User_IniciarPartidaMin'])) {
+        $_SESSION['vista'] = VIEW . 'partida.php';
+        $_SESSION['controller'] = CONTROLLER . 'PalabraController.php';
+    
+
     } elseif (isset($_REQUEST['VerTodasEstadisticas'])) {
         $_SESSION['vista'] = VIEW . 'verEstadisticas.php';
         $_SESSION['controller'] = CONTROLLER . 'EstadisticaController.php';    

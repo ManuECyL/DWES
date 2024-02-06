@@ -23,12 +23,12 @@
 
                 echo "<tr>";
 
-                        echo "<td>". $estadistica -> id_estadistica ."</td>";
-                        echo "<td>". $estadistica -> id_usuario ."</td>";
-                        echo "<td>". $estadistica -> id_palabra ."</td>";
-                        echo "<td>". $estadistica -> resultado ."</td>";
-                        echo "<td>". $estadistica -> intentos ."</td>";
-                        echo "<td>". $estadistica -> fecha ."</td>";
+                    echo "<td>". $estadistica -> id_estadistica ."</td>";
+                    echo "<td>". $estadistica -> id_usuario ."</td>";
+                    echo "<td>". $estadistica -> id_palabra ."</td>";
+                    echo "<td>". $estadistica -> resultado ."</td>";
+                    echo "<td>". $estadistica -> intentos ."</td>";
+                    echo "<td>". $estadistica -> fecha ."</td>";
 
                 echo "</tr>";
             }
