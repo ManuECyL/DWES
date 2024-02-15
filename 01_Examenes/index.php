@@ -42,7 +42,7 @@
 
                     <div class="col-md-6 col-lg">
                         <li class="nav-item">
-                            <a class="nav-link navTema" href="./2Ev/Ejercicio1/index.php">2a Evaluación</a>
+                            <a class="nav-link navTema" href="./2Ev/Examen1/index.php">2a Evaluación</a>
                         </li>
                     </div>
                 </ul>
